@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "494261208781",
+    "project_id": "myprojects-c7f2f",
+    "storage_bucket": "myprojects-c7f2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494261208781:android:6e912fc3594052cb5e4b84",
+        "android_client_info": {
+          "package_name": "de.hochschulehannover.myprojects"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494261208781-7oi9t5arj1af69cuve0vg1p1eag57q7p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZw8VKXmuGb0xbYoL8IFeDLOHq0I-gK08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494261208781-7oi9t5arj1af69cuve0vg1p1eag57q7p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
