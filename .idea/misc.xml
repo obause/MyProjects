@@ -3,11 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_faq.xml" value="0.26666666666666666" />
-        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_infos.xml" value="0.33" />
-        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_infos2.xml" value="0.26666666666666666" />
-        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/menu/main_menu.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_add_project.xml" value="0.4" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_project_list.xml" value="0.2884259259259259" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_task_list.xml" value="0.2" />
       </map>
     </option>
   </component>

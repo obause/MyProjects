@@ -4,30 +4,63 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class ProjectListActivity extends AppCompatActivity {
+
+    ListView projectListView;
+
+    public static ArrayList<String> projectItems = new ArrayList<>();
+    static ArrayAdapter<String> arrayAdapter;
+
+    protected void readProjects (DBHelper dbHelper) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM projects", null);
+
+        int nameIndex = cursor.getColumnIndex("name");
+        while (cursor.moveToNext()) {
+            projectItems.add(cursor.getString(nameIndex));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_list);
 
-        Intent intent = getIntent();
+        projectListView = findViewById(R.id.projectListView);
 
-        String name = intent.getStringExtra("Name");
+        DBHelper dbHelper = new DBHelper(this);
 
-        //Log.i("Name", name);
+        readProjects(dbHelper);
 
-        TextView nameTextView = findViewById(R.id.nameTextView);
-        nameTextView.setText(name);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, projectItems);
+        projectListView.setAdapter(arrayAdapter);
+
+        projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+                intent.putExtra("projectID",i);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -56,6 +89,11 @@ public class ProjectListActivity extends AppCompatActivity {
     }
     public void goToInfo() {
         Intent intent = new Intent(ProjectListActivity.this, InfosActivity.class);
+        startActivity(intent);
+    }
+
+    public void createProject(View view) {
+        Intent intent = new Intent(ProjectListActivity.this, AddProject.class);
         startActivity(intent);
     }
 }

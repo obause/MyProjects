@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check, ob der Nutzer bereits eingeloggt ist
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             goToProjects();
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Weiterleitung zur Projektliste, wenn der Nutzer sich eingeloggt hat
                             Log.d(TAG, "Login erfolgreich");
                             FirebaseUser user = mAuth.getCurrentUser();
                             goToProjects();
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // Fehlermeldung, falls der Login fehlschlägt
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Login fehlgeschlagen!",
                                     Toast.LENGTH_SHORT).show();
