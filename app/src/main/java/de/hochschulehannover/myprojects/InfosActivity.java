@@ -2,15 +2,19 @@ package de.hochschulehannover.myprojects;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
 
 public class InfosActivity extends AppCompatActivity {
 
     TextView headlineTextView;
     TextView authorsTextView;
-    Button faqButton;
     TextView versionTextView;
 
 
@@ -21,6 +25,11 @@ public class InfosActivity extends AppCompatActivity {
         headlineTextView = findViewById(R.id.headlineTextView);
         authorsTextView = findViewById(R.id.authorsTextView);
         versionTextView = findViewById(R.id.versionTextView);
-        faqButton = findViewById(R.id.faqButton);
+
+    }
+    public void goToFaq(View view) {
+
+        Intent intent = new Intent(InfosActivity.this, FaqActivity.class);
+        startActivity(intent);
     }
 }

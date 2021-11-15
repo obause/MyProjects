@@ -53,6 +53,7 @@
         android:layout_marginStart="166dp"
         android:layout_marginEnd="167dp"
         android:layout_marginBottom="15dp"
+        android:onClick="goToFaq"
         android:text="FAQ"
         app:layout_constraintBottom_toTopOf="@+id/versionTextView"
         app:layout_constraintEnd_toEndOf="parent"
