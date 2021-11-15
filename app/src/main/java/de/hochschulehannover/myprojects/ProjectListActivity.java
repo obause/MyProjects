@@ -49,6 +49,13 @@ public class ProjectListActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             finish();
         }
+        if (item.getItemId()==R.id.info){
+            goToInfo();
+        }
         return true;
+    }
+    public void goToInfo() {
+        Intent intent = new Intent(ProjectListActivity.this, InfosActivity.class);
+        startActivity(intent);
     }
 }
