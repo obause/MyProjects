@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProjects">
         <activity
+            android:name=".AddTask"
+            android:exported="false" />
+        <activity
             android:name=".TaskListActivity"
             android:exported="true" />
         <activity

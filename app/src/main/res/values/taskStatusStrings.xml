@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="task_prio_array">
+        <item>Niedrig</item>
+        <item>Mittel</item>
+        <item>Hoch</item>
+        <item>keine Priorität</item>
+    </string-array>
+</resources>
