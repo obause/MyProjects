@@ -54,11 +54,11 @@ public class AddTask extends AppCompatActivity {
             finish();
         }
         else {
-            /*updateTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
-            taskItems.clear();
+            updateTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
+            /*taskItems.clear();
             TaskListActivity.readTasks(dbHelper);
-            arrayAdapter.notifyDataSetChanged();
-            finish();*/
+            arrayAdapter.notifyDataSetChanged();*/
+            finish();
             //TODO: Taskliste updaten
         }
 
