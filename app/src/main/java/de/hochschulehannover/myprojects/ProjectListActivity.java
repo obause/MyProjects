@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProjectListActivity extends AppCompatActivity {
 
@@ -27,14 +29,17 @@ public class ProjectListActivity extends AppCompatActivity {
 
     public static ArrayList<String> projectItems = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
+    Map<String, Integer> map = new HashMap<String, Integer>();
 
     protected void readProjects (DBHelper dbHelper) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM projects", null);
+        Cursor cursor = db.rawQuery("SELECT id, name FROM projects", null);
 
         int nameIndex = cursor.getColumnIndex("name");
+        int idIndex = cursor.getColumnIndex("id");
         while (cursor.moveToNext()) {
             projectItems.add(cursor.getString(nameIndex));
+            map.put(cursor.getString(nameIndex), cursor.getInt(idIndex));
         }
     }
 
@@ -55,8 +60,9 @@ public class ProjectListActivity extends AppCompatActivity {
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Integer projectID = map.get(projectListView.getItemAtPosition(i).toString());
                 Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
-                intent.putExtra("projectID",i);
+                intent.putExtra("projectID",projectID);
                 startActivity(intent);
             }
         });
