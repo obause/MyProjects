@@ -55,7 +55,7 @@ public class AddTask extends AppCompatActivity {
             writeTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
             taskItems.add(taskName);
             TaskListActivity.readTasks(dbHelper);
-            arrayAdapter.notifyDataSetChanged();
+            TaskListActivity.arrayAdapter.notifyDataSetChanged();
             finish();
         }
         else {

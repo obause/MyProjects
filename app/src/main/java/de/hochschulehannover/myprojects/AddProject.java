@@ -39,6 +39,7 @@ public class AddProject extends AppCompatActivity {
 
         writeProject(dbHelper, projectName, projectStatus, projectStartDate, projectEndDate);
         ProjectListActivity.projectItems.add(projectName);
+        ProjectListActivity.readProjects(dbHelper);
         ProjectListActivity.arrayAdapter.notifyDataSetChanged();
         finish();
     }
