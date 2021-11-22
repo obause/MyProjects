@@ -1,12 +1,12 @@
 package de.hochschulehannover.myprojects;
 
-import static de.hochschulehannover.myprojects.TaskListActivity.arrayAdapter;
-import static de.hochschulehannover.myprojects.TaskListActivity.taskItems;
+import static de.hochschulehannover.myprojects.TaskListActivity.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,14 +15,17 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.sql.PreparedStatement;
 import java.util.Calendar;
+import java.util.HashSet;
 
 public class AddTask extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class AddTask extends AppCompatActivity {
     String taskName;
     String taskPrio;
     String taskStatus;
+    ImageButton deleteButton;
 
 
     public void addTask(View view) {
@@ -50,16 +54,14 @@ public class AddTask extends AppCompatActivity {
         if (taskId == -1) {
             writeTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
             taskItems.add(taskName);
+            TaskListActivity.readTasks(dbHelper);
             arrayAdapter.notifyDataSetChanged();
             finish();
         }
         else {
             updateTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
-            /*taskItems.clear();
             TaskListActivity.readTasks(dbHelper);
-            arrayAdapter.notifyDataSetChanged();*/
             finish();
-            //TODO: Taskliste updaten
         }
 
     }
@@ -67,7 +69,7 @@ public class AddTask extends AppCompatActivity {
     public static void updateTask (DBHelper dbHelper, Integer taskId, Integer projectId, String name, String status, String prio) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("projectId", projectId);
+        //values.put("projectId", projectId);
         values.put("name", name);
         values.put("status", status);
         values.put("prio", prio);
@@ -86,12 +88,33 @@ public class AddTask extends AppCompatActivity {
         db.insert("tasks", null, values);
     }
 
+    public void deleteTask(View view) {
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        new android.app.AlertDialog.Builder(AddTask.this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Aufgabe löschen")
+                .setMessage("Möchtest du diese Aufgabe wirklich löschen?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db.delete("tasks", "id = ?", new String[]{taskId.toString()});
+                        TaskListActivity.readTasks(dbHelper);
+                        arrayAdapter.notifyDataSetChanged();
+                        finish();
+                    }
+                })
+                .setNegativeButton("Nein", null)
+                .show();
+    }
+
     protected void readTask (DBHelper dbHelper) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM tasks WHERE id = " + taskId, null);
 
         int nameIndex = cursor.getColumnIndex("name");
-        int idIndex = cursor.getColumnIndex("id");
+        //int idIndex = cursor.getColumnIndex("id");
         int prioIndex = cursor.getColumnIndex("prio");
         int statusIndex = cursor.getColumnIndex("status");
         while (cursor.moveToNext()) {
@@ -117,6 +140,7 @@ public class AddTask extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
 
         taskNameEditText = findViewById(R.id.taskNameEditText);
+        deleteButton = findViewById(R.id.deleteButton);
 
         prioSpinner = (Spinner) findViewById(R.id.prioSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -146,6 +170,7 @@ public class AddTask extends AppCompatActivity {
             taskNameEditText.setText(taskName);
             selectSpinnerItemByValue(statusTaskSpinner, taskStatus);
             selectSpinnerItemByValue(prioSpinner, taskPrio);
+            deleteButton.setVisibility(View.VISIBLE);
         } else {
 
         }

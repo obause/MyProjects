@@ -29,9 +29,11 @@ public class ProjectListActivity extends AppCompatActivity {
 
     public static ArrayList<String> projectItems = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
-    Map<String, Integer> map = new HashMap<String, Integer>();
+    static Map<String, Integer> map = new HashMap<String, Integer>();
 
-    protected void readProjects (DBHelper dbHelper) {
+    public static void readProjects (DBHelper dbHelper) {
+        projectItems.clear();
+        map.clear();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT id, name FROM projects", null);
 
@@ -51,6 +53,9 @@ public class ProjectListActivity extends AppCompatActivity {
         projectListView = findViewById(R.id.projectListView);
 
         DBHelper dbHelper = new DBHelper(this);
+
+        projectItems.clear();
+        map.clear();
 
         readProjects(dbHelper);
 

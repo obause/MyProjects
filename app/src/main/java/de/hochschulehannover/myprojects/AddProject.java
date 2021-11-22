@@ -51,6 +51,7 @@ public class AddProject extends AppCompatActivity {
         values.put("startDate", projectStartDate);
         values.put("endDate", projectEndDate);
         db.insert("projects", null, values);
+        ProjectListActivity.readProjects(dbHelper);
     }
 
     @Override
