@@ -140,4 +140,10 @@ public class TaskListActivity extends AppCompatActivity {
         Intent intent = new Intent(TaskListActivity.this, InfosActivity.class);
         startActivity(intent);
     }
+
+    public void weiter(View view) {
+        Intent intent = new Intent(getApplicationContext(), TasksByStatus.class);
+        intent.putExtra("projectID",projectId);
+        startActivity(intent);
+    }
 }
