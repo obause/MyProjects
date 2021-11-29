@@ -28,7 +28,7 @@ import java.util.Map;
  * Use the {@link TaskListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskListFragment extends Fragment {
+public class DoneFragment extends Fragment {
 
     ListView taskListView;
 
@@ -46,9 +46,9 @@ public class TaskListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TaskListFragment(String status) {
+    public DoneFragment(String status) {
         // Required empty public constructor
-        this.mParam1 = status;
+        this.mParam1 = status.toString();
     }
 
     /**
@@ -119,6 +119,7 @@ public class TaskListFragment extends Fragment {
 
     public void readTasks (DBHelper dbHelper) {
         Log.i("Fragment", "In readTasks Methode");
+        Log.i("Status", this.mParam1.toString());
         taskItems.clear();
         map.clear();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -127,7 +128,7 @@ public class TaskListFragment extends Fragment {
         int nameIndex = cursor.getColumnIndex("name");
         int idIndex = cursor.getColumnIndex("id");
         while (cursor.moveToNext()) {
-            Log.i("Taskname", cursor.getString(nameIndex));
+            //   Log.i("Taskname", cursor.getString(nameIndex));
             taskItems.add(cursor.getString(nameIndex));
             map.put(cursor.getString(nameIndex), cursor.getInt(idIndex));
         }

@@ -28,9 +28,9 @@ public class TasksByStatus extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        sectionsPagerAdapter.addFragment(new TaskListFragment("In Planung"), "Backlog");
-        sectionsPagerAdapter.addFragment(new TaskListFragment("In Arbeit"), "In Bearbeitung");
-        sectionsPagerAdapter.addFragment(new TaskListFragment("Abgeschlossen"), "Abgeschlossen");
+        sectionsPagerAdapter.addFragment(new BacklogFragment("Backlog"), "Backlog");
+        sectionsPagerAdapter.addFragment(new InProgressFragment("In Arbeit"), "In Bearbeitung");
+        sectionsPagerAdapter.addFragment(new DoneFragment("Abgeschlossen"), "Abgeschlossen");
 
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
