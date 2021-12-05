@@ -32,21 +32,30 @@ android {
 }
 
 dependencies {
-    //Deklarieren der Abhängigkeiten für Firebase-Support
-    implementation platform('com.google.firebase:firebase-bom:29.0.0')
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //Deklarieren der Abhängigkeiten für Firebase-Support
+    // Import von BoM for die Firebase Plattform
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+
+    // Deklarieren der Abhängigkeiten für Firebase-Authentication
+    // Mit BoM, muss keine bestimmte Version definiert werden
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Deklarieren der Abhängigkeiten für Google Play services library
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Abhängigkeiten für android material ui
+    implementation 'com.google.android.material:material:1.4.0'
     api 'com.google.android.material:material:1.1.0-alpha06'
 
 }
