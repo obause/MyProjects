@@ -53,14 +53,14 @@ public class AddTask extends AppCompatActivity {
 
         if (taskId == -1) {
             writeTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
-            taskItems.add(taskName);
-            TaskListActivity.readTasks(dbHelper);
-            TaskListActivity.arrayAdapter.notifyDataSetChanged();
+            //taskItems.add(taskName);
+            //TaskListActivity.readTasks(dbHelper);
+            //TaskListActivity.arrayAdapter.notifyDataSetChanged();
             finish();
         }
         else {
             updateTask(dbHelper, taskId,  projectId, taskName, statusSpinner, taskPrio);
-            TaskListActivity.readTasks(dbHelper);
+            //TaskListActivity.readTasks(dbHelper);
             finish();
         }
 

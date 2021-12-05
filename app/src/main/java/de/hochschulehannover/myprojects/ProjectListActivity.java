@@ -66,7 +66,7 @@ public class ProjectListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Integer projectID = map.get(projectListView.getItemAtPosition(i).toString());
-                Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TasksByStatus.class);
                 intent.putExtra("projectID",projectID);
                 startActivity(intent);
             }

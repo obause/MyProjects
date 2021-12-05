@@ -77,9 +77,8 @@ public class InProgressFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
-        taskItems.clear();
-        readTasks(dbHelper);
+
+
 
     }
 
@@ -98,23 +97,32 @@ public class InProgressFragment extends Fragment {
         projectId = extras.getInt("projectID");
         projectIDTextView.setText("Projektnr.: " + projectId.toString());
 
+        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
+        taskItems.clear();
+        readTasks(dbHelper);
+
         taskListView = getView().findViewById(R.id.taskListView);
-
-
-
         arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, taskItems);
         taskListView.setAdapter(arrayAdapter);
 
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*Integer taskId = map.get(taskListView.getItemAtPosition(i).toString());
-                Intent intent = new Intent(getApplicationContext(), AddTask.class);
+                Integer taskId = map.get(taskListView.getItemAtPosition(i).toString());
+                Intent intent = new Intent(getActivity().getApplicationContext(), AddTask.class);
                 intent.putExtra("taskID", taskId);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
+        readTasks(dbHelper);
+        arrayAdapter.notifyDataSetChanged();
     }
 
     public void readTasks (DBHelper dbHelper) {

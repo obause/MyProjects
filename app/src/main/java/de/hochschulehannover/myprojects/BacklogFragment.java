@@ -78,9 +78,7 @@ public class BacklogFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
-        taskItems.clear();
-        readTasks(dbHelper);
+
 
     }
 
@@ -101,7 +99,9 @@ public class BacklogFragment extends Fragment {
 
         taskListView = getView().findViewById(R.id.taskListView);
 
-
+        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
+        taskItems.clear();
+        readTasks(dbHelper);
 
         arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, taskItems);
         taskListView.setAdapter(arrayAdapter);
@@ -109,13 +109,12 @@ public class BacklogFragment extends Fragment {
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*Integer taskId = map.get(taskListView.getItemAtPosition(i).toString());
-                Intent intent = new Intent(getApplicationContext(), AddTask.class);
+                Integer taskId = map.get(taskListView.getItemAtPosition(i).toString());
+                Intent intent = new Intent(getActivity().getApplicationContext(), AddTask.class);
                 intent.putExtra("taskID", taskId);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
-
     }
 
     public void readTasks (DBHelper dbHelper) {

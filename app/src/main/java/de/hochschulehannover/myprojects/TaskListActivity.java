@@ -103,11 +103,11 @@ public class TaskListActivity extends AppCompatActivity {
         });
     }
 
-        public void createTask(View view) {
-            Intent intent = new Intent(TaskListActivity.this, AddTask.class);
-            intent.putExtra("projectID", projectId);
-            startActivity(intent);
-        }
+    public void createTask(View view) {
+        Intent intent = new Intent(TaskListActivity.this, AddTask.class);
+        intent.putExtra("projectID", projectId);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
