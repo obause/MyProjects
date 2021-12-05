@@ -3,10 +3,13 @@ package de.hochschulehannover.myprojects;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
@@ -26,8 +29,19 @@ public class SplashActivity extends AppCompatActivity {
 
         TextView app_name = findViewById(R.id.myprojects_name);
         app_name.setTypeface(typeface);
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Sobald der Timer abgelaufen ist wird die Methode ausgeführt
+                Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 1500);
     }
 
+    //Statusbar für den Splash-Screen ausblenden je nach Android-Version (< Android 10 und ab Android 10)
     private void hide_status_bar() {
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT < 30) {

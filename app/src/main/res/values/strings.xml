@@ -15,4 +15,16 @@
     <string name="tab_text_3">Abgeschlossen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Willkommensbildschirm WelcomeActivity -->
+    <string name="sign_in">Einloggen</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="intro_text">Eine kurze Beschreibung zur App</string>
+    <string name="welcome_text">Willkommen bei</string>
+    <!-- Registrierung RegisterActivity -->
+    <string name="sign_up_description">Bitte gibt deinen Namen, deine Email-Adresse und dein Passwort ein</string>
+    <string name="name">Name</string>
+    <string name="password">Passwort</string>
+    <string name="repeat_password">Passwort wiederholen</string>
+    <string name="email">Email-Adresse</string>
 </resources>
