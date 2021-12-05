@@ -1,7 +1,9 @@
 package de.hochschulehannover.myprojects;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText mailEditText;
     EditText passwordEditText;
+    Button loginButton;
+    Button registerButton;
+    Toolbar toolbar;
 
     String TAG = "MainActivity";
 
@@ -99,6 +104,28 @@ public class MainActivity extends AppCompatActivity {
 
         mailEditText = findViewById(R.id.mailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.startRegisterButton);
+        toolbar = findViewById(R.id.toolbar);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mail = mailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                login(mail, password);
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        setupActionBar();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -124,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void login(View view) {
-        mAuth.signInWithEmailAndPassword(mailEditText.getText().toString(), passwordEditText.getText().toString())
+    public void login(String mail, String password) {
+        mAuth.signInWithEmailAndPassword(mail, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -145,14 +172,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void register(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }
-
     public void goToProjects() {
         Intent intent = new Intent(MainActivity.this, ProjectListActivity.class);
         intent.putExtra("Name", mailEditText.getText());
         startActivity(intent);
+    }
+
+    // Custom ActionBar initialisieren
+    private void setupActionBar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_back_24dp);
+        }
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

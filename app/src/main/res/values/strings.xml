@@ -27,4 +27,9 @@
     <string name="password">Passwort</string>
     <string name="repeat_password">Passwort wiederholen</string>
     <string name="email">Email-Adresse</string>
+    <!-- Anmeldung MainActivity -->
+    <string name="sign_in_description">Bitte gib deine Email-Adresse und dein Passwort ein</string>
+    <string name="login_register_text">Noch keinen Account?</string>
+    <string name="register_button_text">Jetzt registrieren</string>
+    <string name="passwort_vergessen">Passwort vergessen</string>
 </resources>

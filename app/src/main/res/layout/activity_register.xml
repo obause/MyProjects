@@ -139,7 +139,7 @@
                     android:layout_marginEnd="16dp">
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_email"
+                        android:id="@+id/mailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"
@@ -155,7 +155,7 @@
                     android:layout_marginEnd="16dp">
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/registerPasswordEditText"
+                        android:id="@+id/passwordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
@@ -180,7 +180,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/registerButton"
+                    android:id="@+id/loginButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -198,6 +198,15 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleLoginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="200dp"
+            android:background="?attr/selectableItemBackground"
+            android:elevation="2dp"></com.google.android.gms.common.SignInButton>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

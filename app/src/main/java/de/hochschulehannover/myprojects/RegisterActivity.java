@@ -38,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         registerMailEditText = findViewById(R.id.mailEditText);
-        registerPasswordEditText = findViewById(R.id.registerPasswordEditText);
-        registerButton = findViewById(R.id.registerButton);
+        registerPasswordEditText = findViewById(R.id.passwordEditText);
+        registerButton = findViewById(R.id.loginButton);
         toolbar = findViewById(R.id.toolbar);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
