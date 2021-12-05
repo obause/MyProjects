@@ -10,17 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProjects">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyProjects.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".TasksByStatus"
             android:exported="true"
             android:label="@string/title_activity_tasks_by_status"
             android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".WelcomeActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyProjects.NoActionBar">
+
         </activity>
         <activity
             android:name=".AddTask"
@@ -49,8 +59,7 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
