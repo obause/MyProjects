@@ -47,17 +47,16 @@
         app:srcCompat="@drawable/logo2" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/welcomeLoginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#FF9100"
-        android:onClick="login"
-        android:text="@string/sign_in"
         android:background="@drawable/shape_button_rounded"
+        android:backgroundTint="#FF9100"
         android:foreground="?attr/selectableItemBackground"
+        android:text="@string/sign_in"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,21 +72,20 @@
         android:textColor="?colorPrimary"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeLoginButton" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/welcomeRegisterButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:onClick="register"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeLoginButton" />
 
     <TextView
         android:id="@+id/textView11"
@@ -103,7 +101,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeRegisterButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
