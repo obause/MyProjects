@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.hochschulehannover.myprojects">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -61,7 +64,9 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyProjects.NoActionBar"></activity>
     </application>
 
 </manifest>
