@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     EditText mailEditText;
     EditText passwordEditText;
@@ -102,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupActionBar();
+
         mailEditText = findViewById(R.id.mailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
@@ -111,9 +114,13 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mail = mailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                login(mail, password);
+                String mail = mailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+
+                if (validateForm(mail, password)) {
+                    showDialog("Bitte warten");
+                    login(mail, password);
+                }
             }
         });
 
@@ -124,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        setupActionBar();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -158,18 +163,35 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Weiterleitung zur Projektliste, wenn der Nutzer sich eingeloggt hat
+                            hideDialog();
                             Log.d(TAG, "Login erfolgreich");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(MainActivity.this, "Login erfolgreich!",
+                                    Toast.LENGTH_SHORT).show();
                             goToProjects();
                         } else {
                             // Fehlermeldung, falls der Login fehlschlägt
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Login fehlgeschlagen!",
                                     Toast.LENGTH_SHORT).show();
+                            hideDialog();
                         }
                     }
                 });
 
+    }
+
+    private Boolean validateForm(String email, String password) {
+        if (TextUtils.isEmpty(email)) {
+            showErrorSnackBar("Bitte eine Email-Adresse eingeben");
+            return false;
+        }
+        else if (TextUtils.isEmpty(password) || password.length() <= 6) {
+            showErrorSnackBar("Bitte ein Passwort mit mindestens 6 Zeichen eingeben");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void goToProjects() {

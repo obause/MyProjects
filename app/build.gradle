@@ -46,6 +46,7 @@ dependencies {
     // Deklarieren der Abhängigkeiten für Firebase-Authentication
     // Mit BoM, muss keine bestimmte Version definiert werden
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore:24.0.0'
 
     // Deklarieren der Abhängigkeiten für Google Play services library
     implementation 'com.google.android.gms:play-services-auth:19.2.0'

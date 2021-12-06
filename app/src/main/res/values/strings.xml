@@ -31,5 +31,7 @@
     <string name="sign_in_description">Bitte gib deine Email-Adresse und dein Passwort ein</string>
     <string name="login_register_text">Noch keinen Account?</string>
     <string name="register_button_text">Jetzt registrieren</string>
-    <string name="passwort_vergessen">Passwort vergessen</string>
+    <string name="forgot_password">Passwort vergessen</string>
+    <!--  -->
+    <string name="please_wait">Bitte warten...</string>
 </resources>
