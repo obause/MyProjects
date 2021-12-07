@@ -46,7 +46,7 @@ dependencies {
     // Deklarieren der Abhängigkeiten für Firebase-Authentication
     // Mit BoM, muss keine bestimmte Version definiert werden
     implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-firestore:24.0.0'
+    implementation 'com.google.firebase:firebase-firestore'
 
     // Deklarieren der Abhängigkeiten für Google Play services library
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
@@ -58,5 +58,8 @@ dependencies {
     //Abhängigkeiten für android material ui
     implementation 'com.google.android.material:material:1.4.0'
     api 'com.google.android.material:material:1.1.0-alpha06'
+
+    //Runde imageViews (https://github.com/hdodenhof/CircleImageView)
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }
