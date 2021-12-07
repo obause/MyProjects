@@ -16,12 +16,20 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        // Firebase initialisieren
+        mAuth = FirebaseAuth.getInstance();
 
         hide_status_bar();
 
@@ -34,8 +42,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //Sobald der Timer abgelaufen ist wird die Methode ausgeführt
-                Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                startActivity(intent);
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if(currentUser != null){
+                    Intent intent = new Intent(SplashActivity.this, ProjectListActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                    startActivity(intent);
+                }
                 finish();
             }
         }, 1500);

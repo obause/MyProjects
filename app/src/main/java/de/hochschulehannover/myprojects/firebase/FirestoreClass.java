@@ -4,26 +4,31 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hochschulehannover.myprojects.MainActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.model.User;
 
 public class FirestoreClass {
 
-    //private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String TAG = "FirestoreClass";
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public void registerUser(RegisterActivity activity, User userInfo) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(getUserId()).set(userInfo)
                 .addOnSuccessListener(activity.userRegistered())
@@ -31,6 +36,27 @@ public class FirestoreClass {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("FirestoreClass", e.toString());
+                    }
+                });
+    }
+
+    public void loginUser(MainActivity activity) {
+        db.collection("users").document(getUserId()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                User loggedInUser = document.toObject(User.class);
+                                activity.signInSuccess(loggedInUser);
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
                     }
                 });
     }

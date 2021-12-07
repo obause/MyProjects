@@ -30,6 +30,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.model.User;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -103,13 +106,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupActionBar();
-
         mailEditText = findViewById(R.id.mailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.startRegisterButton);
         toolbar = findViewById(R.id.toolbar);
+
+        setupActionBar();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,12 +166,11 @@ public class MainActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Weiterleitung zur Projektliste, wenn der Nutzer sich eingeloggt hat
-                            hideDialog();
                             Log.d(TAG, "Login erfolgreich");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Login erfolgreich!",
                                     Toast.LENGTH_SHORT).show();
-                            goToProjects();
+                            new FirestoreClass().loginUser(MainActivity.this);
                         } else {
                             // Fehlermeldung, falls der Login fehlschlägt
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -179,6 +181,12 @@ public class MainActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    public void signInSuccess(User user) {
+        hideDialog();
+        Intent intent = new Intent(MainActivity.this, ProjectListActivity.class);
+        startActivity(intent);
     }
 
     private Boolean validateForm(String email, String password) {
