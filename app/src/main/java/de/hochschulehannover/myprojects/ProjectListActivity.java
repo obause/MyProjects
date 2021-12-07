@@ -75,14 +75,14 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         toolbarProjectList = findViewById(R.id.projectListToolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
-        //projectListView = findViewById(R.id.projectListView);
+        projectListView = findViewById(R.id.projectListView);
 
         setupActionBar();
         navigationView.setNavigationItemSelectedListener(this);
 
         new FirestoreClass().loginUser(this);
 
-        /*DBHelper dbHelper = new DBHelper(this);
+        DBHelper dbHelper = new DBHelper(this);
 
         projectItems.clear();
         map.clear();
@@ -101,7 +101,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
                 startActivity(intent);
             }
         });
-*/
+
     }
 
     public void updateUserDetails(User user) {
@@ -185,7 +185,8 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_my_profile) {
-            Toast.makeText(this, "Das Profil", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         }
         if (item.getItemId()==R.id.nav_logout){
             FirebaseAuth.getInstance().signOut();

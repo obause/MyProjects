@@ -20,6 +20,7 @@ import java.util.Map;
 
 import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.MainActivity;
+import de.hochschulehannover.myprojects.ProfileActivity;
 import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.model.User;
@@ -57,6 +58,8 @@ public class FirestoreClass {
                                     ((MainActivity) activity).signInSuccess(loggedInUser);
                                 } else if (activity instanceof ProjectListActivity){
                                     ((ProjectListActivity) activity).updateUserDetails(loggedInUser);
+                                } else if (activity instanceof ProfileActivity){
+                                    ((ProfileActivity) activity).setUserDetails(loggedInUser);
                                 }
                             } else {
                                 Log.d(TAG, "No such document");

@@ -9,6 +9,21 @@
             android:title="@string/nav_my_profile" />
 
         <item
+            android:id="@+id/nav_overview"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Übersicht" />
+
+        <item
+            android:id="@+id/nav_projects"
+            android:icon="@drawable/ic_baseline_folder_24"
+            android:title="Projekte" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Einstellungen" />
+
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_nav_sign_out"
             android:title="@string/nav_logout" />

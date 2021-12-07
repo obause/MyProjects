@@ -37,4 +37,6 @@
     <!-- App Drawer -->
     <string name="nav_my_profile">Mein Profil</string>
     <string name="nav_logout">Ausloggen</string>
+    <!-- Profilseite -->
+    <string name="update">Aktualisieren</string>
 </resources>
