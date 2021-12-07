@@ -2,12 +2,13 @@ package de.hochschulehannover.myprojects.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.Serializable;
 
 
 public final class User implements Parcelable {
-    //TODO: Attribute private und getter/setter erstellen
+    //TODO: Attribute privat setzen und getter/setter erstellen
     public String id = "";
     public String name = "";
     public String email = "";
@@ -26,6 +27,10 @@ public final class User implements Parcelable {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public User() {
+        Log.i("User", "Im Default-Konstruktor");
     }
 
     protected User(Parcel in) {

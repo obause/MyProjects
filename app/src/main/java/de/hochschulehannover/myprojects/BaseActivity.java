@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-    protected void hideDialog() {
+    public void hideDialog() {
         progressDialog.dismiss();
     }
 
@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
             super.onBackPressed();
         } else {
             this.doubleBackExit = true;
-            Toast.makeText(this, "Noch einmal klicken zum beenden",
+            Toast.makeText(this, "Noch einmal zurück tippen zum beenden",
                     Toast.LENGTH_LONG).show();
         }
 

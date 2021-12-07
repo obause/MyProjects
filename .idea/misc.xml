@@ -6,6 +6,7 @@
         <entry key="..\:/Users/Office/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/drawable/ic_black_color_back_24dp.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/drawable/ic_white_back_24dp.xml" value="0.25046296296296294" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/drawable/nav_header_background.xml" value="0.25" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_add_project.xml" value="0.4" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_add_task.xml" value="0.264" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_main.xml" value="0.18226600985221675" />
@@ -15,10 +16,14 @@
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_task_list.xml" value="0.264" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_tasks_by_status.xml" value="0.4" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/activity_welcome.xml" value="0.25601851851851853" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/content_main.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/dialog_progress.xml" value="0.264" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/fragment_in_progress.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/fragment_task_list.xml" value="0.35138888888888886" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/fragment_tasks_by_status.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/layout/nav_header_main.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/menu/drawer_menu.xml" value="0.264" />
         <entry key="..\:/Users/oleba/AndroidStudioProjects/MyProjects/app/src/main/res/menu/main_menu.xml" value="0.3638888888888889" />
       </map>
     </option>

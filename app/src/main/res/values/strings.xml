@@ -32,6 +32,9 @@
     <string name="login_register_text">Noch keinen Account?</string>
     <string name="register_button_text">Jetzt registrieren</string>
     <string name="forgot_password">Passwort vergessen</string>
-    <!--  -->
+    <!-- Ladedialog -->
     <string name="please_wait">Bitte warten...</string>
+    <!-- App Drawer -->
+    <string name="nav_my_profile">Mein Profil</string>
+    <string name="nav_logout">Ausloggen</string>
 </resources>

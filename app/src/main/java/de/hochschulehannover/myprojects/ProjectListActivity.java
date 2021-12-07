@@ -2,12 +2,16 @@ package de.hochschulehannover.myprojects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,14 +20,27 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProjectListActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.model.User;
+
+public class ProjectListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbarProjectList;
+    private NavigationView navigationView;
 
     ListView projectListView;
 
@@ -50,9 +67,22 @@ public class ProjectListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_list);
 
-        projectListView = findViewById(R.id.projectListView);
 
-        DBHelper dbHelper = new DBHelper(this);
+        //final LayoutInflater inflater = getLayoutInflater();
+        //final View toolbar = inflater.inflate(R.layout.app_bar_main, null);
+        //toolbarProjectList = toolbar.findViewById(R.id.projectListToolbar);
+
+        toolbarProjectList = findViewById(R.id.projectListToolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        //projectListView = findViewById(R.id.projectListView);
+
+        setupActionBar();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        new FirestoreClass().loginUser(this);
+
+        /*DBHelper dbHelper = new DBHelper(this);
 
         projectItems.clear();
         map.clear();
@@ -71,7 +101,22 @@ public class ProjectListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+*/
+    }
 
+    public void updateUserDetails(User user) {
+        View headerView = navigationView.getHeaderView(0);
+        CircleImageView userImage = findViewById(R.id.userImageView);
+
+        Glide
+                .with(this)
+                .load(user.image)
+                .centerCrop()
+                .placeholder(R.drawable.ic_user_place_holder)
+                .into(userImage);
+
+        TextView navUsername = findViewById(R.id.usernameTextView);
+        navUsername.setText(user.name);
     }
 
     @Override
@@ -106,5 +151,50 @@ public class ProjectListActivity extends AppCompatActivity {
     public void createProject(View view) {
         Intent intent = new Intent(ProjectListActivity.this, AddProject.class);
         startActivity(intent);
+    }
+
+    private void setupActionBar() {
+        setSupportActionBar(toolbarProjectList);
+        toolbarProjectList.setNavigationIcon(R.drawable.ic_action_navigation_menu);
+
+        toolbarProjectList.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleDrawer();
+            }
+        });
+    }
+
+    private void toggleDrawer() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            doubleBackExit();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.nav_my_profile) {
+            Toast.makeText(this, "Das Profil", Toast.LENGTH_SHORT).show();
+        }
+        if (item.getItemId()==R.id.nav_logout){
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+            startActivity(intent);
+            finish();
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

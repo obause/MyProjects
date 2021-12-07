@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,12 +12,12 @@ import android.os.Looper;
 import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// TODO: Die neue Splash-Screen API benutzen
 public class SplashActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -38,20 +37,17 @@ public class SplashActivity extends AppCompatActivity {
         TextView app_name = findViewById(R.id.myprojects_name);
         app_name.setTypeface(typeface);
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Sobald der Timer abgelaufen ist wird die Methode ausgeführt
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if(currentUser != null){
-                    Intent intent = new Intent(SplashActivity.this, ProjectListActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                    startActivity(intent);
-                }
-                finish();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            //Sobald der Timer abgelaufen ist wird die Methode ausgeführt
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            Intent intent;
+            if(currentUser != null){
+                intent = new Intent(SplashActivity.this, ProjectListActivity.class);
+            } else {
+                intent = new Intent(SplashActivity.this, WelcomeActivity.class);
             }
+            startActivity(intent);
+            finish();
         }, 1500);
     }
 

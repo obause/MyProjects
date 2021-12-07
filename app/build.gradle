@@ -62,4 +62,8 @@ dependencies {
     //Runde imageViews (https://github.com/hdodenhof/CircleImageView)
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    // Glide framework für einfaches media management (https://github.com/bumptech/glide)
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
 }

@@ -1,5 +1,6 @@
 package de.hochschulehannover.myprojects.firebase;
 
+import android.app.Activity;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,9 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.MainActivity;
+import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.model.User;
 
@@ -40,7 +43,7 @@ public class FirestoreClass {
                 });
     }
 
-    public void loginUser(MainActivity activity) {
+    public void loginUser(BaseActivity activity) {
         db.collection("users").document(getUserId()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -50,11 +53,16 @@ public class FirestoreClass {
                             if (document.exists()) {
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 User loggedInUser = document.toObject(User.class);
-                                activity.signInSuccess(loggedInUser);
+                                if (activity instanceof MainActivity) {
+                                    ((MainActivity) activity).signInSuccess(loggedInUser);
+                                } else if (activity instanceof ProjectListActivity){
+                                    ((ProjectListActivity) activity).updateUserDetails(loggedInUser);
+                                }
                             } else {
                                 Log.d(TAG, "No such document");
                             }
                         } else {
+                            activity.hideDialog();
                             Log.d(TAG, "get failed with ", task.getException());
                         }
                     }
