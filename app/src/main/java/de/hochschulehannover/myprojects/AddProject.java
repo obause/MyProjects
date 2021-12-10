@@ -13,12 +13,15 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
+
+import dev.sasikanth.colorsheet.ColorSheet;
 
 public class AddProject extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class AddProject extends AppCompatActivity {
     TextView startDateEditText;
     TextView endDateEditText;
     DatePickerDialog picker;
+
+    Button pickColor;
 
     public void addProject(View view) {
         DBHelper dbHelper = new DBHelper(this);
@@ -59,6 +64,16 @@ public class AddProject extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
+
+        pickColor = findViewById(R.id.pickColorButton);
+
+        pickColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //new ColorSheet().colorPicker().show();
+
+            }
+        });
 
         projectNameEditText = findViewById(R.id.projectNameEditText);
 

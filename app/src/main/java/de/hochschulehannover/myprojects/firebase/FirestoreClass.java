@@ -2,6 +2,7 @@ package de.hochschulehannover.myprojects.firebase;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.protobuf.Any;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +26,7 @@ import de.hochschulehannover.myprojects.ProfileActivity;
 import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.model.User;
+import de.hochschulehannover.myprojects.var.Constants;
 
 public class FirestoreClass {
 
@@ -44,7 +47,7 @@ public class FirestoreClass {
                 });
     }
 
-    public void loginUser(BaseActivity activity) {
+    public void loadUserData(BaseActivity activity) {
         db.collection("users").document(getUserId()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -80,5 +83,25 @@ public class FirestoreClass {
         return mAuth.getCurrentUser().getUid();
     }
 
+    public void updateUserData(ProfileActivity activity, HashMap<String, Object> userHashMap) {
+        db.collection(Constants.USERS_TABLE)
+                .document(getUserId())
+                .update(userHashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        activity.showInfoSnackBar("Nutzerdaten erfolgreich aktualisiert");
+                        activity.updateUserProfileSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e("FirestoreClass", "Fehler beim aktualisieren der Nutzerdaten", e);
+                        activity.showErrorSnackBar("Fehler beim aktualisieren der Nutzerdaten");
+                    }
+                });
+    }
 
 }

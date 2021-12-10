@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AddProject">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.MyProjects.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/projectListToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="?colorPrimary"
+            app:titleTextColor="@color/white"
+            app:popupTheme="@style/Theme.MyProjects.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_background"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="10dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="16dp">
+
+                <Button
+                    android:id="@+id/pickColorButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Farbe auswählen" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/textView5"
@@ -111,4 +158,5 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

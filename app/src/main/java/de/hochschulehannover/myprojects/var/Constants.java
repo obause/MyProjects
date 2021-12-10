@@ -12,4 +12,7 @@ public class Constants {
 
     public static final String USERS_TABLE = "users";
 
+    public static final String IMAGE = "image";
+    public static final String NAME = "name";
+
 }

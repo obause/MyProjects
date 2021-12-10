@@ -47,6 +47,7 @@ dependencies {
     // Mit BoM, muss keine bestimmte Version definiert werden
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
 
     // Deklarieren der Abhängigkeiten für Google Play services library
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
@@ -65,5 +66,8 @@ dependencies {
     // Glide framework für einfaches media management (https://github.com/bumptech/glide)
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //Color Picker (https://github.com/msasikanth/ColorSheet)
+    implementation "dev.sasikanth:colorsheet:1.0.1"
 
 }

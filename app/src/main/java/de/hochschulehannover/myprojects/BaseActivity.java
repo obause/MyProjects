@@ -92,7 +92,7 @@ public class BaseActivity extends AppCompatActivity {
     /*
     Snackbar mit rotem Hintergrund für das Anzeigen von Fehlermeldungen
      */
-    protected void showErrorSnackBar(String message) {
+    public void showErrorSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
                 //.setAction("Action", null).show();
         View snackbarView = snackbar.getView();
@@ -101,7 +101,7 @@ public class BaseActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    protected void showInfoSnackBar(String message) {
+    public void showInfoSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
         //.setAction("Action", null).show();
         View snackbarView = snackbar.getView();

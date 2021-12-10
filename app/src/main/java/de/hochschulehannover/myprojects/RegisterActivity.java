@@ -160,7 +160,7 @@ public class RegisterActivity extends BaseActivity {
     public OnSuccessListener<? super Void> userRegistered() {
         showInfoSnackBar("Dein Account wurde erfolgreich erstellt!");
         hideDialog();
-        new FirestoreClass().loginUser(RegisterActivity.this);
+        new FirestoreClass().loadUserData(RegisterActivity.this);
         return null;
     }
 
@@ -221,7 +221,7 @@ public class RegisterActivity extends BaseActivity {
                                 Log.i(TAG, "Bereits existierender User");
                                 showErrorSnackBar("Du hast dich bereits mit deinem Google Account registriert");
                                 //TODO: Login
-                                new FirestoreClass().loginUser(RegisterActivity.this);
+                                new FirestoreClass().loadUserData(RegisterActivity.this);
                             }
 
                         } else {

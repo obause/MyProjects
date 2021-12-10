@@ -1,17 +1,15 @@
 package de.hochschulehannover.myprojects;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -41,6 +38,8 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     private DrawerLayout drawerLayout;
     private Toolbar toolbarProjectList;
     private NavigationView navigationView;
+
+    public static final int PROFILE_REQUEST_CODE = 1;
 
     ListView projectListView;
 
@@ -80,7 +79,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         setupActionBar();
         navigationView.setNavigationItemSelectedListener(this);
 
-        new FirestoreClass().loginUser(this);
+        new FirestoreClass().loadUserData(this);
 
         DBHelper dbHelper = new DBHelper(this);
 
@@ -153,6 +152,18 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         startActivity(intent);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Abfragen, ob der Upload erfolgreich war
+        if (resultCode == RESULT_OK && requestCode == PROFILE_REQUEST_CODE) {
+            new FirestoreClass().loadUserData(this);
+        } else {
+            Log.e("ProjectListActivity","Profiländerung abgebrochen");
+        }
+    }
+
     private void setupActionBar() {
         setSupportActionBar(toolbarProjectList);
         toolbarProjectList.setNavigationIcon(R.drawable.ic_action_navigation_menu);
@@ -186,7 +197,8 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_my_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
+            // TODO: Veraltete Methode ersetzen
+            startActivityForResult(intent, PROFILE_REQUEST_CODE);
         }
         if (item.getItemId()==R.id.nav_logout){
             FirebaseAuth.getInstance().signOut();

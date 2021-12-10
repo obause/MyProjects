@@ -20,4 +20,15 @@
 
     <include layout="@layout/content_main" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_create_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_baseline_add_to_photos_24"
+        app:tint="@color/white"
+        android:backgroundTint="?colorPrimary" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

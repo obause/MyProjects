@@ -2,7 +2,6 @@ package de.hochschulehannover.myprojects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -22,8 +21,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -149,7 +146,7 @@ public class MainActivity extends BaseActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Login erfolgreich!",
                                     Toast.LENGTH_SHORT).show();
-                            new FirestoreClass().loginUser(MainActivity.this);
+                            new FirestoreClass().loadUserData(MainActivity.this);
                         } else {
                             // Fehlermeldung, falls der Login fehlschlägt
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -241,7 +238,7 @@ public class MainActivity extends BaseActivity {
                                 Log.i(TAG, "Neuer Account erstellt");
                             } else {
                                 Log.i(TAG, "Bereits existierender User");
-                                new FirestoreClass().loginUser(MainActivity.this);
+                                new FirestoreClass().loadUserData(MainActivity.this);
                             }
 
                         } else {
