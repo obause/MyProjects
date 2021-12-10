@@ -22,6 +22,17 @@ import com.google.firebase.auth.FirebaseUser;
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.User;
 
+/**
+ * <h2>Activity RegisterActivity</h2>
+ * <p>Rehistrierungsseite der App. Diese erbt von {@link BaseActivity}.
+ * Hier kann sich ein neuer Nutzer mit seiner Email-Adresse oder Google-Account
+ * registrieren.
+ * Weiterleitung zur Projektliste ({@link ProjectListActivity}) nach erfolgreicher Registrierung</p>
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
+
 public class RegisterActivity extends BaseActivity {
 
     EditText registerMailEditText;
@@ -49,6 +60,7 @@ public class RegisterActivity extends BaseActivity {
         registerButton = findViewById(R.id.loginButton);
         toolbar = findViewById(R.id.toolbar);
 
+        //Ereignisverknüfung des Registrierungsbuttons
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +69,7 @@ public class RegisterActivity extends BaseActivity {
                 String password = registerPasswordEditText.getText().toString().trim();
                 String name = nameEditText.getText().toString().trim();
 
+                //Formularüberprüfung und anschließende Registrierung über Firebase
                 if (validateForm(name, mail, password)) {
                     showDialog("Bitte warten...");
                     register(mail, password, name);
@@ -64,9 +77,14 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
+        //ActionBar initialisieren
         setupActionBar();
     }
 
+    /*
+    Registrierung mit Email-Adresse und Passwort
+    TODO: Text aus der Exception abgreifen und User anzeigen welcher Fehler bei der Registrierung aufgetreten ist
+     */
     private void register(String mail, String password, String name) {
         mAuth.createUserWithEmailAndPassword(mail, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -93,6 +111,9 @@ public class RegisterActivity extends BaseActivity {
                 });
     }
 
+    /*
+    Bei erfolgreicher Registrierung dies anzeigen, Ladedialog ausblenden und zur Projektliste weiterleiten
+     */
     public OnSuccessListener<? super Void> userRegistered() {
         Toast.makeText(this, "Du hast dich erfolgreich registriert", Toast.LENGTH_SHORT).show();
         hideDialog();
@@ -101,6 +122,11 @@ public class RegisterActivity extends BaseActivity {
         return null;
     }
 
+    /*
+    Formular überprüfen und checken, ob alle Felder ausgefüllt sind, sowie die Mindestanforderungen
+    an das Passwort überprüfen
+    TODO: Eingegebene Passwörter vergleichen
+     */
     private Boolean validateForm(String name, String email, String password) {
         if (TextUtils.isEmpty(name)) {
             showErrorSnackBar("Bitte einen Namen eingeben");

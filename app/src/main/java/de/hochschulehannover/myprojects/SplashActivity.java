@@ -17,6 +17,20 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * <h2>Klasse SplashActivity</h2>
+ * Eigener Splash-Screen für die App. Ist im Manifest als Launcher-Activity definiert.
+ * Umsetzung mit Timer (1,5 Sek).
+ * <p>Weitere Implementierung:</p>
+ * <ul>
+ *     <li>Status-Bar wird entsprechend der Android Version korrekt ausgeblendet.</li>
+ *     <li>Es wird überprüft, ob der User bereits eingeloggt ist und zur entsprechenden Activity weitergeleitet</li>
+ * </ul>
+ *
+ *
+ * <b>Autor(en):</b>
+ */
+
 // TODO: Die neue Splash-Screen API benutzen
 public class SplashActivity extends AppCompatActivity {
 

@@ -19,6 +19,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <h2>Activity WelcomeActivity</h2>
+ * <p>Startseite der App. Diese erbt von {@link BaseActivity}.
+ * Von hier kommt der Nutzer zur Registrierung bzw. zum Login.
+ * Auch ein direkter Login/Registrierung über Google ist von hier aus möglich.
+ * Sollte der Nutzer bereits eingeloggt sein wir man direkt zur
+ * Projektliste ({@link ProjectListActivity}) weitergeleitet</p>
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
+
 public class WelcomeActivity extends AppCompatActivity {
 
     Button registerButton;
@@ -26,6 +38,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    /*
+    Check, ob der Nutzer bereits eingeloggt ist direkt beim Start der Activity und
+    Weiterleitung zur Projektliste
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -64,6 +80,9 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Weiterleitung zur Projektliste
+     */
     public void goToProjects() {
         Intent intent = new Intent(this, ProjectListActivity.class);
         intent.putExtra("name", "Benutzername"); //TODO: Name aus Firebase holen
