@@ -29,6 +29,13 @@ public final class User implements Parcelable {
         this.email = email;
     }
 
+    public User(String id, String  name, String email, String image) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.image = image;
+    }
+
     public User() {
         Log.i("User", "Im Default-Konstruktor");
     }

@@ -39,6 +39,7 @@ import de.hochschulehannover.myprojects.model.User;
  * Bereits registrierte Nutzer können sich hier einloggen.
  * Weiterleitung zur Projektliste ({@link ProjectListActivity}) nach erfolgreichem Login</p>
  * TODO: Klassenname umbenennen. Passt nicht mehr so wirklich.
+ * TODO: Google Login in eigene Klasse
  *<p>
  * <b>Autor(en):</b>
  * </p>
@@ -107,10 +108,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        Log.i("WEBCLIENTID", String.valueOf(R.string.default_web_client_id));
         // GoogleSignIn-Optionen definieren, um die UserID, Email-Adresse etc. von Google zu erhalten.
         // DEFAULT_SIGN_IN beinhaltet bereits die UserID, email wird extra abgefragt.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         //GoogleSignInClient mit zuvor angegebenen Optionen initialisieren.
@@ -207,7 +211,6 @@ public class MainActivity extends BaseActivity {
 
     /*
     Bei erfolgreichem Login mit Google zur Projektliste weiterleiten
-    TODO: Neue Implementierung mit Firestore Daten und User-Klasse umsetzen
      */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -218,10 +221,29 @@ public class MainActivity extends BaseActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
                             Toast.makeText(MainActivity.this, "Login mit Google erfolgreich!",
                                     Toast.LENGTH_SHORT).show();
-                            goToProjects();
+                            //goToProjects();
+                            Log.i("Google Uid:", firebaseUser.getUid());
+                            Log.i("Google Email:", firebaseUser.getEmail());
+                            Log.i("Google Name:", firebaseUser.getDisplayName());
+                            Log.i("Google Photo", String.valueOf(firebaseUser.getPhotoUrl()));
+                            String userUid =  firebaseUser.getUid();
+                            String userMail =  firebaseUser.getEmail();
+                            String userName =  firebaseUser.getDisplayName();
+                            String userPhoto =  String.valueOf(firebaseUser.getPhotoUrl());
+
+
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                //User user = new User(firebaseUser.getUid(), userName, userMail);
+                                //new FirestoreClass().registerUser(MainActivity.this, user);
+                                Log.i(TAG, "Neuer Account erstellt");
+                            } else {
+                                Log.i(TAG, "Bereits existierender User");
+                                new FirestoreClass().loginUser(MainActivity.this);
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

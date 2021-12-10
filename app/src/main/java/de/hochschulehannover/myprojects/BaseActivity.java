@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +60,12 @@ public class BaseActivity extends AppCompatActivity {
     Ladedialog wieder ausblenden
      */
     public void hideDialog() {
-        progressDialog.dismiss();
+        try {
+            progressDialog.dismiss();
+        } catch (NullPointerException npe) {
+            Log.i("BaseActivity", "Kein Ladedialog vorhanden\n" + npe);
+        }
+
     }
 
     /*
@@ -92,6 +98,15 @@ public class BaseActivity extends AppCompatActivity {
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(ContextCompat
                 .getColor(BaseActivity.this, R.color.snackbar_error_color));
+        snackbar.show();
+    }
+
+    protected void showInfoSnackBar(String message) {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+        //.setAction("Action", null).show();
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat
+                .getColor(BaseActivity.this, R.color.snackbar_info_color));
         snackbar.show();
     }
 }

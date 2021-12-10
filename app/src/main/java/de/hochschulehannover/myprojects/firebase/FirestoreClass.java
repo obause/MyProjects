@@ -60,6 +60,8 @@ public class FirestoreClass {
                                     ((ProjectListActivity) activity).updateUserDetails(loggedInUser);
                                 } else if (activity instanceof ProfileActivity){
                                     ((ProfileActivity) activity).setUserDetails(loggedInUser);
+                                } else if (activity instanceof RegisterActivity) {
+                                    ((RegisterActivity) activity).signInSuccess(loggedInUser);
                                 }
                             } else {
                                 Log.d(TAG, "No such document");
