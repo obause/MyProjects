@@ -39,4 +39,9 @@
     <string name="nav_logout">Ausloggen</string>
     <!-- Profilseite -->
     <string name="update">Aktualisieren</string>
+    <!-- Projekt erstellen seite -->
+    <string name="project_name">Projektname</string>
+    <string name="project_status">Projektstatus</string>
+    <string name="create_project_title">Projekt erstellen</string>
+    <string name="create">ERSTELLEN</string>
 </resources>

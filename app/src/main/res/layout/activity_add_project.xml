@@ -38,13 +38,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:padding="16dp">
+
 
                 <Button
                     android:id="@+id/pickColorButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="+"
+                    app:cornerRadius="250dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Farbe auswählen"
+                    android:textSize="20sp"
+                    android:textColor="@color/primary_text_color"
+                    android:textAlignment="center" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/project_name"
+                        android:inputType="text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:hint="@string/project_status">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/projectNameEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Farbe auswählen" />
+                    android:hint="Tag setzen"
+                    android:inputType="text"
+                    android:textSize="18sp"
+                    android:layout_gravity="start"/>
+
 
             </LinearLayout>
 
@@ -67,7 +116,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/projectNameEditText"
+        android:id="@+id/projectNameEditText_old"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

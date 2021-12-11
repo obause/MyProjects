@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-import dev.sasikanth.colorsheet.ColorSheet;
+import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddProject extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class AddProject extends AppCompatActivity {
     TextView endDateEditText;
     DatePickerDialog picker;
 
-    Button pickColor;
+    Button pickColorButton;
 
     public void addProject(View view) {
         DBHelper dbHelper = new DBHelper(this);
@@ -65,12 +65,29 @@ public class AddProject extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
 
-        pickColor = findViewById(R.id.pickColorButton);
+        pickColorButton = findViewById(R.id.pickColorButton);
 
-        pickColor.setOnClickListener(new View.OnClickListener() {
+        pickColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //new ColorSheet().colorPicker().show();
+                ColorPicker colorPicker = new ColorPicker(AddProject.this);
+                colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                    @Override
+                    public void onChooseColor(int position,int color) {
+                        pickColorButton.setBackgroundColor(color);
+                        //view.background.colorFilter = BlendModeColorFilter(Color.parseColor("#343434"), BlendMode.SRC_ATOP)
+                        //GradientDrawable bgShape = (GradientDrawable)pickColorButton.getBackground();
+                        //bgShape.setColor(color);
+                    }
+
+                    @Override
+                    public void onCancel(){
+                        // put code
+                    }
+                })
+                        .setTitle("Wähle eine Farbe für dein Projekt")
+                        .setRoundColorButton(true)
+                        .show();
 
             }
         });
