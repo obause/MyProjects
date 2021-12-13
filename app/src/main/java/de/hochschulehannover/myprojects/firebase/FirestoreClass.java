@@ -20,11 +20,13 @@ import com.google.protobuf.Any;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hochschulehannover.myprojects.AddProject;
 import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.MainActivity;
 import de.hochschulehannover.myprojects.ProfileActivity;
 import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
+import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.var.Constants;
 
@@ -43,6 +45,26 @@ public class FirestoreClass {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("FirestoreClass", e.toString());
+                    }
+                });
+    }
+
+    public void createProject(AddProject activity, Project project) {
+        db.collection(Constants.PROJECTS_TABLE).document().set(project, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i("CreateProject", "Projekt erstellt");
+                        activity.showInfoSnackBar("Projekt erfolgreich erstellt");
+                        activity.projectCreatedSuccessfully();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e("CreateProject", "Fehler beim erstellen", e);
+                        activity.showErrorSnackBar("Fehler beim Erstellen des Projekts");
                     }
                 });
     }

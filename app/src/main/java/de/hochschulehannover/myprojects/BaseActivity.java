@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * <h2>Oberklasse BaseActivity</h2>
@@ -40,9 +41,15 @@ public class BaseActivity extends AppCompatActivity {
     private Boolean doubleBackExit = false;
     private Dialog progressDialog;
 
+    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public String getUserId() {
+        return mAuth.getCurrentUser().getUid();
     }
 
     /*

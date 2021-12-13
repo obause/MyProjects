@@ -44,4 +44,9 @@
     <string name="project_status">Projektstatus</string>
     <string name="create_project_title">Projekt erstellen</string>
     <string name="create">ERSTELLEN</string>
+    <string name="project_start">Projektstart</string>
+    <string name="project_end">Projektende</string>
+    <string name="create_project_button">Projekt hinzufügen</string>
+    <!-- Projektübersicht -->
+    <string name="no_projects">Du hast bisher keine Projekte angelegt. Füge dein erstes Projekt hinzu!</string>
 </resources>

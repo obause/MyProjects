@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,6 +33,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.User;
+import de.hochschulehannover.myprojects.var.Constants;
 
 public class ProjectListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,6 +42,9 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     private NavigationView navigationView;
 
     public static final int PROFILE_REQUEST_CODE = 1;
+
+    private FloatingActionButton createProjectFab;
+    private String userName;
 
     ListView projectListView;
 
@@ -66,17 +71,23 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_list);
 
-
-        //final LayoutInflater inflater = getLayoutInflater();
-        //final View toolbar = inflater.inflate(R.layout.app_bar_main, null);
-        //toolbarProjectList = toolbar.findViewById(R.id.projectListToolbar);
-
         toolbarProjectList = findViewById(R.id.projectListToolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         projectListView = findViewById(R.id.projectListView);
 
         setupActionBar();
+
+        createProjectFab = findViewById(R.id.createProjectFab);
+        createProjectFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProjectListActivity.this, AddProject.class);
+                intent.putExtra(Constants.NAME, userName);
+                startActivity(intent);
+            }
+        });
+
         navigationView.setNavigationItemSelectedListener(this);
 
         new FirestoreClass().loadUserData(this);
@@ -104,6 +115,9 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     }
 
     public void updateUserDetails(User user) {
+
+        userName = user.name;
+
         View headerView = navigationView.getHeaderView(0);
         CircleImageView userImage = findViewById(R.id.userImageView);
 

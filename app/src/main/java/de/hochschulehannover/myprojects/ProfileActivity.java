@@ -41,10 +41,6 @@ public class ProfileActivity extends BaseActivity {
     EditText emailEditText;
     Button updateButton;
 
-    // TODO: In Constants Klasse packen
-    private static int READ_STORAGE_PERMISSION_CODE = 1;
-    private static int PICK_IMAGE_REQUEST_CODE = 2;
-
     private FirebaseStorage storage;
     private Uri selectedImageUri = null;
     private String profileImageURL = "";
@@ -74,11 +70,11 @@ public class ProfileActivity extends BaseActivity {
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(ProfileActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    showImageChooser();
+                    Constants.showImageChooser(ProfileActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(ProfileActivity.this,
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_STORAGE_PERMISSION_CODE);
+                            Constants.READ_STORAGE_PERMISSION_CODE);
                 }
             }
         });
@@ -96,17 +92,6 @@ public class ProfileActivity extends BaseActivity {
         });
     }
 
-    private void showImageChooser() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // TODO: Veraltete Funktion ersetzen
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE);
-    }
-
-    //Dateityp zurückgeben
-    private String getFileExtension(Uri uri) {
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(getContentResolver().getType(uri));
-    }
-
     /*
     Vom Nutzer ausgewähles Bild in Firebase Storage hochladen und URL abrufen
      */
@@ -116,7 +101,7 @@ public class ProfileActivity extends BaseActivity {
             // Create a Cloud Storage reference from the app
             StorageReference storageRef = storage.getReference();
             StorageReference imageRef = storageRef.child("USER_IMAGE" + System.currentTimeMillis() +
-                    "." + getFileExtension(selectedImageUri));
+                    "." + Constants.getFileExtension(this, selectedImageUri));
             //Datei hochladen
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -191,7 +176,7 @@ public class ProfileActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE_REQUEST_CODE && data.getData() != null) {
+        if (resultCode == RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data.getData() != null) {
             selectedImageUri = data.getData();
 
             try {
@@ -211,9 +196,9 @@ public class ProfileActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == READ_STORAGE_PERMISSION_CODE) {
+        if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showImageChooser();
+                Constants.showImageChooser(this);
             } else {
                 showErrorSnackBar("Berechtigungen wurden verweigert");
             }
