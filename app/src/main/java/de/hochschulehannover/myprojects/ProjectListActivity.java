@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,8 +32,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import adapter.ProjectAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.var.Constants;
 
@@ -42,11 +46,17 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     private NavigationView navigationView;
 
     public static final int PROFILE_REQUEST_CODE = 1;
+    public static final int CREATE_PROJECT_REQUEST_CODE = 2;
+
+    private static final String TAG = "ProjectListActivity";
 
     private FloatingActionButton createProjectFab;
     private String userName;
 
+    private RecyclerView projectRecylerView;
+
     ListView projectListView;
+    TextView noProjects;
 
     public static ArrayList<String> projectItems = new ArrayList<>();
     static ArrayAdapter<String> arrayAdapter;
@@ -74,7 +84,9 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         toolbarProjectList = findViewById(R.id.projectListToolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
-        projectListView = findViewById(R.id.projectListView);
+
+        projectRecylerView = findViewById(R.id.projectRecyclerView);
+        noProjects = findViewById(R.id.no_projects);
 
         setupActionBar();
 
@@ -84,14 +96,17 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
             public void onClick(View view) {
                 Intent intent = new Intent(ProjectListActivity.this, AddProject.class);
                 intent.putExtra(Constants.NAME, userName);
-                startActivity(intent);
+                startActivityForResult(intent, CREATE_PROJECT_REQUEST_CODE);
             }
         });
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        new FirestoreClass().loadUserData(this);
+        Log.i(TAG, "Lade Nutzerdaten und Projekte...");
+        new FirestoreClass().loadUserData(this, true);
 
+        /*
+        projectListView = findViewById(R.id.projectListView);
         DBHelper dbHelper = new DBHelper(this);
 
         projectItems.clear();
@@ -111,10 +126,29 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
                 startActivity(intent);
             }
         });
-
+         */
     }
 
-    public void updateUserDetails(User user) {
+    public void projectsToUi (ArrayList<Project> projectList) {
+        hideDialog();
+        if (projectList.size() > 0) {
+            projectRecylerView.setVisibility(View.VISIBLE);
+            noProjects.setVisibility(View.GONE);
+
+            projectRecylerView.setLayoutManager(new LinearLayoutManager(this));
+            projectRecylerView.setHasFixedSize(true);
+
+            ProjectAdapter adapter = new ProjectAdapter(this, projectList);
+            projectRecylerView.setAdapter(adapter);
+            Log.i(TAG, "Projekte erfolgreich geladen und zum UI hinzugefügt.");
+        } else {
+            projectRecylerView.setVisibility(View.GONE);
+            noProjects.setVisibility(View.VISIBLE);
+            Log.i(TAG, "Keine Projekte vorhanden");
+        }
+    }
+
+    public void updateUserDetails(User user, Boolean readProjectsList) {
 
         userName = user.name;
 
@@ -130,6 +164,13 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
 
         TextView navUsername = findViewById(R.id.usernameTextView);
         navUsername.setText(user.name);
+
+        // Wenn die Projektliste neu von Firestore geladen werden soll
+        if (readProjectsList) {
+            showDialog("Lade Projekte...");
+            Log.i(TAG, "Lade Projekte von Firestore...");
+            new FirestoreClass().getProjectList(this);
+        }
     }
 
     @Override
@@ -170,9 +211,11 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //Abfragen, ob der Upload erfolgreich war
+        //Abfragen, ob Profilupdate bzw. Projekterstellung erfolgreich war
         if (resultCode == RESULT_OK && requestCode == PROFILE_REQUEST_CODE) {
             new FirestoreClass().loadUserData(this);
+        } else if (resultCode == RESULT_OK && requestCode == CREATE_PROJECT_REQUEST_CODE) {
+            new FirestoreClass().getProjectList(this);
         } else {
             Log.e("ProjectListActivity","Profiländerung abgebrochen");
         }

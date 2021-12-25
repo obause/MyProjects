@@ -8,9 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Textfarben definieren -->
+    <!-- App Farben -->
+    <color name="primary_app_color"> #0c90f1</color>
+    <!-- Textfarben -->
     <color name="primary_text_color">#363A43</color>
     <color name="secondary_text_color">#363A43</color>
+    <!-- Snackbar Farben -->
     <color name="snackbar_error_color">#F72400</color>
     <color name="snackbar_info_color">#00E676</color>
+    <!-- Weitere Farben -->
+    <color name="divider_color">#EAEAEA</color>
 </resources>

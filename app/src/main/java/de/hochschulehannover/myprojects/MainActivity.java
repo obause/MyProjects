@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
         // Check, ob der Nutzer bereits eingeloggt ist
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            goToProjects();
+            new FirestoreClass().loadUserData(MainActivity.this);
         }
     }
 
@@ -97,6 +97,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // Ereignisverknüpfung des Registrieren-Buttons. Weiterleitung zur RegiterActivity
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +106,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // String default_web_client_id wird nicht erkannt, ist aber zur Laufzeit verfügbar
         Log.i("WEBCLIENTID", String.valueOf(R.string.default_web_client_id));
         // GoogleSignIn-Optionen definieren, um die UserID, Email-Adresse etc. von Google zu erhalten.
         // DEFAULT_SIGN_IN beinhaltet bereits die UserID, email wird extra abgefragt.
@@ -249,12 +251,6 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 });
-    }
-
-    public void goToProjects() {
-        Intent intent = new Intent(MainActivity.this, ProjectListActivity.class);
-        intent.putExtra("Name", mailEditText.getText());
-        startActivity(intent);
     }
 
     // Custom ActionBar initialisieren

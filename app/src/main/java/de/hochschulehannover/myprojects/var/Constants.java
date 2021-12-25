@@ -21,6 +21,8 @@ public class Constants {
     public static final String IMAGE = "image";
     public static final String NAME = "name";
 
+    public static final String ASSIGNED_TO = "assignedUsers";
+
     // TODO: In Constants Klasse packen
     public static int READ_STORAGE_PERMISSION_CODE = 1;
     public static int PICK_IMAGE_REQUEST_CODE = 2;

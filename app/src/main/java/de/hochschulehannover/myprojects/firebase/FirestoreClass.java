@@ -14,9 +14,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.protobuf.Any;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,7 +72,47 @@ public class FirestoreClass {
                 });
     }
 
+    public void getProjectList(ProjectListActivity activity) {
+        db.collection(Constants.PROJECTS_TABLE)
+                .whereArrayContains(Constants.ASSIGNED_TO, getUserId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.i(TAG, queryDocumentSnapshots.toString());
+
+                        ArrayList<Project> projectsList = new ArrayList<>();
+
+                        Log.i(TAG, "Anzahl Projekte:" + queryDocumentSnapshots.size());
+
+                        for (QueryDocumentSnapshot i:
+                             queryDocumentSnapshots) {
+                            Project project = i.toObject(Project.class);
+                            project.documentId = i.getId();
+
+                            Log.i(TAG, project.name + " geladen");
+
+                            projectsList.add(project);
+                        }
+                        Log.i(TAG, "Projekte erfolgreich geladen. Aktualisiere UI...");
+                        activity.projectsToUi(projectsList);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e(TAG, "Fehler beim Laden der Projekte:", e);
+                        activity.showErrorSnackBar("Fehler beim Laden der Projekte!");
+                    }
+                });
+    }
+
     public void loadUserData(BaseActivity activity) {
+        loadUserData(activity, false);
+    }
+
+    public void loadUserData(BaseActivity activity, Boolean readProjectsList) {
         db.collection("users").document(getUserId()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -77,12 +120,14 @@ public class FirestoreClass {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
+                                Log.i(TAG, "Nutzerdaten geladen");
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 User loggedInUser = document.toObject(User.class);
                                 if (activity instanceof MainActivity) {
                                     ((MainActivity) activity).signInSuccess(loggedInUser);
                                 } else if (activity instanceof ProjectListActivity){
-                                    ((ProjectListActivity) activity).updateUserDetails(loggedInUser);
+                                    Log.i(TAG, "Aktualisiere Nutzerdaten in UI...");
+                                    ((ProjectListActivity) activity).updateUserDetails(loggedInUser, readProjectsList);
                                 } else if (activity instanceof ProfileActivity){
                                     ((ProfileActivity) activity).setUserDetails(loggedInUser);
                                 } else if (activity instanceof RegisterActivity) {

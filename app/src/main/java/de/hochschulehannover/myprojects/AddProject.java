@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +50,7 @@ public class AddProject extends BaseActivity {
     Button addProjectButton;
 
     private String userName;
-    private String projectColor = String.valueOf(Color.WHITE);
+    private Integer projectColor = R.color.primary_app_color;
 
 
     /* Alte Methode
@@ -81,7 +82,7 @@ public class AddProject extends BaseActivity {
 
         Log.i("ProjectDetails", projectName + projectStatus);
 
-        Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate);
+        Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate, projectStatus);
         new FirestoreClass().createProject(this, project);
     }
 
@@ -117,18 +118,18 @@ public class AddProject extends BaseActivity {
                         //view.background.colorFilter = BlendModeColorFilter(Color.parseColor("#343434"), BlendMode.SRC_ATOP)
                         //GradientDrawable bgShape = (GradientDrawable)pickColorButton.getBackground();
                         //bgShape.setColor(color);
-                        projectColor = String.valueOf(color);
+                        Log.i("ColorPicker", String.valueOf(color));
+                        projectColor = color;
                     }
 
                     @Override
                     public void onCancel(){
-
+                        Toast.makeText(AddProject.this, "Farbauswahl abgebrochen", Toast.LENGTH_SHORT).show();
                     }
                 })
                         .setTitle("Wähle eine Farbe für dein Projekt")
                         .setRoundColorButton(true)
                         .show();
-
             }
         });
 
@@ -155,9 +156,8 @@ public class AddProject extends BaseActivity {
             }
         });
 
-        /*startDateEditText = findViewById(R.id.startDateEditText);
-        startDateEditText.setInputType(InputType.TYPE_NULL);
-        startDateEditText.setOnClickListener(new View.OnClickListener() {
+        projectStartEditText.setInputType(InputType.TYPE_NULL);
+        projectStartEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar cldr = Calendar.getInstance();
@@ -176,9 +176,8 @@ public class AddProject extends BaseActivity {
             }
         });
 
-        endDateEditText = findViewById(R.id.endDateEditText);
-        endDateEditText.setInputType(InputType.TYPE_NULL);
-        endDateEditText.setOnClickListener(new View.OnClickListener() {
+        projectEndEditText.setInputType(InputType.TYPE_NULL);
+        projectEndEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar cldr = Calendar.getInstance();
@@ -196,7 +195,6 @@ public class AddProject extends BaseActivity {
                 picker.show();
             }
         });
-         */
 
         //statusSpinner = (Spinner) findViewById(R.id.statusSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -215,6 +213,7 @@ public class AddProject extends BaseActivity {
 
     public void projectCreatedSuccessfully() {
         hideDialog();
+        setResult(RESULT_OK);
         finish();
     }
 
