@@ -1,4 +1,4 @@
-package de.hochschulehannover.myprojects.ui.main;
+package de.hochschulehannover.myprojects.adapter;
 
 import android.content.Context;
 
@@ -16,7 +16,7 @@ import de.hochschulehannover.myprojects.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class TaskPagerAdapter extends FragmentPagerAdapter {
 
     private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private final ArrayList<String> fragmentTitle = new ArrayList<>();
@@ -25,7 +25,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    public TaskPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }

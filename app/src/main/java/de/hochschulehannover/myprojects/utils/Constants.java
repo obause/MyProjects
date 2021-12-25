@@ -1,9 +1,8 @@
-package de.hochschulehannover.myprojects.var;
+package de.hochschulehannover.myprojects.utils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
 

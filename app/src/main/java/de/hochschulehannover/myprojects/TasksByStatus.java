@@ -6,13 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,10 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import de.hochschulehannover.myprojects.ui.main.SectionsPagerAdapter;
+import de.hochschulehannover.myprojects.adapter.TaskPagerAdapter;
 import de.hochschulehannover.myprojects.databinding.ActivityTasksByStatusBinding;
 
-public class TasksByStatus extends AppCompatActivity {
+public class TasksByStatus extends BaseActivity {
 
     private ActivityTasksByStatusBinding binding;
     static Integer projectId;
@@ -35,7 +33,7 @@ public class TasksByStatus extends AppCompatActivity {
         binding = ActivityTasksByStatusBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        TaskPagerAdapter sectionsPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(new BacklogFragment("Backlog"), "Backlog");
         sectionsPagerAdapter.addFragment(new InProgressFragment("In Arbeit"), "In Bearbeitung");
         sectionsPagerAdapter.addFragment(new DoneFragment("Abgeschlossen"), "Abgeschlossen");
@@ -75,7 +73,7 @@ public class TasksByStatus extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db.delete("projects", "id = ?", new String[]{projectId.toString()});
                         db.delete("tasks", "projectId = ?", new String[]{projectId.toString()});
-                        ProjectListActivity.readProjects(dbHelper);
+                        //ProjectListActivity.readProjects(dbHelper);
                         ProjectListActivity.arrayAdapter.notifyDataSetChanged();
                         Toast.makeText(TasksByStatus.this, "Projekt wurde gelöscht!", Toast.LENGTH_SHORT).show();
                         finish();

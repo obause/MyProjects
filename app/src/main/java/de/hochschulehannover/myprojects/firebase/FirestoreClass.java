@@ -1,8 +1,6 @@
 package de.hochschulehannover.myprojects.firebase;
 
-import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,17 +9,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.protobuf.Any;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import de.hochschulehannover.myprojects.AddProject;
 import de.hochschulehannover.myprojects.BaseActivity;
@@ -31,7 +26,7 @@ import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
-import de.hochschulehannover.myprojects.var.Constants;
+import de.hochschulehannover.myprojects.utils.Constants;
 
 public class FirestoreClass {
 

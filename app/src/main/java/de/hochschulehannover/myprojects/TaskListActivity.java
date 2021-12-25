@@ -61,7 +61,7 @@ public class TaskListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db.delete("projects", "id = ?", new String[]{projectId.toString()});
                         db.delete("tasks", "projectId = ?", new String[]{projectId.toString()});
-                        ProjectListActivity.readProjects(dbHelper);
+                        //ProjectListActivity.readProjects(dbHelper);
                         ProjectListActivity.arrayAdapter.notifyDataSetChanged();
                         Toast.makeText(TaskListActivity.this, "Projekt wurde gelöscht!", Toast.LENGTH_SHORT).show();
                         finish();

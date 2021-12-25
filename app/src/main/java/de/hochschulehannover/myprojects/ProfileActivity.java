@@ -12,10 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,7 +29,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.User;
-import de.hochschulehannover.myprojects.var.Constants;
+import de.hochschulehannover.myprojects.utils.Constants;
 
 public class ProfileActivity extends BaseActivity {
 

@@ -3,14 +3,9 @@ package de.hochschulehannover.myprojects;
 //import de.hochschulehannover.myprojects.ProjectListActivity.projectItems;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -29,7 +24,7 @@ import java.util.Calendar;
 
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.Project;
-import de.hochschulehannover.myprojects.var.Constants;
+import de.hochschulehannover.myprojects.utils.Constants;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddProject extends BaseActivity {
@@ -86,7 +81,7 @@ public class AddProject extends BaseActivity {
         new FirestoreClass().createProject(this, project);
     }
 
-    public static void writeProject (DBHelper dbHelper, String name, String status, String projectStartDate, String projectEndDate) {
+    /*public static void writeProject (DBHelper dbHelper, String name, String status, String projectStartDate, String projectEndDate) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("name", name);
@@ -95,7 +90,7 @@ public class AddProject extends BaseActivity {
         values.put("endDate", projectEndDate);
         db.insert("projects", null, values);
         ProjectListActivity.readProjects(dbHelper);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

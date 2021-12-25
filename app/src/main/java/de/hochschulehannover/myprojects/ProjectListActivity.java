@@ -6,15 +6,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,12 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import adapter.ProjectAdapter;
+import de.hochschulehannover.myprojects.adapter.ProjectAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
-import de.hochschulehannover.myprojects.var.Constants;
+import de.hochschulehannover.myprojects.utils.Constants;
 
 public class ProjectListActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,7 +59,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
     static ArrayAdapter<String> arrayAdapter;
     static Map<String, Integer> map = new HashMap<String, Integer>();
 
-    public static void readProjects (DBHelper dbHelper) {
+    /*public static void readProjects (DBHelper dbHelper) {
         projectItems.clear();
         map.clear();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -74,7 +71,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
             projectItems.add(cursor.getString(nameIndex));
             map.put(cursor.getString(nameIndex), cursor.getInt(idIndex));
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,10 +199,10 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
         startActivity(intent);
     }
 
-    public void createProject(View view) {
+    /*public void createProject(View view) {
         Intent intent = new Intent(ProjectListActivity.this, AddProject.class);
         startActivity(intent);
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

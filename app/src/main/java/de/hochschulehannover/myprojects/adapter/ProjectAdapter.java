@@ -1,4 +1,4 @@
-package adapter;
+package de.hochschulehannover.myprojects.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
