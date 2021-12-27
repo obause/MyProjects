@@ -138,6 +138,18 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
             ProjectAdapter adapter = new ProjectAdapter(this, projectList);
             projectRecylerView.setAdapter(adapter);
             Log.i(TAG, "Projekte erfolgreich geladen und zum UI hinzugefügt.");
+
+            /* Implementierung des Interface aus der Adapterklasse, Bei Klick auf Projekt TaskListActivity
+             * starten und documentId des entsprechenden Projekt übergeben
+             */
+            adapter.setOnClickListener(new ProjectAdapter.ItemClickListener() {
+                @Override
+                public void onClick(int position, Project model) {
+                    Intent intent = new Intent(ProjectListActivity.this, TaskListActivity.class);
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId);
+                    startActivity(intent);
+                }
+            });
         } else {
             projectRecylerView.setVisibility(View.GONE);
             noProjects.setVisibility(View.VISIBLE);

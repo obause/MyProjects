@@ -24,6 +24,7 @@ import de.hochschulehannover.myprojects.MainActivity;
 import de.hochschulehannover.myprojects.ProfileActivity;
 import de.hochschulehannover.myprojects.ProjectListActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
+import de.hochschulehannover.myprojects.TaskListActivity;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.utils.Constants;
@@ -99,6 +100,29 @@ public class FirestoreClass {
                         activity.hideDialog();
                         Log.e(TAG, "Fehler beim Laden der Projekte:", e);
                         activity.showErrorSnackBar("Fehler beim Laden der Projekte!");
+                    }
+                });
+    }
+
+    public void getProjectDetails(TaskListActivity activity, String documentId) {
+        db.collection(Constants.PROJECTS_TABLE)
+                .document(documentId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Log.i(TAG, "projectDetails:" + documentSnapshot.toString());
+                        // documentSnapshot der Die Projektinfos beinhaltet in ein Objekt der Klasse Project umwandeln
+                        Project project = documentSnapshot.toObject(Project.class);
+                        activity.getProjectDetails(project);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e(TAG, "Fehler beim Laden des Projekts:\n" + e);
+                        activity.showErrorSnackBar("Fehler beim Laden des Projekts!");
                     }
                 });
     }

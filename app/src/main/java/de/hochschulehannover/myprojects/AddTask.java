@@ -100,8 +100,8 @@ public class AddTask extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         db.delete("tasks", "id = ?", new String[]{taskId.toString()});
-                        TaskListActivity.readTasks(dbHelper);
-                        arrayAdapter.notifyDataSetChanged();
+                        //TaskListActivity.readTasks(dbHelper);
+                        //arrayAdapter.notifyDataSetChanged();
                         finish();
                     }
                 })
