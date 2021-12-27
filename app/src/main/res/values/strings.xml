@@ -22,7 +22,7 @@
     <string name="intro_text">Eine kurze Beschreibung zur App</string>
     <string name="welcome_text">Willkommen bei</string>
     <!-- Registrierung RegisterActivity -->
-    <string name="sign_up_description">Bitte gibt deinen Namen, deine Email-Adresse und dein Passwort ein</string>
+    <string name="sign_up_description">Bitte gib deinen Namen, deine Email-Adresse und dein Passwort ein</string>
     <string name="name">Name</string>
     <string name="password">Passwort</string>
     <string name="repeat_password">Passwort wiederholen</string>
