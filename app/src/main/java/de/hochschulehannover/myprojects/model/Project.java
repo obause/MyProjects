@@ -19,6 +19,7 @@ public class Project implements Parcelable {
     public String endDate = "";
     public String documentId = "";
     public String status = "";
+    public ArrayList<Task> taskList = new ArrayList<>();
 
     public Project() {
         Log.i("Project", "Im Default-Konstruktor");
@@ -50,6 +51,7 @@ public class Project implements Parcelable {
         endDate = in.readString();
         documentId = in.readString();
         status = in.readString();
+        taskList = in.createTypedArrayList(Task.CREATOR);
     }
 
     @Override
@@ -68,6 +70,7 @@ public class Project implements Parcelable {
         dest.writeString(endDate);
         dest.writeString(documentId);
         dest.writeString(status);
+        dest.writeTypedList(taskList);
     }
 
     @Override

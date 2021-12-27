@@ -125,7 +125,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mData.size();
     }
 
-    // allows clicks events to be caught
+    // Click-Events abfangen und neues Objekt vom Interface übergeben
     public void setOnClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
