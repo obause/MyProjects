@@ -17,5 +17,179 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:textSize="24sp" />
+        tools:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/frage1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Wann wurde die App entwickelt?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/antwort1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="2021"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/frage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Existiert eine Begrenzung bei der Anzahl an Projekten?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/antwort2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="144dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="Nein. "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/frage3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Können mehrere Nutzer gleichzeitig an einem Projekt arbeiten?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/antwort3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="Nein. Die Projekte sind fest an die Accounts gebunden. "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/frage4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="288dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Wo werden meine Daten abgespeichert?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/antwort4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="312dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="Sämtliche Daten werden in Firebase abgespeichert."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/frage5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="384dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Wird die App noch weiter entwickelt?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/antwort5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="408dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="Nein. Dies ist ein Studienprojekt und endet Anfang 2022."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/frage6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="464dp"
+        android:layout_marginEnd="34dp"
+        android:background="#4CAF50"
+        android:text="Wird es die App auch für IOS Geräte geben?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/antwort6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="488dp"
+        android:layout_marginEnd="34dp"
+        android:background="#B14E4E"
+        android:text="Nein. Die App wird nur für Andriod Geräte verfügbar sein."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headlineFaqTextView"
+        tools:textSize="15sp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
