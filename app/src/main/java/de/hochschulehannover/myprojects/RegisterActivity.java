@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,8 +45,9 @@ import de.hochschulehannover.myprojects.model.User;
 
 public class RegisterActivity extends BaseActivity {
 
-    EditText registerMailEditText;
-    EditText registerPasswordEditText;
+    EditText mailEditText;
+    EditText passwordEditText;
+    EditText repeatPasswortEditText;
     EditText nameEditText;
     Button registerButton;
     Toolbar toolbar;
@@ -65,8 +67,9 @@ public class RegisterActivity extends BaseActivity {
         // Firebase Instanz initialisieren
         mAuth = FirebaseAuth.getInstance();
 
-        registerMailEditText = findViewById(R.id.mailEditText);
-        registerPasswordEditText = findViewById(R.id.passwordEditText);
+        mailEditText = findViewById(R.id.mailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        repeatPasswortEditText = findViewById(R.id.repeatPasswordEditText);
         nameEditText = findViewById(R.id.nameEditText);
 
         registerButton = findViewById(R.id.loginButton);
@@ -79,12 +82,13 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 // Trim, um versehentliche Leerzeichen vor oder nach der Eingabe zu entfernen
-                String mail = registerMailEditText.getText().toString().trim();
-                String password = registerPasswordEditText.getText().toString().trim();
+                String mail = mailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
                 String name = nameEditText.getText().toString().trim();
+                String repeatPassword = repeatPasswortEditText.getText().toString().trim();
 
                 //Formularüberprüfung und anschließende Registrierung über Firebase
-                if (validateForm(name, mail, password)) {
+                if (validateForm(name, mail, password, repeatPassword)) {
                     showDialog("Bitte warten...");
                     register(mail, password, name);
                 }
@@ -176,7 +180,6 @@ public class RegisterActivity extends BaseActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Bei erfolgreichem Login, Daten aus Firebase holen
-                //TODO: Firestore implementieren und User-Objekt anlegen
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
@@ -188,7 +191,6 @@ public class RegisterActivity extends BaseActivity {
 
     /*
     Bei erfolgreichem Login mit Google zur Projektliste weiterleiten
-    TODO: Neue Implementierung mit Firestore Daten und User-Klasse umsetzen
      */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -246,9 +248,8 @@ public class RegisterActivity extends BaseActivity {
     /*
     Formular überprüfen und checken, ob alle Felder ausgefüllt sind, sowie die Mindestanforderungen
     an das Passwort überprüfen
-    TODO: Eingegebene Passwörter vergleichen
      */
-    private Boolean validateForm(String name, String email, String password) {
+    private Boolean validateForm(String name, String email, String password, String repeatPassword) {
         if (TextUtils.isEmpty(name)) {
             showErrorSnackBar("Bitte einen Namen eingeben");
             return false;
@@ -257,10 +258,19 @@ public class RegisterActivity extends BaseActivity {
             showErrorSnackBar("Bitte eine Email-Adresse eingeben");
             return false;
         }
+        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showErrorSnackBar("Bitte eine korrekte Email-Adresse eingeben");
+            return false;
+        }
         else if (TextUtils.isEmpty(password) || password.length() <= 6) {
             showErrorSnackBar("Bitte ein Passwort mit mindestens 6 Zeichen eingeben");
             return false;
-        } else {
+        }
+        else if (!password.equals(repeatPassword)) {
+            showErrorSnackBar("Die eingegebenen Passwörter stimmen nicht miteinander überein!");
+            return false;
+        }
+        else {
             return true;
         }
     }
