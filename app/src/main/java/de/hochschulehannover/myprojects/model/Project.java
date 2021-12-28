@@ -1,6 +1,5 @@
 package de.hochschulehannover.myprojects.model;
 
-import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -19,7 +18,7 @@ public class Project implements Parcelable {
     public String endDate = "";
     public String documentId = "";
     public String status = "";
-    public ArrayList<Task> taskList = new ArrayList<>();
+    public ArrayList<TaskList> taskList = new ArrayList<>();
 
     public Project() {
         Log.i("Project", "Im Default-Konstruktor");
@@ -51,7 +50,7 @@ public class Project implements Parcelable {
         endDate = in.readString();
         documentId = in.readString();
         status = in.readString();
-        taskList = in.createTypedArrayList(Task.CREATOR);
+        taskList = in.createTypedArrayList(TaskList.CREATOR);
     }
 
     @Override

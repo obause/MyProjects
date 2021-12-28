@@ -24,6 +24,7 @@ import java.util.Calendar;
 
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.Project;
+import de.hochschulehannover.myprojects.model.TaskList;
 import de.hochschulehannover.myprojects.utils.Constants;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
@@ -77,6 +78,7 @@ public class AddProject extends BaseActivity {
 
         Log.i("ProjectDetails", projectName + projectStatus);
 
+        // Projekt in Firestore anlegen
         Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate, projectStatus);
         new FirestoreClass().createProject(this, project);
     }

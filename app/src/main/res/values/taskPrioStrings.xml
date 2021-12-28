@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="task_status_array">
-        <item>Backlog</item>
-        <item>In Arbeit</item>
-        <item>Abgeschlossen</item>
+    <string-array name="task_prio_array">
+        <item>Niedrig</item>
+        <item>Mittel</item>
+        <item>Hoch</item>
     </string-array>
 </resources>

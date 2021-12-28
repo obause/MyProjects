@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hochschulehannover.myprojects.AddProject;
+import de.hochschulehannover.myprojects.AddTask;
 import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.MainActivity;
 import de.hochschulehannover.myprojects.ProfileActivity;
@@ -114,6 +114,7 @@ public class FirestoreClass {
                         Log.i(TAG, "projectDetails:" + documentSnapshot.toString());
                         // documentSnapshot der Die Projektinfos beinhaltet in ein Objekt der Klasse Project umwandeln
                         Project project = documentSnapshot.toObject(Project.class);
+                        project.documentId = documentSnapshot.getId();
                         activity.getProjectDetails(project);
                     }
                 })
@@ -134,8 +135,9 @@ public class FirestoreClass {
     public void loadUserData(BaseActivity activity, Boolean readProjectsList) {
         db.collection("users").document(getUserId()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    // Komplette Package Name des Datentyps Tasks wegen überdeckender Benennung unserer eigenen Klasse
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
@@ -159,6 +161,34 @@ public class FirestoreClass {
                             activity.hideDialog();
                             Log.d(TAG, "get failed with ", task.getException());
                         }
+                    }
+                });
+    }
+
+    public void updateTaskList(BaseActivity activity, Project project) {
+        HashMap<String, Object> taskListHashMap = new HashMap<>();
+        taskListHashMap.put(Constants.TASK_LIST, project.taskList);
+
+        db.collection(Constants.PROJECTS_TABLE)
+                .document(project.documentId)
+                .update(taskListHashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i(TAG, "Aufgabenliste aktualisiert");
+
+                        if (activity instanceof TaskListActivity) {
+                            ((TaskListActivity) activity).updateStatusListSuccess();
+                        } else if (activity instanceof AddTask) {
+                            Log.i(TAG, "Aktualisiere Nutzerdaten in UI...");
+                            ((AddTask) activity).updateStatusListSuccess();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Fehler beim Aktualisieren der Aufgabenliste:\n" + e);
                     }
                 });
     }

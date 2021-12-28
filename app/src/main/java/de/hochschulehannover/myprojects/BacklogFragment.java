@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +25,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hochschulehannover.myprojects.adapter.TaskListAdapter;
+import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.model.Project;
+import de.hochschulehannover.myprojects.utils.Constants;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TaskListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class BacklogFragment extends Fragment {
+
+    public RecyclerView taskRecyclerView;
+    private String projectDocumentId;
+    private Project projectDetails;
+
 
     ListView taskListView;
 
@@ -86,13 +98,16 @@ public class BacklogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false);
+        return inflater.inflate(R.layout.fragment_task_list_content, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        TextView projectIDTextView = (TextView) getView().findViewById(R.id.projectIDTextView);
+        //TextView projectIDTextView = (TextView) getView().findViewById(R.id.projectIDTextView);
 
+        taskRecyclerView = getView().findViewById(R.id.taskListRecyclerView);
+
+        /*
         Bundle extras = getActivity().getIntent().getExtras();
         projectId = extras.getInt("projectID");
         projectIDTextView.setText("Projektnr.: " + projectId.toString());
@@ -115,6 +130,16 @@ public class BacklogFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+         */
+    }
+
+    public void setupRecycler(Project project) {
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        taskRecyclerView.setHasFixedSize(true);
+
+        TaskListAdapter adapter = new TaskListAdapter(getActivity(), project.taskList);
+        taskRecyclerView.setAdapter(adapter);
     }
 
     public void readTasks (DBHelper dbHelper) {

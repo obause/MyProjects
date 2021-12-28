@@ -45,7 +45,9 @@
             android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".AddTask"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".TaskListActivity"
             android:exported="true"

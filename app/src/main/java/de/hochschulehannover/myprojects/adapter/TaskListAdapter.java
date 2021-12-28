@@ -5,28 +5,28 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.R;
 import de.hochschulehannover.myprojects.model.Project;
-import de.hochschulehannover.myprojects.model.Task;
+import de.hochschulehannover.myprojects.model.TaskList;
 
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
     private Context context;
-    private ArrayList<Task> mData;
+    private ArrayList<TaskList> mData;
     private ProjectAdapter.ItemClickListener mClickListener;
 
-    public TaskListAdapter(Context context, ArrayList<Task> list) {
+    public TaskListAdapter(Context context, ArrayList<TaskList> list) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = list;
@@ -36,7 +36,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(
-                R.layout.task_list_item_fragment,
+                R.layout.fragment_task_list_item,
                 parent,
                 false
         );
@@ -46,7 +46,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Task model = mData.get(position);
+        TaskList model = mData.get(position);
 
         ShapeableImageView doneIcon = holder.itemView.findViewById(R.id.done_icon);
         TextView taskTitleTextView = holder.itemView.findViewById(R.id.taskTitleTextView);
@@ -55,12 +55,34 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ShapeableImageView editIcon = holder.itemView.findViewById(R.id.edit_icon);
 
         taskTitleTextView.setText(model.name);
-        taskStatusTextView.setText(model.status);
+        //taskStatusTextView.setText(model.status);
         taskByTextView.setText(model.createdBy);
 
-        if (model.status != "Abgeschlossen") {
+        /*if (model.status != "Abgeschlossen") {
             doneIcon.setColorFilter(Color.argb(100,61,87,117));
-        }
+        }*/
+
+        MaterialCardView taskListItem = holder.itemView.findViewById(R.id.taskListItem);
+        taskListItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Aufgabe öffnen
+            }
+        });
+
+        doneIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Aufgabe als abgeschlossen setzen
+            }
+        });
+
+        editIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: Aufgabe bearbeiten
+            }
+        });
     }
 
     @Override

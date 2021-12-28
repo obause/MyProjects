@@ -15,8 +15,7 @@
     <string name="tab_text_1">Backlog</string>
     <string name="tab_text_2">In Bearbeitung</string>
     <string name="tab_text_3">Abgeschlossen</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Leeres fragment</string>
 
     <!-- Willkommensbildschirm WelcomeActivity -->
     <string name="sign_in">Einloggen</string>
@@ -51,4 +50,11 @@
     <string name="create_project_button">Projekt hinzufügen</string>
     <!-- Projektübersicht -->
     <string name="no_projects">Du hast bisher keine Projekte angelegt. Füge dein erstes Projekt hinzu!</string>
+    <!-- Aufgabe erstellen Activity -->
+    <string name="task_name">Aufgabenname</string>
+    <string name="task_priority">Priorität</string>
+    <string name="task_status">Status</string>
+    <string name="task_description">Aufgabenbeschreibung</string>
+    <string name="create_task">Aufgabe erstellen</string>
+    <string name="delete_task">Aufgabe löschen</string>
 </resources>

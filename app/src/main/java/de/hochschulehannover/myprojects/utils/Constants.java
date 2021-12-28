@@ -10,18 +10,17 @@ import java.text.SimpleDateFormat;
 
 public class Constants {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
-    public static final SimpleDateFormat CLOCK_FORMAT = new SimpleDateFormat("HH:mm");
-    public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("yyyy/MM/dd  HH:mm");
-
+    // Tabellennamen in Firebase
     public static final String USERS_TABLE = "users";
     public static final String PROJECTS_TABLE = "projects";
+
+    //Key für Firebase für Liste der Tasks eines Projektes
+    public static final String TASK_LIST = "taskList";
 
     public static final String IMAGE = "image";
     public static final String NAME = "name";
 
     public static final String ASSIGNED_TO = "assignedUsers";
-
     public static final String DOCUMENT_ID = "documentId";
 
     // TODO: In Constants Klasse packen
