@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.hochschulehannover.myprojects">
+    package="de.hochschulehannover.myprojects" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,17 +12,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyProjects">
+        android:theme="@style/Theme.MyProjects" >
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyProjects.NoActionBar"/>
+            android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyProjects.NoActionBar">
+            android:theme="@style/Theme.MyProjects.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,14 +35,14 @@
         <activity
             android:name=".TasksByStatus"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_tasks_by_status"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".WelcomeActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyProjects.NoActionBar"></activity>
+            android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".AddTask"
             android:exported="false" />
@@ -52,7 +55,7 @@
             android:name=".AddProject"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyProjects.NoActionBar"/>
+            android:theme="@style/Theme.MyProjects.NoActionBar" />
         <activity
             android:name=".FaqActivity"
             android:exported="false" />
