@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import de.hochschulehannover.myprojects.adapter.TaskPagerAdapter;
 import de.hochschulehannover.myprojects.databinding.ActivityTasksByStatusBinding;
+import de.hochschulehannover.myprojects.helper.DBHelper;
 
 public class TasksByStatus extends BaseActivity {
 

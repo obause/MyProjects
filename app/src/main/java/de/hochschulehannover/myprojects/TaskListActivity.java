@@ -38,6 +38,8 @@ public class TaskListActivity extends BaseActivity {
     private RecyclerView taskRecyclerView;
 
     private TaskListContentFragment backlogFragment;
+    private TaskListContentFragment inProgressFragment;
+    private TaskListContentFragment doneFragment;
 
     private String projectDocumentId;
     private Project projectDetails;
@@ -56,21 +58,20 @@ public class TaskListActivity extends BaseActivity {
         binding = ActivityTaskListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        backlogFragment = new TaskListContentFragment("Backlog");
+        backlogFragment = new TaskListContentFragment(Constants.BACKLOG);
+        inProgressFragment = new TaskListContentFragment(Constants.PROGRESS);
+        doneFragment = new TaskListContentFragment(Constants.DONE);
 
         TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
         //taskPagerAdapter.addFragment(new BacklogFragment("Backlog"), "Backlog");
         taskPagerAdapter.addFragment(backlogFragment, "Backlog");
-        taskPagerAdapter.addFragment(new InProgressFragment("In Arbeit"), "In Bearbeitung");
-        taskPagerAdapter.addFragment(new DoneFragment("Abgeschlossen"), "Abgeschlossen");
+        taskPagerAdapter.addFragment(inProgressFragment, "In Bearbeitung");
+        taskPagerAdapter.addFragment(doneFragment, "Abgeschlossen");
 
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(taskPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-
-        Bundle extras = getIntent().getExtras();
-        Integer projectId = extras.getInt("projectID");
 
         FloatingActionButton fab = binding.fab;
 
@@ -113,6 +114,8 @@ public class TaskListActivity extends BaseActivity {
         List<Fragment> allFragments = getSupportFragmentManager().getFragments();
         Log.i("Fragments:", allFragments.toString());
         backlogFragment.setupRecycler(project);
+
+        //TODO: Fragments mit Aufgaben befüllen
 
         /*taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setHasFixedSize(true);

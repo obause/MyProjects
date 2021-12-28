@@ -1,4 +1,4 @@
-package de.hochschulehannover.myprojects;
+package de.hochschulehannover.myprojects.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

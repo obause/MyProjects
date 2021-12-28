@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.Project;
@@ -78,8 +79,21 @@ public class AddProject extends BaseActivity {
 
         Log.i("ProjectDetails", projectName + projectStatus);
 
-        // Projekt in Firestore anlegen
         Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate, projectStatus);
+
+        // Standard-Aufgabenlisten erstellen TODO: Listennamen in Contants packen
+        TaskList backlog = new TaskList("backlog", new FirestoreClass().getUserId());
+        TaskList inProgress = new TaskList("in_progress", new FirestoreClass().getUserId());
+        TaskList done = new TaskList("done", new FirestoreClass().getUserId());
+        //projectDetails.taskList.add(0, taskList);
+        //new FirestoreClass().updateTaskList(this, projectDetails);
+        //HashMap<String, Object> taskListHashMap = new HashMap<>();
+        //taskListHashMap.put(Constants.TASK_LIST, project.taskList);
+        project.taskList.add(backlog);
+        project.taskList.add(inProgress);
+        project.taskList.add(done);
+
+        // Projekt in Firestore anlegen
         new FirestoreClass().createProject(this, project);
     }
 

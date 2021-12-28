@@ -2,6 +2,7 @@ package de.hochschulehannover.myprojects.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,10 @@ public class Task implements Parcelable {
     public String status = "";
     public String priotity = "";
     public String description = "";
+
+    public Task() {
+        Log.i("Task", "Im Default-Konstruktor");
+    }
 
     public Task(String name, String createdBy, ArrayList<String> assignedTo, String status,
                 String priotity, String description) {

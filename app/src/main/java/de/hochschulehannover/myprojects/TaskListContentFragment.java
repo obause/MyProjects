@@ -29,7 +29,7 @@ public class TaskListContentFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String status;
     private String mParam2;
 
     public TaskListContentFragment() {
@@ -38,7 +38,7 @@ public class TaskListContentFragment extends Fragment {
 
     public TaskListContentFragment(String status) {
         // Required empty public constructor
-        this.mParam1 = status.toString();
+        this.status = status;
     }
 
     /**
@@ -63,7 +63,7 @@ public class TaskListContentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            status = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -77,8 +77,6 @@ public class TaskListContentFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //TextView projectIDTextView = (TextView) getView().findViewById(R.id.projectIDTextView);
-
         taskRecyclerView = getView().findViewById(R.id.taskListRecyclerView);
     }
 

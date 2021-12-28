@@ -104,7 +104,7 @@ public class FirestoreClass {
                 });
     }
 
-    public void getProjectDetails(TaskListActivity activity, String documentId) {
+    public void getProjectDetails(BaseActivity activity, String documentId) {
         db.collection(Constants.PROJECTS_TABLE)
                 .document(documentId)
                 .get()
@@ -115,7 +115,12 @@ public class FirestoreClass {
                         // documentSnapshot der Die Projektinfos beinhaltet in ein Objekt der Klasse Project umwandeln
                         Project project = documentSnapshot.toObject(Project.class);
                         project.documentId = documentSnapshot.getId();
-                        activity.getProjectDetails(project);
+                        if (activity instanceof TaskListActivity) {
+                            ((TaskListActivity) activity).getProjectDetails(project);
+                        } else if (activity instanceof AddTask) {
+                            Log.i(TAG, "Aktualisiere Nutzerdaten in UI...");
+                            ((AddTask) activity).getProjectDetails(project);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

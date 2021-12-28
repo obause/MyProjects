@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -19,16 +18,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hochschulehannover.myprojects.adapter.TaskListAdapter;
-import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.helper.DBHelper;
 import de.hochschulehannover.myprojects.model.Project;
-import de.hochschulehannover.myprojects.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,11 +31,6 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * create an instance of this fragment.
  */
 public class BacklogFragment extends Fragment {
-
-    public RecyclerView taskRecyclerView;
-    private String projectDocumentId;
-    private Project projectDetails;
-
 
     ListView taskListView;
 
@@ -103,11 +93,8 @@ public class BacklogFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //TextView projectIDTextView = (TextView) getView().findViewById(R.id.projectIDTextView);
+        TextView projectIDTextView = (TextView) getView().findViewById(R.id.projectIDTextView);
 
-        taskRecyclerView = getView().findViewById(R.id.taskListRecyclerView);
-
-        /*
         Bundle extras = getActivity().getIntent().getExtras();
         projectId = extras.getInt("projectID");
         projectIDTextView.setText("Projektnr.: " + projectId.toString());
@@ -130,16 +117,6 @@ public class BacklogFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-         */
-    }
-
-    public void setupRecycler(Project project) {
-        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        taskRecyclerView.setHasFixedSize(true);
-
-        TaskListAdapter adapter = new TaskListAdapter(getActivity(), project.taskList);
-        taskRecyclerView.setAdapter(adapter);
     }
 
     public void readTasks (DBHelper dbHelper) {

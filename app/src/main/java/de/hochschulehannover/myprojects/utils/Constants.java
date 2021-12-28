@@ -23,9 +23,12 @@ public class Constants {
     public static final String ASSIGNED_TO = "assignedUsers";
     public static final String DOCUMENT_ID = "documentId";
 
-    // TODO: In Constants Klasse packen
     public static int READ_STORAGE_PERMISSION_CODE = 1;
     public static int PICK_IMAGE_REQUEST_CODE = 2;
+
+    public static final String BACKLOG = "backlog";
+    public static final String PROGRESS = "in_progress";
+    public static final String DONE = "done";
 
     public static void showImageChooser(Activity activity) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

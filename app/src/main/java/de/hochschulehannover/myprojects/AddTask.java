@@ -1,37 +1,25 @@
 package de.hochschulehannover.myprojects;
 
-import static de.hochschulehannover.myprojects.TaskListActivity.*;
-
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashSet;
 
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.helper.DBHelper;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
@@ -66,9 +54,11 @@ public class AddTask extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        // Aufgaben des aktuellen Projekts holen
         if (getIntent().hasExtra(Constants.DOCUMENT_ID)) {
             projectDocumentId = getIntent().getStringExtra(Constants.DOCUMENT_ID);
         }
+        new FirestoreClass().getProjectDetails(this, projectDocumentId);
 
         toolbar = findViewById(R.id.addProjectToolbar);
         setupActionBar();
@@ -143,7 +133,7 @@ public class AddTask extends BaseActivity {
 
     public void addTaskToList(Integer position, String taskName, String status, String priotity,
                               String description) {
-        projectDetails.taskList.remove(projectDetails.taskList.size() -1);
+        //projectDetails.taskList.remove(projectDetails.taskList.size() -1);
 
         ArrayList<String> taskAssignedUsersList = new ArrayList<>();
         String userId = new FirestoreClass().getUserId();
@@ -170,6 +160,11 @@ public class AddTask extends BaseActivity {
         showDialog("Lade Daten...");
         setResult(RESULT_OK);
         finish();
+    }
+
+    public void getProjectDetails(Project project) {
+        hideDialog();
+        projectDetails = project;
     }
 
     // Custom ActionBar initialisieren

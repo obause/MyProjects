@@ -17,11 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hochschulehannover.myprojects.helper.DBHelper;
 
 /**
  * A simple {@link Fragment} subclass.
