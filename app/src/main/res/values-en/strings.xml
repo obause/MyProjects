@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">MyProjects</string>
+    <string name="language">ENGLISH</string>
+    <string name="hello_world">hello</string>
+    <string name="title_activity_login">loginActivity</string>
+    <string name="prompt_email">email</string>
+    <string name="prompt_password">password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_tasks_by_status">TasksByStatus</string>
+    <string name="tab_text_1">backlog</string>
+    <string name="tab_text_2">in progress</string>
+    <string name="tab_text_3">done</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Willkommensbildschirm WelcomeActivity -->
+    <string name="sign_in">login</string>
+    <string name="sign_up">registering</string>
+    <string name="intro_text">A short description of the APP</string>
+    <string name="welcome_text">Welcome to</string>
+    <!-- Registrierung RegisterActivity -->
+    <string name="sign_up_description">Please enter your name, your email address and your password</string>
+    <string name="name">name</string>
+    <string name="password">passwort</string>
+    <string name="repeat_password">repeat password</string>
+    <string name="email">email-address</string>
+    <!-- Anmeldung MainActivity -->
+    <string name="sign_in_description">Please enter your email address and password</string>
+    <string name="login_register_text">Don t have an account yet?</string>
+    <string name="register_button_text">Join Now</string>
+    <string name="forgot_password">forgot password</string>
+    <!-- Ladedialog -->
+    <string name="please_wait">Please wait...</string>
+    <!-- App Drawer -->
+    <string name="nav_my_profile">My profile</string>
+    <string name="nav_logout">Log out</string>
+    <!-- Profilseite -->
+    <string name="update">update</string>
+    <!-- Projekt erstellen seite -->
+    <string name="project_name">Project name</string>
+    <string name="project_status">Project status</string>
+    <string name="create_project_title">Create project</string>
+    <string name="create">CREATE</string>
+    <string name="project_start">Project start</string>
+    <string name="project_end">Project end</string>
+    <string name="create_project_button">Add project</string>
+    <!-- Projektübersicht -->
+    <string name="no_projects">You have not yet created any projects. Add your first project!</string>
+</resources>
