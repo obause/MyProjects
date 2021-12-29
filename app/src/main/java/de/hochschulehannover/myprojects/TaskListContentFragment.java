@@ -7,12 +7,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.adapter.TaskListAdapter;
 import de.hochschulehannover.myprojects.model.Project;
+import de.hochschulehannover.myprojects.model.Task;
+import de.hochschulehannover.myprojects.model.TaskList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,23 +28,29 @@ import de.hochschulehannover.myprojects.model.Project;
 public class TaskListContentFragment extends Fragment {
 
     public RecyclerView taskRecyclerView;
+    public ArrayList<Task> tasks = new ArrayList<>();
+    public TaskListAdapter adapter;
+
+    TextView testTextView;
+
+    private View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String STATUS_PARAM = "status";
+    private static final String INDEX_PARAM = "index";
 
     // TODO: Rename and change types of parameters
     private String status;
-    private String mParam2;
+    private Integer index;
 
     public TaskListContentFragment() {
         // Required empty public constructor
     }
 
-    public TaskListContentFragment(String status) {
-        // Required empty public constructor
+    public TaskListContentFragment(String status, Integer index) {
         this.status = status;
+        this.index = index;
     }
 
     /**
@@ -53,8 +65,8 @@ public class TaskListContentFragment extends Fragment {
     public static TaskListContentFragment newInstance(String param1, String param2) {
         TaskListContentFragment fragment = new TaskListContentFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(STATUS_PARAM, param1);
+        args.putString(INDEX_PARAM, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,8 +75,8 @@ public class TaskListContentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            status = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            status = getArguments().getString(STATUS_PARAM);
+            index = getArguments().getInt(INDEX_PARAM);
         }
     }
 
@@ -72,19 +84,60 @@ public class TaskListContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list_content, container, false);
+        view = inflater.inflate(R.layout.fragment_task_list_content, container, false);
+
+        Log.i("Fragment", "OnCreateView ausgeführt");
+
+        taskRecyclerView = view.findViewById(R.id.taskListRecyclerView);
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        taskRecyclerView.setHasFixedSize(true);
+
+        testTextView = view.findViewById(R.id.testTextView);
+
+        //TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
+        adapter = new TaskListAdapter(getActivity(), tasks);
+        taskRecyclerView.setAdapter(adapter);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        taskRecyclerView = getView().findViewById(R.id.taskListRecyclerView);
-    }
 
-    public void setupRecycler(Project project) {
+        Log.i("Fragment", "OnViewCreated ausgeführt");
+
+        //taskRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        /*
+        tasks.add(new Task("onViewCreated", "Test", new ArrayList<String>(), "Abgeschlossen",
+                "Hoch", "Beschreibung"));
+
+        taskRecyclerView = getView().findViewById(R.id.taskListRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         taskRecyclerView.setHasFixedSize(true);
 
-        TaskListAdapter adapter = new TaskListAdapter(getActivity(), project.taskList);
+        //TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
+        adapter = new TaskListAdapter(getActivity(), tasks);
         taskRecyclerView.setAdapter(adapter);
+
+        TextView testTextView = view.findViewById(R.id.testTextView);
+        testTextView.setText("Funktioniert mit view.find...");
+
+        TextView testTextView2 = getView().findViewById(R.id.testTextView2);
+        testTextView2.setText("Funktioniert mit getview().find...");
+        */
+    }
+
+    public void setupRecycler(TaskList taskList) {
+        tasks = taskList.tasks;
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        taskRecyclerView.setHasFixedSize(true);
+
+        TaskListAdapter adapter = new TaskListAdapter(getActivity(), taskList.tasks);
+        taskRecyclerView.setAdapter(adapter);
+        //TextView testTextView = view.findViewById(R.id.testTextView);
+        testTextView.setText("Funktioniert...");
+        adapter.notifyDataSetChanged();
     }
 }

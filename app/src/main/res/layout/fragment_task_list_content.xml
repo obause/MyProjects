@@ -8,6 +8,12 @@
     android:padding="10dp"
     tools:context=".TaskListActivity">
 
+        <TextView
+            android:id="@+id/testTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test TextView"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskListRecyclerView"
             android:layout_width="match_parent"

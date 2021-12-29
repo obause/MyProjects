@@ -27,8 +27,11 @@ public class Constants {
     public static int PICK_IMAGE_REQUEST_CODE = 2;
 
     public static final String BACKLOG = "backlog";
+    public static final int BACKLOG_INDEX = 0;
     public static final String PROGRESS = "in_progress";
+    public static final int PROGRESS_INDEX = 1;
     public static final String DONE = "done";
+    public static final int DONE_INDEX = 2;
 
     public static void showImageChooser(Activity activity) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

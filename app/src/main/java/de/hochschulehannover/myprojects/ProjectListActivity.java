@@ -147,6 +147,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
                 public void onClick(int position, Project model) {
                     Intent intent = new Intent(ProjectListActivity.this, TaskListActivity.class);
                     intent.putExtra(Constants.DOCUMENT_ID, model.documentId);
+                    intent.putExtra(Constants.NAME, userName);
                     startActivity(intent);
                 }
             });

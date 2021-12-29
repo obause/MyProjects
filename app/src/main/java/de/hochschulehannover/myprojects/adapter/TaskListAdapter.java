@@ -17,16 +17,17 @@ import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.R;
 import de.hochschulehannover.myprojects.model.Project;
+import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
 
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
     private Context context;
-    private ArrayList<TaskList> mData;
-    private ProjectAdapter.ItemClickListener mClickListener;
+    private ArrayList<Task> mData;
+    private ItemClickListener mClickListener;
 
-    public TaskListAdapter(Context context, ArrayList<TaskList> list) {
+    public TaskListAdapter(Context context, ArrayList<Task> list) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = list;
@@ -46,7 +47,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        TaskList model = mData.get(position);
+        Task model = mData.get(position);
 
         ShapeableImageView doneIcon = holder.itemView.findViewById(R.id.done_icon);
         TextView taskTitleTextView = holder.itemView.findViewById(R.id.taskTitleTextView);
@@ -55,7 +56,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ShapeableImageView editIcon = holder.itemView.findViewById(R.id.edit_icon);
 
         taskTitleTextView.setText(model.name);
-        //taskStatusTextView.setText(model.status);
+        taskStatusTextView.setText(model.status);
         taskByTextView.setText(model.createdBy);
 
         /*if (model.status != "Abgeschlossen") {
@@ -91,7 +92,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     // Click-Events abfangen und neues Objekt vom Interface übergeben
-    public void setOnClickListener(ProjectAdapter.ItemClickListener itemClickListener) {
+    public void setOnClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

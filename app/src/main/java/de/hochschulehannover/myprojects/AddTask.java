@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -35,8 +36,11 @@ public class AddTask extends BaseActivity {
     Button createTaskButton;
     Button deleteTaskButton;
 
+    Integer statusIndex;
+
     Project projectDetails;
     String projectDocumentId;
+    String userName;
 
     //Alt
     Spinner prioSpinner;
@@ -58,6 +62,9 @@ public class AddTask extends BaseActivity {
         if (getIntent().hasExtra(Constants.DOCUMENT_ID)) {
             projectDocumentId = getIntent().getStringExtra(Constants.DOCUMENT_ID);
         }
+        if (getIntent().hasExtra(Constants.NAME)) {
+            userName = getIntent().getStringExtra(Constants.NAME);
+        }
         new FirestoreClass().getProjectDetails(this, projectDocumentId);
 
         toolbar = findViewById(R.id.addProjectToolbar);
@@ -76,8 +83,13 @@ public class AddTask extends BaseActivity {
                 if (taskNameEditText.getText().toString().length() > 0
                         && taskStatusText.getText().toString().length() > 0
                         && taskPrioText.getText().toString().length() > 0) {
-                    addTaskToList(0, "Testaufgabe", "Backlog", "Hoch",
-                            "Beschreibung");
+
+                    String taskName = taskNameEditText.getText().toString();
+                    String taskStatus = taskStatusText.getText().toString();
+                    String taskPrio = taskPrioText.getText().toString();
+                    String taskDescr = taskDescrEditText.getText().toString();
+
+                    addTaskToList(statusIndex, taskName, taskStatus, taskPrio, taskDescr);
                 } else {
                     showErrorSnackBar("Name, Status und Priorität müssen ausgefüllt werden!");
                 }
@@ -91,6 +103,16 @@ public class AddTask extends BaseActivity {
         String[] prioList = getResources().getStringArray(R.array.task_prio_array);
         ArrayAdapter prioAdapter = new ArrayAdapter(this, R.layout.drop_down_item, prioList);
         taskPrioText.setAdapter(prioAdapter);
+
+        /* Position des ausgewählten Elements vom Status holen
+         * Entspricht der Position der Liste in Firestore
+         */
+        taskStatusText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                statusIndex = i;
+            }
+        });
         /*
         taskNameEditText = findViewById(R.id.taskNameEditText);
         deleteButton = findViewById(R.id.deleteButton);
@@ -136,10 +158,9 @@ public class AddTask extends BaseActivity {
         //projectDetails.taskList.remove(projectDetails.taskList.size() -1);
 
         ArrayList<String> taskAssignedUsersList = new ArrayList<>();
-        String userId = new FirestoreClass().getUserId();
-        taskAssignedUsersList.add(userId);
+        taskAssignedUsersList.add(userName);
 
-        Task task = new Task(taskName, userId, taskAssignedUsersList, status, priotity, description);
+        Task task = new Task(taskName, userName, taskAssignedUsersList, status, priotity, description);
         ArrayList<Task> taskList = projectDetails.taskList.get(position).tasks;
         taskList.add(task);
 
@@ -150,7 +171,6 @@ public class AddTask extends BaseActivity {
         projectDetails.taskList.set(position, updatedTaskList);
 
         showDialog("Erstelle Aufgabe...");
-
         new FirestoreClass().updateTaskList(this, projectDetails);
     }
 

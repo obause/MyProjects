@@ -42,9 +42,11 @@ public class TaskListActivity extends BaseActivity {
     private TaskListContentFragment doneFragment;
 
     private String projectDocumentId;
+    private String userName;
     private Project projectDetails;
 
     public static final int CREATE_TASK_REQUEST_CODE = 1;
+    private static final String TAG = "TaskListActivity";
 
     //private ActivityTasksByStatusBinding binding;
     private ActivityTaskListBinding binding;
@@ -58,12 +60,12 @@ public class TaskListActivity extends BaseActivity {
         binding = ActivityTaskListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        backlogFragment = new TaskListContentFragment(Constants.BACKLOG);
-        inProgressFragment = new TaskListContentFragment(Constants.PROGRESS);
-        doneFragment = new TaskListContentFragment(Constants.DONE);
+        backlogFragment = new TaskListContentFragment(Constants.BACKLOG, 0);
+        inProgressFragment = new TaskListContentFragment(Constants.PROGRESS, 1);
+        //doneFragment = new TaskListContentFragment(Constants.DONE, 2);
+        doneFragment = new TaskListContentFragment(Constants.BACKLOG, 0);
 
         TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
-        //taskPagerAdapter.addFragment(new BacklogFragment("Backlog"), "Backlog");
         taskPagerAdapter.addFragment(backlogFragment, "Backlog");
         taskPagerAdapter.addFragment(inProgressFragment, "In Bearbeitung");
         taskPagerAdapter.addFragment(doneFragment, "Abgeschlossen");
@@ -73,10 +75,32 @@ public class TaskListActivity extends BaseActivity {
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
 
+        /*
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+         */
+
         FloatingActionButton fab = binding.fab;
 
         if (getIntent().hasExtra(Constants.DOCUMENT_ID)) {
             projectDocumentId = getIntent().getStringExtra(Constants.DOCUMENT_ID);
+        }
+        if (getIntent().hasExtra(Constants.NAME)) {
+            userName = getIntent().getStringExtra(Constants.NAME);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +108,7 @@ public class TaskListActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(TaskListActivity.this, AddTask.class);
                 intent.putExtra(Constants.DOCUMENT_ID, projectDocumentId);
+                intent.putExtra(Constants.NAME, userName);
                 startActivityForResult(intent, CREATE_TASK_REQUEST_CODE);
             }
         });
@@ -113,9 +138,15 @@ public class TaskListActivity extends BaseActivity {
         //BacklogFragment fragment = fm.findFragmentById(R.id.fr)
         List<Fragment> allFragments = getSupportFragmentManager().getFragments();
         Log.i("Fragments:", allFragments.toString());
-        backlogFragment.setupRecycler(project);
 
-        //TODO: Fragments mit Aufgaben befüllen
+        Log.i(TAG, "TaskList:" + project.taskList.toString());
+
+        backlogFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX));
+        Log.i(TAG, "Recycler für Backlog aufgesetzt");
+        inProgressFragment.setupRecycler(project.taskList.get(Constants.PROGRESS_INDEX));
+        Log.i(TAG, "Recycler für in Progress aufgesetzt");
+        //doneFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX));
+        Log.i(TAG, "Recycler für Done aufgesetzt");
 
         /*taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setHasFixedSize(true);
