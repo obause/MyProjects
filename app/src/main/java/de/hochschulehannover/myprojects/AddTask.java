@@ -40,6 +40,7 @@ public class AddTask extends BaseActivity {
     Button deleteTaskButton;
 
     Integer statusIndex;
+    Integer oldStatusIndex;
 
     Task task;
     Integer taskPosition;
@@ -121,8 +122,11 @@ public class AddTask extends BaseActivity {
         });
 
         if (getIntent().hasExtra("task") && getIntent().hasExtra("taskPosition")) {
+
             task = getIntent().getExtras().getParcelable("task");
             taskPosition = getIntent().getIntExtra("taskPosition", 0);
+            oldStatusIndex = statusIndex;
+
             taskNameEditText.setText(task.name);
             taskStatusText.setText(task.status, false);
             taskPrioText.setText(task.priotity, false);
@@ -132,13 +136,14 @@ public class AddTask extends BaseActivity {
 
             Log.i(TAG, "Task Status:" + task.status);
             if (task.status.equals("Backlog")) {
-                statusIndex = 0;
+                oldStatusIndex = 0;
             } else if (task.status.equals("In Arbeit")) {
-                statusIndex = 1;
+                oldStatusIndex = 1;
             } else if (task.status.equals("Abgeschlossen")) {
-                statusIndex = 2;
+                oldStatusIndex = 2;
             }
             Log.i("Positionen", "statusIndex: " + statusIndex);
+            Log.i("Positionen", "oldStatusIndex: " + oldStatusIndex);
             Log.i("Positionen", "taskPosition: " + taskPosition);
 
             createTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +162,13 @@ public class AddTask extends BaseActivity {
                     } else {
                         showErrorSnackBar("Name, Status und Priorität müssen ausgefüllt werden!");
                     }
+                }
+            });
+
+            deleteTaskButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteTask(oldStatusIndex);
                 }
             });
         }
@@ -231,33 +243,61 @@ public class AddTask extends BaseActivity {
         Log.i(TAG, "ProjectDetails: " + projectDetails.name);
         Log.i(TAG, "ProjectDetails: " + projectDocumentId);
 
+        // Aktualisierte Aufgabe Objekt erstellen
         Task updatedTask = task;
         updatedTask.name = taskName;
         updatedTask.status = status;
         updatedTask.priotity = priotity;
         updatedTask.description = description;
 
-        ArrayList<Task> taskList = projectDetails.taskList.get(position).tasks;
+        // Liste mit Tasks des bisherigen Status holen
+        ArrayList<Task> taskList = projectDetails.taskList.get(oldStatusIndex).tasks;
         Log.i(TAG, "TaskList Länge:" + taskList.size());
-        taskList.set(taskPosition, updatedTask);
+        Log.i(TAG, "Alte TaskListe:" + projectDetails.taskList.get(oldStatusIndex).name);
+        Log.i(TAG, "Neue TaskListe:" + projectDetails.taskList.get(statusIndex).name);
 
-        if (updatedTask.status != task.status) {
-            taskList.remove(taskPosition);
+        // Wenn sich der Status geändert hat, Task aus bisheriger Liste löschen und in neue einfügen
+        if (oldStatusIndex != statusIndex) {
+            Log.i(TAG, "Task Status hat sich geändert");
+            // Task aus bisheriger Liste löschen
+            taskList.remove(taskPosition.intValue());
+
+            // Objekt des neuen Status holen
             TaskList newTaskStatusList = projectDetails.taskList.get(statusIndex);
 
-            ArrayList<String> taskAssignedUsersList = new ArrayList<>();
-            taskAssignedUsersList.add(userName);
-
-            Task task = new Task(taskName, userName, taskAssignedUsersList, status, priotity, description);
+            // Liste mit Tasks des neuen Status holen
             ArrayList<Task> otherStatusTaskList = projectDetails.taskList.get(statusIndex).tasks;
-            otherStatusTaskList.add(task);
+            // Task in diese Liste hinzufügen
+            otherStatusTaskList.add(updatedTask);
 
+            // Neues geändertes TaskList Objekt erstellen
             TaskList updatedTaskList = new TaskList(newTaskStatusList.name,
                     newTaskStatusList.createdBy, otherStatusTaskList);
 
-            projectDetails.taskList.set(position, updatedTaskList);
-            new FirestoreClass().updateTaskList(this, projectDetails);
+            // Geupdatete TaskList des neuen Status mit alter ersetzen
+            projectDetails.taskList.set(statusIndex, updatedTaskList);
+        } else {
+            // Geänderten Task in Liste ersetzen
+            taskList.set(taskPosition, updatedTask);
         }
+
+        TaskList taskStatusList = projectDetails.taskList.get(oldStatusIndex);
+        TaskList updatedTaskList = new TaskList(taskStatusList.name,
+                taskStatusList.createdBy, taskList);
+
+        projectDetails.taskList.set(oldStatusIndex, updatedTaskList);
+
+        showDialog("Aktualisiere Aufgabe...");
+        new FirestoreClass().updateTaskList(this, projectDetails);
+    }
+
+    public void deleteTask(Integer position) {
+
+        ArrayList<Task> taskList = projectDetails.taskList.get(position).tasks;
+        Log.i(TAG, "TaskPosition: " + taskPosition);
+        Log.i(TAG, "TaskList vorher: " + taskList.size() + taskList.toString());
+        taskList.remove(taskPosition.intValue());
+        Log.i(TAG, "TaskList danach: " + taskList.size() + taskList.toString());
 
         TaskList taskStatusList = projectDetails.taskList.get(position);
         TaskList updatedTaskList = new TaskList(taskStatusList.name,
@@ -265,7 +305,7 @@ public class AddTask extends BaseActivity {
 
         projectDetails.taskList.set(position, updatedTaskList);
 
-        showDialog("Erstelle Aufgabe...");
+        showDialog("Lösche Aufgabe...");
         new FirestoreClass().updateTaskList(this, projectDetails);
     }
 

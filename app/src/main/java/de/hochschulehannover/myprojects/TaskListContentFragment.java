@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.adapter.TaskListAdapter;
+import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
@@ -28,6 +29,9 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * create an instance of this fragment.
  */
 public class TaskListContentFragment extends Fragment {
+
+    private static final int RESULT_OK = 1;
+    public static final int UPDATE_TASK_REQUEST_CODE = 1;
 
     public RecyclerView taskRecyclerView;
     public ArrayList<Task> tasks = new ArrayList<>();
@@ -173,7 +177,7 @@ public class TaskListContentFragment extends Fragment {
                         intent.putExtra("taskPosition", position);
                         startActivityForResult(intent, 1);
                     } else if (s.equals("changeStatus")) {
-                        //Toast.makeText(getActivity(), "Haken gedrückt", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Haken gedrückt", Toast.LENGTH_SHORT).show();
                     }
                     Log.i("TaskListContentFragment", "Task geklickt:" + task.name);
                 }
@@ -182,6 +186,17 @@ public class TaskListContentFragment extends Fragment {
             Log.i("SetupRecycler", "Recycler erfolgreich aufgesetzt:" + status);
         } catch (Exception e) {
             Log.i("SetupRecycler", "Fehler für " + status + "aufgetreten:" + e);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == UPDATE_TASK_REQUEST_CODE) {
+            ((TaskListActivity)getActivity()).updateStatusListSuccess();
+        } else {
+            Log.e("TaskListActivity","Aufgabenerstellung abgebrochen");
         }
     }
 }

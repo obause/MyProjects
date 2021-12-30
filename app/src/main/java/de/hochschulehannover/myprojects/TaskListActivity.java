@@ -188,7 +188,7 @@ public class TaskListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //
+        new FirestoreClass().getProjectDetails(this, projectDetails.documentId);
         if (resultCode == RESULT_OK && requestCode == CREATE_TASK_REQUEST_CODE) {
             new FirestoreClass().getProjectDetails(this, projectDetails.documentId);
             showInfoSnackBar("Aufgabe erfolgreich erstellt");
