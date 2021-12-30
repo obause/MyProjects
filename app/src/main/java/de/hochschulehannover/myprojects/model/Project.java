@@ -10,7 +10,7 @@ import de.hochschulehannover.myprojects.R;
 
 public class Project implements Parcelable {
     public String name = "";
-    public Integer color = R.color.primary_app_color;
+    public String color = "";
     public String userId = "";
     public ArrayList<String> assignedUsers = new ArrayList<>();
     public String tag = "";
@@ -24,7 +24,7 @@ public class Project implements Parcelable {
         Log.i("Project", "Im Default-Konstruktor");
     }
 
-    public Project(String name, Integer color, String userId, ArrayList<String> assignedUsers,
+    public Project(String name, String color, String userId, ArrayList<String> assignedUsers,
                    String tag, String startDate, String endDate, String status) {
         this.name = name;
         this.color = color;
@@ -38,11 +38,7 @@ public class Project implements Parcelable {
 
     protected Project(Parcel in) {
         name = in.readString();
-        if (in.readByte() == 0) {
-            color = null;
-        } else {
-            color = in.readInt();
-        }
+        color = in.readString();
         userId = in.readString();
         assignedUsers = in.createStringArrayList();
         tag = in.readString();
@@ -56,12 +52,7 @@ public class Project implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        if (color == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(color);
-        }
+        dest.writeString(color);
         dest.writeString(userId);
         dest.writeStringList(assignedUsers);
         dest.writeString(tag);

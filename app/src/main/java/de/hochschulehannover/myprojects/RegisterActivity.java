@@ -262,7 +262,7 @@ public class RegisterActivity extends BaseActivity {
             showErrorSnackBar("Bitte eine korrekte Email-Adresse eingeben");
             return false;
         }
-        else if (TextUtils.isEmpty(password) || password.length() <= 6) {
+        else if (TextUtils.isEmpty(password) || password.length() < 6) {
             showErrorSnackBar("Bitte ein Passwort mit mindestens 6 Zeichen eingeben");
             return false;
         }

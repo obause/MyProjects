@@ -47,7 +47,7 @@ public class AddProject extends BaseActivity {
     Button addProjectButton;
 
     private String userName;
-    private Integer projectColor = R.color.primary_app_color;
+    private String projectColor;
 
 
     /* Alte Methode
@@ -130,7 +130,7 @@ public class AddProject extends BaseActivity {
                         //GradientDrawable bgShape = (GradientDrawable)pickColorButton.getBackground();
                         //bgShape.setColor(color);
                         Log.i("ColorPicker", String.valueOf(color));
-                        projectColor = color;
+                        projectColor = String.valueOf(color);
                     }
 
                     @Override
