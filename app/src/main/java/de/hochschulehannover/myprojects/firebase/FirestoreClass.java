@@ -118,7 +118,6 @@ public class FirestoreClass {
                         if (activity instanceof TaskListActivity) {
                             ((TaskListActivity) activity).getProjectDetails(project);
                         } else if (activity instanceof AddTask) {
-                            Log.i(TAG, "Aktualisiere Nutzerdaten in UI...");
                             ((AddTask) activity).getProjectDetails(project);
                         }
                     }

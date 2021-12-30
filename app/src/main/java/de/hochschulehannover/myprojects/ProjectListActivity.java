@@ -140,7 +140,7 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
             Log.i(TAG, "Projekte erfolgreich geladen und zum UI hinzugefügt.");
 
             /* Implementierung des Interface aus der Adapterklasse, Bei Klick auf Projekt TaskListActivity
-             * starten und documentId des entsprechenden Projekt übergeben
+             * starten und documentId des entsprechenden Projekts übergeben
              */
             adapter.setOnClickListener(new ProjectAdapter.ItemClickListener() {
                 @Override

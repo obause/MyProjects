@@ -1,24 +1,21 @@
 package de.hochschulehannover.myprojects.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.R;
-import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.Task;
-import de.hochschulehannover.myprojects.model.TaskList;
 
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -63,25 +60,38 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             doneIcon.setColorFilter(Color.argb(100,61,87,117));
         }*/
 
-        MaterialCardView taskListItem = holder.itemView.findViewById(R.id.taskListItem);
+        /*MaterialCardView taskListItem = holder.itemView.findViewById(R.id.taskListItem);
         taskListItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: Aufgabe öffnen
             }
-        });
+        });*/
 
         doneIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Aufgabe als abgeschlossen setzen
+                if (mClickListener != null) {
+                    mClickListener.onClick(position, model, view, "changeStatus");
+                }
             }
         });
 
         editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Aufgabe bearbeiten
+                if (mClickListener != null) {
+                    mClickListener.onClick(position, model, view, "edit");
+                }
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mClickListener != null) {
+                    mClickListener.onClick(position, model, view, "edit");
+                }
             }
         });
     }
@@ -106,6 +116,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onClick(int position, Project model);
+        void onClick(int position, Task task, View view, String s);
     }
 }

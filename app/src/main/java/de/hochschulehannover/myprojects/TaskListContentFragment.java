@@ -1,5 +1,6 @@
 package de.hochschulehannover.myprojects;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,7 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ import de.hochschulehannover.myprojects.adapter.TaskListAdapter;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
+import de.hochschulehannover.myprojects.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +33,6 @@ public class TaskListContentFragment extends Fragment {
     public ArrayList<Task> tasks = new ArrayList<>();
     public TaskListAdapter adapter;
 
-    TextView testTextView;
-
     private View view;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -43,6 +43,7 @@ public class TaskListContentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String status;
     private Integer index;
+    private Project project;
 
     public TaskListContentFragment() {
         // Required empty public constructor
@@ -51,6 +52,12 @@ public class TaskListContentFragment extends Fragment {
     public TaskListContentFragment(String status, Integer index) {
         this.status = status;
         this.index = index;
+    }
+
+    public TaskListContentFragment(String status, Integer index, Project project) {
+        this.status = status;
+        this.index = index;
+        this.project = project;
     }
 
     /**
@@ -77,6 +84,7 @@ public class TaskListContentFragment extends Fragment {
         if (getArguments() != null) {
             status = getArguments().getString(STATUS_PARAM);
             index = getArguments().getInt(INDEX_PARAM);
+            project = getArguments().getParcelable("project");
         }
     }
 
@@ -92,11 +100,21 @@ public class TaskListContentFragment extends Fragment {
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         taskRecyclerView.setHasFixedSize(true);
 
-        testTextView = view.findViewById(R.id.testTextView);
+        project = ((TaskListActivity)getActivity()).getProject();
+        if (project != null) {
+            tasks = project.taskList.get(index).tasks;
+        } else {
+            Log.i("TaskListContentFragment", "Es konnten keine Tasks abgerufen werden");
+        }
+
+        Log.i("TaskListContentFragment", "TaskList Index:" + String.valueOf(index));
+
 
         //TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
         adapter = new TaskListAdapter(getActivity(), tasks);
         taskRecyclerView.setAdapter(adapter);
+
+
 
         return view;
     }
@@ -107,7 +125,7 @@ public class TaskListContentFragment extends Fragment {
         Log.i("Fragment", "OnViewCreated ausgeführt");
 
         //taskRecyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
 
         /*
         tasks.add(new Task("onViewCreated", "Test", new ArrayList<String>(), "Abgeschlossen",
@@ -120,24 +138,50 @@ public class TaskListContentFragment extends Fragment {
         //TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
         adapter = new TaskListAdapter(getActivity(), tasks);
         taskRecyclerView.setAdapter(adapter);
-
-        TextView testTextView = view.findViewById(R.id.testTextView);
-        testTextView.setText("Funktioniert mit view.find...");
-
-        TextView testTextView2 = getView().findViewById(R.id.testTextView2);
-        testTextView2.setText("Funktioniert mit getview().find...");
         */
     }
 
-    public void setupRecycler(TaskList taskList) {
-        tasks = taskList.tasks;
-        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        taskRecyclerView.setHasFixedSize(true);
+    public void setupRecycler(TaskList taskList, Project project) {
+        this.tasks = taskList.tasks;
+        this.project = project;
 
-        TaskListAdapter adapter = new TaskListAdapter(getActivity(), taskList.tasks);
-        taskRecyclerView.setAdapter(adapter);
-        //TextView testTextView = view.findViewById(R.id.testTextView);
-        testTextView.setText("Funktioniert...");
-        adapter.notifyDataSetChanged();
+        try {
+            /*taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            taskRecyclerView.setHasFixedSize(true);*/
+            adapter = new TaskListAdapter(getActivity(), taskList.tasks);
+            taskRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            /* Implementierung des Interface aus der Adapterklasse, Bei Klick auf Projekt TaskListActivity
+             * starten und documentId des entsprechenden Projekt übergeben
+             */
+            adapter.setOnClickListener(new TaskListAdapter.ItemClickListener() {
+                @Override
+                public void onClick(int position, Task task, View view, String s) {
+                    /*Intent intent = new Intent(getActivity(), AddTask.class);
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId);
+                    intent.putExtra(Constants.NAME, model.userId);
+                    startActivity(intent);*/
+
+                    if (s.equals("edit")) {
+                        //Toast.makeText(getActivity(), "Edit gedrückt", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), AddTask.class);
+                        intent.putExtra(Constants.DOCUMENT_ID, project.documentId);
+                        intent.putExtra(Constants.NAME, project.userId);
+                        intent.putExtra("edit", true);
+                        intent.putExtra("task", task);
+                        intent.putExtra("taskPosition", position);
+                        startActivityForResult(intent, 1);
+                    } else if (s.equals("changeStatus")) {
+                        //Toast.makeText(getActivity(), "Haken gedrückt", Toast.LENGTH_SHORT).show();
+                    }
+                    Log.i("TaskListContentFragment", "Task geklickt:" + task.name);
+                }
+            });
+
+            Log.i("SetupRecycler", "Recycler erfolgreich aufgesetzt:" + status);
+        } catch (Exception e) {
+            Log.i("SetupRecycler", "Fehler für " + status + "aufgetreten:" + e);
+        }
     }
 }

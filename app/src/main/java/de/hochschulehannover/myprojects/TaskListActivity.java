@@ -36,6 +36,7 @@ public class TaskListActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private RecyclerView taskRecyclerView;
+    private Bundle bundle;
 
     private TaskListContentFragment backlogFragment;
     private TaskListContentFragment inProgressFragment;
@@ -56,27 +57,12 @@ public class TaskListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        //Ab hier alt
         binding = ActivityTaskListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        backlogFragment = new TaskListContentFragment(Constants.BACKLOG, 0);
-        inProgressFragment = new TaskListContentFragment(Constants.PROGRESS, 1);
-        //doneFragment = new TaskListContentFragment(Constants.DONE, 2);
-        doneFragment = new TaskListContentFragment(Constants.BACKLOG, 0);
 
-        TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
-        taskPagerAdapter.addFragment(backlogFragment, "Backlog");
-        taskPagerAdapter.addFragment(inProgressFragment, "In Bearbeitung");
-        taskPagerAdapter.addFragment(doneFragment, "Abgeschlossen");
 
-        ViewPager viewPager = binding.viewPager;
-        viewPager.setAdapter(taskPagerAdapter);
-        TabLayout tabs = binding.tabs;
-        tabs.setupWithViewPager(viewPager);
-
-        /*
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        /*tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -92,6 +78,7 @@ public class TaskListActivity extends BaseActivity {
 
             }
         });
+
          */
 
         FloatingActionButton fab = binding.fab;
@@ -112,7 +99,6 @@ public class TaskListActivity extends BaseActivity {
                 startActivityForResult(intent, CREATE_TASK_REQUEST_CODE);
             }
         });
-        //Bis hier
 
         //toolbar = findViewById(R.id.taskListToolbar);
         toolbar = binding.taskListToolbar;
@@ -120,6 +106,28 @@ public class TaskListActivity extends BaseActivity {
 
         showDialog("Lade Projektdaten");
         new FirestoreClass().getProjectDetails(this, projectDocumentId);
+
+        bundle = new Bundle();
+        bundle.putParcelable("project", projectDetails);
+
+        backlogFragment = new TaskListContentFragment(Constants.BACKLOG, 0, projectDetails);
+        backlogFragment.setArguments(bundle);
+        inProgressFragment = new TaskListContentFragment(Constants.PROGRESS, 1, projectDetails);
+        inProgressFragment.setArguments(bundle);
+        doneFragment = new TaskListContentFragment(Constants.DONE, 2, projectDetails);
+        doneFragment.setArguments(bundle);
+
+        TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
+        taskPagerAdapter.addFragment(backlogFragment, "Backlog");
+        taskPagerAdapter.addFragment(inProgressFragment, "In Bearbeitung");
+        taskPagerAdapter.addFragment(doneFragment, "Abgeschlossen");
+        //taskPagerAdapter.addFragment(new BacklogFragment("Done"), "Done");
+
+        ViewPager viewPager = binding.viewPager;
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(taskPagerAdapter);
+        TabLayout tabs = binding.tabs;
+        tabs.setupWithViewPager(viewPager);
     }
 
     public void getProjectDetails(Project project) {
@@ -141,12 +149,13 @@ public class TaskListActivity extends BaseActivity {
 
         Log.i(TAG, "TaskList:" + project.taskList.toString());
 
-        backlogFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX));
+        backlogFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX), project);
         Log.i(TAG, "Recycler für Backlog aufgesetzt");
-        inProgressFragment.setupRecycler(project.taskList.get(Constants.PROGRESS_INDEX));
+        inProgressFragment.setupRecycler(project.taskList.get(Constants.PROGRESS_INDEX), project);
         Log.i(TAG, "Recycler für in Progress aufgesetzt");
-        //doneFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX));
+        doneFragment.setupRecycler(project.taskList.get(Constants.DONE_INDEX), project);
         Log.i(TAG, "Recycler für Done aufgesetzt");
+        //doneFragment.test();
 
         /*taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         taskRecyclerView.setHasFixedSize(true);
@@ -160,6 +169,10 @@ public class TaskListActivity extends BaseActivity {
         showInfoSnackBar("Aufgabenliste erfolgreich aktualisiert!");
         showDialog("Lade Daten...");
         new FirestoreClass().getProjectDetails(this, projectDetails.documentId);
+    }
+
+    public Project getProject() {
+        return projectDetails;
     }
 
     public void createTaskList(String taskListName) {
