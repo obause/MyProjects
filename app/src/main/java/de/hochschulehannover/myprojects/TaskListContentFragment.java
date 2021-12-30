@@ -175,6 +175,7 @@ public class TaskListContentFragment extends Fragment {
                         intent.putExtra("edit", true);
                         intent.putExtra("task", task);
                         intent.putExtra("taskPosition", position);
+                        intent.putExtra("statusIndex", index);
                         startActivityForResult(intent, 1);
                     } else if (s.equals("changeStatus")) {
                         Toast.makeText(getActivity(), "Haken gedrückt", Toast.LENGTH_SHORT).show();

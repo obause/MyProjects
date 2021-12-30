@@ -121,6 +121,10 @@ public class AddTask extends BaseActivity {
             }
         });
 
+        if (getIntent().hasExtra("statusIndex")) {
+            statusIndex = getIntent().getIntExtra("statusIndex", 0);
+        }
+
         if (getIntent().hasExtra("task") && getIntent().hasExtra("taskPosition")) {
 
             task = getIntent().getExtras().getParcelable("task");

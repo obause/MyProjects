@@ -1,6 +1,7 @@
 package de.hochschulehannover.myprojects.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +99,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView projectStatusTextView = holder.itemView.findViewById(R.id.projectStatusTextView);
         TextView projectOwnerTextView = holder.itemView.findViewById(R.id.projectOwnerTextView);
 
-        projectColorImageView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.primary_app_color));
+        projectColorImageView.setBackgroundTintList(ColorStateList.valueOf(Integer.valueOf(model.color)));
         projectNameTextView.setText(model.name);
         projectTagTextView.setText(model.tag);
         projectDescriptionTextView.setText(model.name);
