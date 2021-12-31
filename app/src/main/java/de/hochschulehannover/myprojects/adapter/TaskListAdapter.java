@@ -60,14 +60,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             doneIcon.setColorFilter(Color.argb(100,61,87,117));
         }*/
 
-        /*MaterialCardView taskListItem = holder.itemView.findViewById(R.id.taskListItem);
-        taskListItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: Aufgabe öffnen
-            }
-        });*/
-
         doneIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

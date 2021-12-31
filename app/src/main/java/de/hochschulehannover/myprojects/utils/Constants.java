@@ -23,6 +23,8 @@ public class Constants {
     public static final String ASSIGNED_TO = "assignedUsers";
     public static final String DOCUMENT_ID = "documentId";
 
+    public static final String PROJECT_DETAILS = "project_details";
+
     public static int READ_STORAGE_PERMISSION_CODE = 1;
     public static int PICK_IMAGE_REQUEST_CODE = 2;
 

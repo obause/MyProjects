@@ -140,11 +140,11 @@ public class AddTask extends BaseActivity {
 
             Log.i(TAG, "Task Status:" + task.status);
             if (task.status.equals("Backlog")) {
-                oldStatusIndex = 0;
+                oldStatusIndex = Constants.BACKLOG_INDEX;
             } else if (task.status.equals("In Arbeit")) {
-                oldStatusIndex = 1;
+                oldStatusIndex = Constants.PROGRESS_INDEX;
             } else if (task.status.equals("Abgeschlossen")) {
-                oldStatusIndex = 2;
+                oldStatusIndex = Constants.DONE_INDEX;
             }
             Log.i("Positionen", "statusIndex: " + statusIndex);
             Log.i("Positionen", "oldStatusIndex: " + oldStatusIndex);

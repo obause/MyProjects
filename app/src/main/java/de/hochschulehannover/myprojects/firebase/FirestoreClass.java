@@ -23,6 +23,7 @@ import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.MainActivity;
 import de.hochschulehannover.myprojects.ProfileActivity;
 import de.hochschulehannover.myprojects.ProjectListActivity;
+import de.hochschulehannover.myprojects.ProjectMembersActivity;
 import de.hochschulehannover.myprojects.RegisterActivity;
 import de.hochschulehannover.myprojects.TaskListActivity;
 import de.hochschulehannover.myprojects.model.Project;
@@ -193,6 +194,94 @@ public class FirestoreClass {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e(TAG, "Fehler beim Aktualisieren der Aufgabenliste:\n" + e);
+                    }
+                });
+    }
+
+    /**
+     * Abfrage auf Firestore-Tabelle users. Es wird eine Liste mit UserIDs übergeben und für jeden
+     * User die entsprechenden Nutzerdaten aus Firestore abgerufen. Für diese werden dann Einzelne
+     * User-Objeke angelegt und zusammen in einer Liste übergeben
+     * @param activity
+     * @param assignedUsers
+     */
+    public void getMembersFromProject(ProjectMembersActivity activity, ArrayList<String> assignedUsers) {
+        db.collection(Constants.USERS_TABLE)
+                .whereIn("id", assignedUsers)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.i(TAG, queryDocumentSnapshots.toString());
+
+                        ArrayList<User> userList = new ArrayList<>();
+
+                        // Durch jedes QueryDocumentSnapshot-Objekt (User) iterieren, User-Objekt anlegen und in Liste packen
+                        for (QueryDocumentSnapshot i: queryDocumentSnapshots) {
+                            User user = i.toObject(User.class);
+
+                            userList.add(user);
+                        }
+
+                        activity.setupMemberList(userList);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e(TAG, "Fehler beim Laden der Miglieder:\n" + e);
+                        activity.showErrorSnackBar("Fehler beim Laden der Miglieder!");
+                    }
+                });
+    }
+
+    public void searchMember(ProjectMembersActivity activity, String email) {
+        db.collection(Constants.USERS_TABLE)
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            // Erste Element aus Ergebnis in User-Objekt umwandeln
+                            User user = queryDocumentSnapshots.getDocuments().get(0).toObject(User.class);
+                            activity.memberDetails(user);
+                        } else {
+                            activity.hideDialog();
+                            Log.e(TAG, "Kein Nutzer gefunden");
+                            activity.showErrorSnackBar("Kein Nutzer mit dieser Email-Adresse gefunden!");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e(TAG, "Fehler beim Suchen eines Nutzers:\n" + e);
+                        activity.showErrorSnackBar("Fehler aufgetreten");
+                    }
+                });
+    }
+
+    public void addMemberToProject (ProjectMembersActivity activity, Project project, User user) {
+        HashMap<String, Object> assignedUsersHashMap = new HashMap<>();
+        assignedUsersHashMap.put(Constants.ASSIGNED_TO, project.assignedUsers);
+        db.collection(Constants.PROJECTS_TABLE)
+                .document(project.documentId)
+                .update(assignedUsersHashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        activity.addMemberSuccess(user);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.e(TAG, "Fehler beim Hinzufügen eines Nutzers:\n" + e);
+                        activity.showErrorSnackBar("Fehler beim Hinzufügen eines Nutzers");
                     }
                 });
     }

@@ -1,5 +1,6 @@
 package de.hochschulehannover.myprojects;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -12,11 +13,15 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,9 +123,9 @@ public class TaskListActivity extends BaseActivity {
         doneFragment.setArguments(bundle);
 
         TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
-        taskPagerAdapter.addFragment(backlogFragment, "Backlog");
-        taskPagerAdapter.addFragment(inProgressFragment, "In Bearbeitung");
-        taskPagerAdapter.addFragment(doneFragment, "Abgeschlossen");
+        taskPagerAdapter.addFragment(backlogFragment, getString(R.string.backlog));
+        taskPagerAdapter.addFragment(inProgressFragment, getString(R.string.in_progress));
+        taskPagerAdapter.addFragment(doneFragment, getString(R.string.done));
         //taskPagerAdapter.addFragment(new BacklogFragment("Done"), "Done");
 
         ViewPager viewPager = binding.viewPager;
@@ -182,6 +187,35 @@ public class TaskListActivity extends BaseActivity {
 
         showDialog("Erstelle Listen...");
         new FirestoreClass().updateTaskList(this, projectDetails);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        menu.clear();
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_members, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.membersMenuItem) {
+            Intent intent = new Intent(this, ProjectMembersActivity.class);
+            intent.putExtra(Constants.PROJECT_DETAILS, projectDetails);
+            startActivity(intent);
+        }
+        if (item.getItemId()==R.id.editProjectMenuItem){
+            // TODO
+        }
+        if (item.getItemId() == R.id.deleteProjectMenuItem) {
+            // TODO
+        }
+        return true;
     }
 
     @Override

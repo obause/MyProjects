@@ -50,6 +50,13 @@
     <string name="create_project_button">Projekt hinzufügen</string>
     <!-- Projektübersicht -->
     <string name="no_projects">Du hast bisher keine Projekte angelegt. Füge dein erstes Projekt hinzu!</string>
+    <!-- Aufgabenliste -->
+    <string name="no_tasks">Du hast in diesem Bereich noch keine Aufgaben</string>
+    <string name="backlog">Backlog</string>
+    <string name="in_progress">In Arbeit</string>
+    <string name="done">Fertig</string>
+    <string name="delete_project">Projekt löschen</string>
+    <string name="edit_project">Projekt bearbeiten</string>
     <!-- Aufgabe erstellen Activity -->
     <string name="task_name">Aufgabenname</string>
     <string name="task_priority">Priorität</string>
@@ -57,4 +64,10 @@
     <string name="task_description">Aufgabenbeschreibung</string>
     <string name="create_task">Aufgabe erstellen</string>
     <string name="delete_task">Aufgabe löschen</string>
+    <!-- Projektmitglieder Activity -->
+    <string name="members">Projektmitglieder</string>
+    <string name="add_member">Mitglied hinzufügen</string>
+    <!-- Miglieder hinzufügen Activity -->
+    <string name="search_member">Mitglied suchen</string>
+    <string name="cancel">Abbrechen</string>
 </resources>

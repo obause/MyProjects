@@ -22,7 +22,9 @@
     </style>
 
     <!-- Theme für die AppBar -->
-    <style name="Theme.MyProjects.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
+    <style name="Theme.MyProjects.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="tint">@color/white</item>
+    </style>
 
     <style name="Theme.MyProjects.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

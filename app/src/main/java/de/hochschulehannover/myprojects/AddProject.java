@@ -47,7 +47,7 @@ public class AddProject extends BaseActivity {
     Button addProjectButton;
 
     private String userName;
-    private String projectColor;
+    private String projectColor = String.valueOf(R.color.primary_app_color);
 
 
     /* Alte Methode
