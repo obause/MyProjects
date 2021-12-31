@@ -148,13 +148,14 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/forgotPasswordTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/forgot_password"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:textColor="?colorSecondary"/>
+                    android:textColor="@color/secondary_app_color"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <com.google.android.gms.common.SignInButton

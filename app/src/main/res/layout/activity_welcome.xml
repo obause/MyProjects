@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/advent_pro"
-        android:text="Willkommen bei"
+        android:text="@string/welcome_text"
         android:textAlignment="center"
         android:textColor="?colorPrimary"
         android:textSize="40sp"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
-        app:srcCompat="@drawable/logo2" />
+        app:srcCompat="@drawable/logo_neu" />
 
     <Button
         android:id="@+id/welcomeLoginButton"
@@ -69,7 +69,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:text="Bist du neu hier?"
-        android:textColor="?colorPrimary"
+        android:textColor="@color/secondary_app_color"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeLoginButton" />

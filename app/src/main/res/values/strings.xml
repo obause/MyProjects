@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyProjects</string>
     <string name="language">DEUTSCH</string>
-    <string name="hello_world">hallo</string>
+    <string name="hello_world">Sprache einstellen</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

@@ -1,6 +1,9 @@
 package de.hochschulehannover.myprojects.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +62,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         /*if (model.status != "Abgeschlossen") {
             doneIcon.setColorFilter(Color.argb(100,61,87,117));
         }*/
+        Log.i("StatusIcon", "Status ist:" + model.status);
+        if (model.status == "Backlog") {
+            Log.i("StatusIcon", "Icon für Backlog anpassen");
+            doneIcon.setImageResource(R.drawable.ic_baseline_playlist_play_24);
+        } else if (model.status == "In Arbeit") {
+            Log.i("StatusIcon", "Icon für In Arbeit anpassen");
+            doneIcon.setImageResource(R.drawable.ic_baseline_check_24);
+        }
 
         doneIcon.setOnClickListener(new View.OnClickListener() {
             @Override

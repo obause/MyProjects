@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -50,6 +53,7 @@ public class MainActivity extends BaseActivity {
     Button registerButton;
     Toolbar toolbar;
     SignInButton googleLoginButton;
+    TextView forgotPasswordTextView;
 
     String TAG = "MainActivity";
 
@@ -78,6 +82,7 @@ public class MainActivity extends BaseActivity {
         registerButton = findViewById(R.id.startRegisterButton);
         toolbar = findViewById(R.id.toolbar);
         googleLoginButton = findViewById(R.id.googleLoginButton);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView);
 
         setupActionBar();
 
@@ -106,10 +111,10 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        // String default_web_client_id wird nicht erkannt, ist aber zur Laufzeit verfügbar
+        // Strings werden von der IDE nicht erkannt, sind aber zur Laufzeit verfügbar
         Log.i("WEBCLIENTID", String.valueOf(R.string.default_web_client_id));
         // GoogleSignIn-Optionen definieren, um die UserID, Email-Adresse etc. von Google zu erhalten.
-        // DEFAULT_SIGN_IN beinhaltet bereits die UserID, email wird extra abgefragt.
+        // DEFAULT_SIGN_IN beinhaltet bereits die UserID, email und Profilbild werden extra abgefragt.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -128,6 +133,30 @@ public class MainActivity extends BaseActivity {
                 Intent intent = mGoogleSignInClient.getSignInIntent();
                 //TODO: Veraltete Methode durch neue Umsetzung ändern (registerForActivityResult?)
                 startActivityForResult(intent, RC_SIGN_IN);
+            }
+        });
+
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String mailAddress = mailEditText.getText().toString();
+                if (mailAddress != null && !mailAddress.isEmpty()) {
+                    mAuth.sendPasswordResetEmail(mailEditText.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    showInfoSnackBar("Eine Mail zum zurücksetzen des Passworts wurde gesendet");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    showErrorSnackBar("Es konnte keine Mail zum Zurücksetzen des Passworts gesendet werden");
+                                }
+                            });
+                } else {
+                    showErrorSnackBar("Bitte Emial-Adresse eingeben, um das Passwort zurück zu setzen");
+                }
             }
         });
 

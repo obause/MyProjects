@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyProjects</string>
-    <string name="language">ENGLISH</string>
-    <string name="hello_world">hello</string>
+    <string name="language">English</string>
+    <string name="hello_world">Set language</string>
     <string name="title_activity_login">loginActivity</string>
     <string name="prompt_email">email</string>
     <string name="prompt_password">password</string>

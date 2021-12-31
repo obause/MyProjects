@@ -17,6 +17,7 @@
 
     <!-- App Farben -->
     <color name="primary_app_color"> #0c90f1</color>
+    <color name="secondary_app_color">#D95B28</color>
     <!-- Textfarben -->
     <color name="primary_text_color">#363A43</color>
     <color name="secondary_text_color">#363A43</color>

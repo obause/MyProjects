@@ -55,7 +55,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:text="Aufgabenstatus"
-            android:textColor="?colorSecondary"
+            android:textColor="@color/secondary_app_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/taskTitleTextView"
             app:layout_constraintEnd_toStartOf="@id/taskByTextView"
