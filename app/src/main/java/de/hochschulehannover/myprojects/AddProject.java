@@ -180,7 +180,7 @@ public class AddProject extends BaseActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                startDateEditText.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                                projectStartEditText.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                             }
                         }, year, month, day);
                 picker.show();
@@ -200,7 +200,7 @@ public class AddProject extends BaseActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                endDateEditText.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+                                projectEndEditText.setText(dayOfMonth + "." + (monthOfYear + 1) + "." + year);
                             }
                         }, year, month, day);
                 picker.show();

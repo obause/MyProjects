@@ -10,7 +10,7 @@ import de.hochschulehannover.myprojects.R;
 
 public class Project implements Parcelable {
     public String name = "";
-    public String color = "";
+    public String color = String.valueOf(R.color.primary_app_color);
     public String userId = "";
     public ArrayList<String> assignedUsers = new ArrayList<>();
     public String tag = "";
