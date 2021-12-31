@@ -95,14 +95,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView projectColorImageView = holder.itemView.findViewById(R.id.projectColorImageView);
         TextView projectNameTextView = holder.itemView.findViewById(R.id.projectNameTextView);
         TextView projectTagTextView = holder.itemView.findViewById(R.id.projectTagTextView);
-        TextView projectDescriptionTextView = holder.itemView.findViewById(R.id.projectDescriptionTextView);
         TextView projectStatusTextView = holder.itemView.findViewById(R.id.projectStatusTextView);
         TextView projectOwnerTextView = holder.itemView.findViewById(R.id.projectOwnerTextView);
 
         projectColorImageView.setBackgroundTintList(ColorStateList.valueOf(Integer.valueOf(model.color)));
         projectNameTextView.setText(model.name);
         projectTagTextView.setText(model.tag);
-        projectDescriptionTextView.setText(model.name);
         projectStatusTextView.setText(model.status);
         projectOwnerTextView.setText("Erstellt von: " + model.userId);
 

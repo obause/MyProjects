@@ -28,8 +28,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -38,7 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Projektname"/>
+                android:text="Projektname"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +49,8 @@
                     android:id="@+id/projectTagTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ProjektTag"/>
+                    android:text="ProjektTag"
+                    android:textColor="?colorSecondary"/>
 
                 <TextView
                     android:id="@+id/projectOwnerTextView"
@@ -56,15 +59,6 @@
                     android:gravity="right"
                     android:text="Projektbesitzer"/>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/projectDescriptionTextView"
-                style="?attr/textAppearanceSubtitle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:maxLines="3"
-                android:text="Vielleicht noch eine Projektbeschreibung als Attribut zum Projekt hinzufügen?"/>
 
             <View
                 android:layout_width="match_parent"

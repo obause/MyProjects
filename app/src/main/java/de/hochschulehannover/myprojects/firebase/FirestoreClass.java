@@ -69,6 +69,25 @@ public class FirestoreClass {
                 });
     }
 
+    public void deleteProject(TaskListActivity activity, String projectDocumentId) {
+        db.collection(Constants.PROJECTS_TABLE).document(projectDocumentId).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.i(TAG, "Projekt gelöscht");
+                        activity.projectDeletedSuccessfully();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        activity.hideDialog();
+                        Log.i(TAG, "Projekt nicht gelöscht. Fehler:\n" +e);
+                        activity.showErrorSnackBar("Projekt konnte nicht gelöscht werden");
+                    }
+                });
+    }
+
     public void getProjectList(ProjectListActivity activity) {
         db.collection(Constants.PROJECTS_TABLE)
                 .whereArrayContains(Constants.ASSIGNED_TO, getUserId())

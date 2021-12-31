@@ -105,9 +105,6 @@ public class TasksByStatus extends BaseActivity {
         if (item.getItemId()==R.id.info){
             goToInfo();
         }
-        if (item.getItemId() == R.id.deleteProject) {
-            deleteProject();
-        }
         return true;
     }
     public void goToInfo() {

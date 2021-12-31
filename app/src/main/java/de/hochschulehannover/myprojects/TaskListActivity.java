@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -176,6 +177,12 @@ public class TaskListActivity extends BaseActivity {
         new FirestoreClass().getProjectDetails(this, projectDetails.documentId);
     }
 
+    public void projectDeletedSuccessfully() {
+        hideDialog();
+        showInfoSnackBar("Projekt "+ projectDetails.name + "erfolgreich gelöscht");
+        finish();
+    }
+
     public Project getProject() {
         return projectDetails;
     }
@@ -211,9 +218,22 @@ public class TaskListActivity extends BaseActivity {
         }
         if (item.getItemId()==R.id.editProjectMenuItem){
             // TODO
+            showErrorSnackBar("Noch nicht verfügbar");
         }
         if (item.getItemId() == R.id.deleteProjectMenuItem) {
-            // TODO
+            new android.app.AlertDialog.Builder(TaskListActivity.this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Projekt löschen")
+                    .setMessage("Möchtest du dieses Projekt wirklich löschen?")
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showDialog("Lösche Projekt...");
+                            new FirestoreClass().deleteProject(TaskListActivity.this, projectDocumentId);
+                        }
+                    })
+                    .setNegativeButton("Nein", null)
+                    .show();
         }
         return true;
     }

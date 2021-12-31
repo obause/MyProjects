@@ -274,6 +274,13 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
             startActivity(intent);
             finish();
         }
+        if (item.getItemId() == R.id.nav_overview) {
+            showErrorSnackBar("Noch nicht verfügbar");
+        }
+        if (item.getItemId() == R.id.nav_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

@@ -297,20 +297,31 @@ public class AddTask extends BaseActivity {
 
     public void deleteTask(Integer position) {
 
-        ArrayList<Task> taskList = projectDetails.taskList.get(position).tasks;
-        Log.i(TAG, "TaskPosition: " + taskPosition);
-        Log.i(TAG, "TaskList vorher: " + taskList.size() + taskList.toString());
-        taskList.remove(taskPosition.intValue());
-        Log.i(TAG, "TaskList danach: " + taskList.size() + taskList.toString());
+        new android.app.AlertDialog.Builder(AddTask.this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Aufgabe löschen")
+                .setMessage("Möchtest du diese Aufgabe wirklich löschen?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ArrayList<Task> taskList = projectDetails.taskList.get(position).tasks;
+                        Log.i(TAG, "TaskPosition: " + taskPosition);
+                        Log.i(TAG, "TaskList vorher: " + taskList.size() + taskList.toString());
+                        taskList.remove(taskPosition.intValue());
+                        Log.i(TAG, "TaskList danach: " + taskList.size() + taskList.toString());
 
-        TaskList taskStatusList = projectDetails.taskList.get(position);
-        TaskList updatedTaskList = new TaskList(taskStatusList.name,
-                taskStatusList.createdBy, taskList);
+                        TaskList taskStatusList = projectDetails.taskList.get(position);
+                        TaskList updatedTaskList = new TaskList(taskStatusList.name,
+                                taskStatusList.createdBy, taskList);
 
-        projectDetails.taskList.set(position, updatedTaskList);
+                        projectDetails.taskList.set(position, updatedTaskList);
 
-        showDialog("Lösche Aufgabe...");
-        new FirestoreClass().updateTaskList(this, projectDetails);
+                        showDialog("Lösche Aufgabe...");
+                        new FirestoreClass().updateTaskList(AddTask.this, projectDetails);
+                    }
+                })
+                .setNegativeButton("Nein", null)
+                .show();
     }
 
     public void updateStatusListSuccess() {

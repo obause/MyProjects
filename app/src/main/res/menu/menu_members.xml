@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/membersMenuItem"
-        android:orderInCategory="100"
-        android:title="@string/members"
-        app:showAsAction="never" />
+    <item android:id="@+id/deleteProjectMenuItem"
+        android:icon="@drawable/ic_baseline_delete_white_24"
+        android:title="Projekt Löschen"
+        app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/deleteProjectMenuItem"
-        android:orderInCategory="150"
-        android:title="@string/delete_project" />
+    <item android:id="@+id/editProjectMenuItem"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Projekt bearbeiten"
+        app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/editProjectMenuItem"
-        android:orderInCategory="110"
-        android:title="@string/edit_project" />
+    <item android:id="@+id/membersMenuItem"
+        android:icon="@drawable/ic_baseline_group_24"
+        android:title="Projektmitglieder"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom"/>
 </menu>
