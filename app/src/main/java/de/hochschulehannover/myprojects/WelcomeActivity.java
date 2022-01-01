@@ -31,16 +31,16 @@ import java.util.Map;
  * </p>
  */
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
-    Button registerButton;
-    Button loginButton;
+    private Button registerButton;
+    private Button loginButton;
 
     private FirebaseAuth mAuth;
 
-    /*
-    Check, ob der Nutzer bereits eingeloggt ist direkt beim Start der Activity und
-    Weiterleitung zur Projektliste
+    /**
+     * Check, ob der Nutzer bereits eingeloggt ist direkt beim Start der Activity und
+     * Weiterleitung zur Projektliste
      */
     @Override
     public void onStart() {
@@ -80,8 +80,8 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    Weiterleitung zur Projektliste
+    /**
+     * Weiterleitung zur Projektliste
      */
     public void goToProjects() {
         Intent intent = new Intent(this, ProjectListActivity.class);

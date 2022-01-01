@@ -36,7 +36,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * <b>Autor(en):</b>
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private Boolean doubleBackExit = false;
     private Dialog progressDialog;
@@ -48,12 +48,16 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Aktuelle UserId des eingeloggten Nutzers zurückgeben
+     * @return UserId
+     */
     public String getUserId() {
         return mAuth.getCurrentUser().getUid();
     }
 
-    /*
-    Ladedialog bei Verbindung zu Firebase anzeigen
+    /**
+     * Ladedialog bei Verbindung zu Firebase anzeigen
      */
     protected void showDialog(String text) {
         progressDialog = new Dialog(this);
@@ -63,8 +67,8 @@ public class BaseActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-    /*
-    Ladedialog wieder ausblenden
+    /**
+     * Ladedialog wieder ausblenden
      */
     public void hideDialog() {
         try {
@@ -75,8 +79,8 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    /*
-    App erst nach zweimaligem Tippen des Zurück-Buttons beenden
+    /**
+     *  App erst nach zweimaligem Tippen des Zurück-Buttons beenden
      */
     protected void doubleBackExit() {
         if (this.doubleBackExit) {
@@ -96,8 +100,8 @@ public class BaseActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    /*
-    Snackbar mit rotem Hintergrund für das Anzeigen von Fehlermeldungen
+    /**
+     *  Snackbar mit rotem Hintergrund für das Anzeigen von Fehlermeldungen
      */
     public void showErrorSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
@@ -108,6 +112,9 @@ public class BaseActivity extends AppCompatActivity {
         snackbar.show();
     }
 
+    /**
+     *  Snackbar mit grünen Hintergrund für das Anzeigen von Meldungen
+     */
     public void showInfoSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
         //.setAction("Action", null).show();

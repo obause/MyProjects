@@ -34,7 +34,7 @@ import de.hochschulehannover.myprojects.model.User;
 
 /**
  * <h2>Activity RegisterActivity</h2>
- * <p>Rehistrierungsseite der App. Diese erbt von {@link BaseActivity}.
+ * <p>Registrierungsseite der App. Diese erbt von {@link BaseActivity}.
  * Hier kann sich ein neuer Nutzer mit seiner Email-Adresse oder Google-Account
  * registrieren.
  * Weiterleitung zur Projektliste ({@link ProjectListActivity}) nach erfolgreicher Registrierung</p>
@@ -45,13 +45,13 @@ import de.hochschulehannover.myprojects.model.User;
 
 public class RegisterActivity extends BaseActivity {
 
-    EditText mailEditText;
-    EditText passwordEditText;
-    EditText repeatPasswortEditText;
-    EditText nameEditText;
-    Button registerButton;
-    Toolbar toolbar;
-    SignInButton googleLoginButton;
+    private EditText mailEditText;
+    private EditText passwordEditText;
+    private EditText repeatPasswortEditText;
+    private EditText nameEditText;
+    private Button registerButton;
+    private Toolbar toolbar;
+    private SignInButton googleLoginButton;
 
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -77,7 +77,7 @@ public class RegisterActivity extends BaseActivity {
 
         googleLoginButton = findViewById(R.id.googleLoginButton);
 
-        //Ereignisverknüfung des Registrierungsbuttons
+        // Ereignisverknüfung des Registrierungsbuttons
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,16 +95,22 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
-        //ActionBar initialisieren
+        // ActionBar initialisieren
         setupActionBar();
-
+        // GoogleLogin-Button initialisieren
         setupGoogleLogin();
     }
 
+    /**
+     * GoogleLogin initialisieren. Bei Klick auf den Google Login Button wird eine Activity von Google
+     * für den Login gestartet. Bei erfolgreichem Login wird ein Nutzer bei Firebase angelegt und die
+     * entsprechenden Nutzerdaten aus dem Google-Account im Firestore abgelegt.
+     */
     private void setupGoogleLogin() {
+        // default_web_client_id kann von der IDE nicht gefunden werden ist aber zur Laufzeit verfügbar!
         Log.i("WEBCLIENTID", String.valueOf(R.string.default_web_client_id));
         // GoogleSignIn-Optionen definieren, um die UserID, Email-Adresse etc. von Google zu erhalten.
-        // DEFAULT_SIGN_IN beinhaltet bereits die UserID, email wird extra abgefragt.
+        // DEFAULT_SIGN_IN beinhaltet bereits die UserID, Email und Profilbild werden extra abgefragt.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -128,9 +134,15 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
-    /*
-    Registrierung mit Email-Adresse und Passwort
-    TODO: Text aus der Exception abgreifen und User anzeigen welcher Fehler bei der Registrierung aufgetreten ist
+    /**
+     * Registrierung mit Email-Adresse und Passwort. Wenn die Registrierung erfolgreich war wird ein
+     * User-Objekt des neuen Nutzers angelegt und für diesen ein Document im Firestore angelegt
+     *
+     * @param mail Eingegebene Email-Adresse
+     * @param password Eingegebenes Passwort
+     * @param name Eingegebener Name
+     *
+     * TODO: Text aus der Exception abgreifen und User anzeigen welcher Fehler bei der Registrierung aufgetreten ist
      */
     private void register(String mail, String password, String name) {
         mAuth.createUserWithEmailAndPassword(mail, password)
@@ -138,17 +150,18 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "Registrierung erfolgreich");
 
                             FirebaseUser firebaseUser = mAuth.getCurrentUser(); //task.getResult().getUser();
                             String emailRegistered = firebaseUser.getEmail();
 
+                            // User-Objekt des neuen Nutzers anlegen
                             User user = new User(firebaseUser.getUid(), name, emailRegistered);
 
+                            // Nutzerdaten in Firestore abspeichern
                             new FirestoreClass().registerUser(RegisterActivity.this, user);
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // Registrierung fehlgeschlagen, Fehlermeldung anzeigen
                             Log.w(TAG, "Registrierung fehlgeschlagen", task.getException());
                             Toast.makeText(RegisterActivity.this, "Leider ist die Registrierung fehlgeschlagen",
                                     Toast.LENGTH_SHORT).show();
@@ -158,8 +171,10 @@ public class RegisterActivity extends BaseActivity {
                 });
     }
 
-    /*
-    Bei erfolgreicher Registrierung dies anzeigen, Ladedialog ausblenden und zur Projektliste weiterleiten
+    /**
+     * Bei erfolgreicher Registrierung dies anzeigen, Ladedialog ausblenden, Nutzerdaten mit {@link FirestoreClass} laden
+     * und bei erfolgreichem Laden die Methode signInSuccess() ausführen.
+     * @return
      */
     public OnSuccessListener<? super Void> userRegistered() {
         showInfoSnackBar("Dein Account wurde erfolgreich erstellt!");
@@ -169,7 +184,26 @@ public class RegisterActivity extends BaseActivity {
     }
 
     /*
-    Methode, um nach erfolgreichem Google-Login die Daten aus dem Intent von Google zu erhalten
+    Wenn der Login erfolgreich war die ProjektListActivity aufrufen
+     */
+
+    /**
+     * Nach erfolgreicher Registrierung und Laden der Nutzerdaten ruft die FirestoreClass diese Methode
+     * auf und übergibt das User-Objekt. Dann wird die {@link ProjectListActivity} für die Projektliste
+     * aufgerufen.
+     * @param user
+     */
+    public void signInSuccess(User user) {
+        hideDialog();
+        Intent intent = new Intent(RegisterActivity.this, ProjectListActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Methode, um nach erfolgreichem Google-Login die Daten aus dem Intent von Google zu erhalten
+     * @param requestCode RequestCode der zuvor an die GoogleLogin Activity übergeben wurde
+     * @param resultCode resultCode ob der Login erfolgreich war
+     * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,8 +223,9 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
-    /*
-    Bei erfolgreichem Login mit Google zur Projektliste weiterleiten
+    /**
+     * Bei erfolgreichem Login mit Google zur Projektliste weiterleiten
+     * @param idToken
      */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -199,12 +234,12 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            // Login mit Google-Account erfolgreich
+                            Log.d(TAG, "Login mit Google-Account erfolgreich");
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                            Toast.makeText(RegisterActivity.this, "Login mit Google erfolgreich!",
-                                    Toast.LENGTH_SHORT).show();
+                            showInfoSnackBar("Login mit Google erfolgreich!");
                             //goToProjects();
+                            // Google Nutzerdaten abrufen
                             Log.i("Google Uid:", firebaseUser.getUid());
                             Log.i("Google Email:", firebaseUser.getEmail());
                             Log.i("Google Name:", firebaseUser.getDisplayName());
@@ -214,7 +249,7 @@ public class RegisterActivity extends BaseActivity {
                             String userName =  firebaseUser.getDisplayName();
                             String userPhoto =  String.valueOf(firebaseUser.getPhotoUrl());
 
-
+                            // Wenn der Nutzer neu ist, Collection in Firestore anlegen und Nutzerdaten abspeichern
                             if (task.getResult().getAdditionalUserInfo().isNewUser()) {
                                 User user = new User(firebaseUser.getUid(), userName, userMail, userPhoto);
                                 new FirestoreClass().registerUser(RegisterActivity.this, user);
@@ -222,13 +257,13 @@ public class RegisterActivity extends BaseActivity {
                             } else {
                                 Log.i(TAG, "Bereits existierender User");
                                 showErrorSnackBar("Du hast dich bereits mit deinem Google Account registriert");
-                                //TODO: Login
+                                //TODO: Login implementieren
                                 new FirestoreClass().loadUserData(RegisterActivity.this);
                             }
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            // Login mit Google-Account nicht erfolgreich
+                            Log.w(TAG, "Login mit Google-Account nicht erfolgreich", task.getException());
                             showErrorSnackBar("Registrierung fehlgeschlagen!");
                             //hideDialog();
                         }
@@ -237,17 +272,18 @@ public class RegisterActivity extends BaseActivity {
     }
 
     /*
-    Wenn der Login erfolgreich war die ProjektListActivity aufrufen
-     */
-    public void signInSuccess(User user) {
-        hideDialog();
-        Intent intent = new Intent(RegisterActivity.this, ProjectListActivity.class);
-        startActivity(intent);
-    }
-
-    /*
     Formular überprüfen und checken, ob alle Felder ausgefüllt sind, sowie die Mindestanforderungen
     an das Passwort überprüfen
+     */
+
+    /**
+     * Formular überprüfen und checken, ob alle Felder ausgefüllt sind, sowie die Mindestanforderungen
+     * an das Passwort überprüfen und beide Passwortfelder abgleichen
+     * @param name
+     * @param email
+     * @param password
+     * @param repeatPassword
+     * @return
      */
     private Boolean validateForm(String name, String email, String password, String repeatPassword) {
         if (TextUtils.isEmpty(name)) {

@@ -37,6 +37,20 @@ import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
 import de.hochschulehannover.myprojects.utils.Constants;
 
+/**
+ * <h2>Activity TaskListActivity</h2>
+ * <p>Liste der Aufgaben eines Projekts. Diese erbt von {@link BaseActivity}.
+ *
+ * Die Activity beinhaltet ein TabLayout. Es gibt drei Tabs die jeweils die Aufgaben mit dem entsprechenden
+ * Status anzeigen (Backlog, In Arbeit, Fertig).
+ * Die Tabs werden jeweils über einen ViewPager mit der Adapterklasse {@link TaskPagerAdapter} mit einem Fragment
+ * der Klasse {@link TaskListContentFragment} verbunden. Die Inhalte in den Fragments sind wiederum über
+ * einen RecyclerView mit dem Adapter {@link TaskListAdapter} umgesetzt.
+ * </p>
+ * <p>
+ *  <b>Autor(en):</b>
+ * </p>
+ */
 
 public class TaskListActivity extends BaseActivity {
 
@@ -66,8 +80,6 @@ public class TaskListActivity extends BaseActivity {
         binding = ActivityTaskListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
         /*tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -96,6 +108,7 @@ public class TaskListActivity extends BaseActivity {
             userName = getIntent().getStringExtra(Constants.NAME);
         }
 
+        // Neue Aufgabe erstellen mit startActivityForResult, um danach die Listen zu aktualisieren
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,11 +124,13 @@ public class TaskListActivity extends BaseActivity {
         //taskRecyclerView = findViewById(R.id.taskListRecyclerView);
 
         showDialog("Lade Projektdaten");
+        // Projektdaten und Aufgabenlisten abrufen
         new FirestoreClass().getProjectDetails(this, projectDocumentId);
 
         bundle = new Bundle();
         bundle.putParcelable("project", projectDetails);
 
+        // Fragment-Objekte erstellen
         backlogFragment = new TaskListContentFragment(Constants.BACKLOG, 0, projectDetails);
         backlogFragment.setArguments(bundle);
         inProgressFragment = new TaskListContentFragment(Constants.PROGRESS, 1, projectDetails);
@@ -123,6 +138,7 @@ public class TaskListActivity extends BaseActivity {
         doneFragment = new TaskListContentFragment(Constants.DONE, 2, projectDetails);
         doneFragment.setArguments(bundle);
 
+        // Fragments über den TaskPagerAdapter mit den Tabs verbinden
         TaskPagerAdapter taskPagerAdapter = new TaskPagerAdapter(this, getSupportFragmentManager());
         taskPagerAdapter.addFragment(backlogFragment, getString(R.string.backlog));
         taskPagerAdapter.addFragment(inProgressFragment, getString(R.string.in_progress));
@@ -136,17 +152,19 @@ public class TaskListActivity extends BaseActivity {
         tabs.setupWithViewPager(viewPager);
     }
 
+    /**
+     * Abgerufene Projekt-Details verarbeiten. Das Projekt-Objekt wird von der {@link FirestoreClass} übergeben.
+     * Zusätzlich werden die drei Aufgabenlisten an die entsprechenden Fragments übergeben, damit dort
+     * die Listen mit den Aufgaben mithilfe des entsprechenden RecyclerViews erstellt werden können.
+     * @param project
+     */
     public void getProjectDetails(Project project) {
 
         projectDetails = project;
 
         hideDialog();
+        // Projektname als Titel in der Actionbar
         setupActionBar(project.name);
-
-        //TaskList taskList = new TaskList("Backlog", project.userId);
-        //TaskList taskList2 = new TaskList("Zweite Testaufgabe", "Max", "Niedrig", "In Arbeit");
-        //project.taskList.add(taskList);
-        //project.taskList.add(taskList2);
 
         FragmentManager fm = getSupportFragmentManager();
         //BacklogFragment fragment = fm.findFragmentById(R.id.fr)
@@ -155,6 +173,7 @@ public class TaskListActivity extends BaseActivity {
 
         Log.i(TAG, "TaskList:" + project.taskList.toString());
 
+        // Aufgabenlisten im UI entsprechend den Tabs generieren
         backlogFragment.setupRecycler(project.taskList.get(Constants.BACKLOG_INDEX), project);
         Log.i(TAG, "Recycler für Backlog aufgesetzt");
         inProgressFragment.setupRecycler(project.taskList.get(Constants.PROGRESS_INDEX), project);
@@ -170,6 +189,11 @@ public class TaskListActivity extends BaseActivity {
         taskRecyclerView.setAdapter(adapter);*/
     }
 
+    /**
+     * Diese Methode wird von der {@link FirestoreClass} aufgerufen wenn die Aufgabenlisten im
+     * Firestore erfolgreich aktualisiert werden konnten. Danach werden die ProjektDetails
+     * und Aufgabenlisten im UI aktualisiert
+     */
     public void updateStatusListSuccess() {
         hideDialog();
         showInfoSnackBar("Aufgabenliste erfolgreich aktualisiert!");
@@ -177,22 +201,32 @@ public class TaskListActivity extends BaseActivity {
         new FirestoreClass().getProjectDetails(this, projectDetails.documentId);
     }
 
+    /**
+     * Diese Methode wird von der {@link FirestoreClass} aufgerufen wenn das Projekt erfolgreich
+     * gelöscht werden konnte. Die Activity wird nach Löschen des Projekts geschlossen.
+     */
     public void projectDeletedSuccessfully() {
         hideDialog();
         showInfoSnackBar("Projekt "+ projectDetails.name + "erfolgreich gelöscht");
         finish();
     }
 
+    /**
+     * Attribut projectDetails vom Datentyp Projekt abrufen
+     * @return
+     */
     public Project getProject() {
         return projectDetails;
     }
 
+    // Weitere Aufgabenliste(ähnlich wie Backlog etc.) vom Nutzer erstellen. Wurde nicht mehr umgesetzt
+    // Es kann nur die drei Standard-Aufgabenlisten geben, ein Nutzer kann keine eigenen Listen erstellen.
     public void createTaskList(String taskListName) {
         TaskList taskList = new TaskList(taskListName, new FirestoreClass().getUserId());
 
         projectDetails.taskList.add(0, taskList);
 
-        showDialog("Erstelle Listen...");
+        showDialog("Erstelle Liste...");
         new FirestoreClass().updateTaskList(this, projectDetails);
     }
 

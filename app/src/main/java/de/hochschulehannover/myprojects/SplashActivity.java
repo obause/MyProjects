@@ -44,6 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         // Firebase initialisieren
         mAuth = FirebaseAuth.getInstance();
 
+        // Statusbar ausblenden
         hide_status_bar();
 
         Typeface typeface = ResourcesCompat.getFont(this, R.font.carbonbl);
@@ -51,6 +52,8 @@ public class SplashActivity extends AppCompatActivity {
         TextView app_name = findViewById(R.id.myprojects_name);
         app_name.setTypeface(typeface);
 
+        // Splashscreen für 1,5 Sekunden anzeigen, danach zum Startbildschirm weiterleiten bzw.
+        // zur Projektliste, wenn der Nutzer bereits eingeloggt ist
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             //Sobald der Timer abgelaufen ist wird die Methode ausgeführt
             FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -65,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
         }, 1500);
     }
 
-    //Statusbar für den Splash-Screen ausblenden je nach Android-Version (< Android 10 und ab Android 10)
+    // Statusbar für den Splash-Screen ausblenden je nach Android-Version (< Android 10 und ab Android 10)
     private void hide_status_bar() {
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT < 30) {

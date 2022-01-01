@@ -6,6 +6,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -24,89 +26,44 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hochschulehannover.myprojects.firebase.FirestoreClass;
+import de.hochschulehannover.myprojects.helper.DBHelper;
 import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.TaskList;
 import de.hochschulehannover.myprojects.utils.Constants;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
+/**
+ * <h2>Activity AddProject</h2>
+ * <p>Activity zum Hinzufügen eines neuen Projekts. Diese erbt von {@link BaseActivity}.
+ *
+ *
+ * Über einen RecyclerView werden alle Projekte die dem eingeloggten Nutzer zugeordnet sind, angezeigt.
+ * Weiterleitung zur Aufgabenliste ({@link TaskListActivity}) bei Klick auf ein Projekt</p>
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
+
 public class AddProject extends BaseActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    Spinner statusSpinner;
-    TextView startDateEditText;
-    TextView endDateEditText;
-    DatePickerDialog picker;
-
-    Button pickColorButton;
-    EditText projectNameEditText;
-    EditText projectTagEditText;
-    AutoCompleteTextView projectStatusText;
-    EditText projectStartEditText;
-    EditText projectEndEditText;
-    Button addProjectButton;
+    private Button pickColorButton;
+    private EditText projectNameEditText;
+    private EditText projectTagEditText;
+    private AutoCompleteTextView projectStatusText;
+    private EditText projectStartEditText;
+    private EditText projectEndEditText;
+    private Button addProjectButton;
 
     private String userName;
     private String projectColor = String.valueOf(R.color.primary_app_color);
 
-
-    /* Alte Methode
-    public void addProject(View view) {
-        DBHelper dbHelper = new DBHelper(this);
-
-        String projectName = projectNameEditText.getText().toString();
-        String projectStatus = statusSpinner.getSelectedItem().toString();
-        String projectStartDate = startDateEditText.getText().toString();
-        String projectEndDate = endDateEditText.getText().toString();
-
-        writeProject(dbHelper, projectName, projectStatus, projectStartDate, projectEndDate);
-        ProjectListActivity.projectItems.add(projectName);
-        ProjectListActivity.readProjects(dbHelper);
-        ProjectListActivity.arrayAdapter.notifyDataSetChanged();
-        finish();
-    }
-    */
-
-    public void createProject() {
-        ArrayList<String> assignedUsers = new ArrayList<>();
-        assignedUsers.add(getUserId());
-
-        String projectName = projectNameEditText.getText().toString();
-        String projectStatus = projectStatusText.getText().toString();
-        String projectTag = projectTagEditText.getText().toString();
-        String projectStartDate = projectStartEditText.getText().toString();
-        String projectEndDate = projectEndEditText.getText().toString();
-
-        Log.i("ProjectDetails", projectName + projectStatus);
-
-        Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate, projectStatus);
-
-        // Standard-Aufgabenlisten erstellen TODO: Listennamen in Contants packen
-        TaskList backlog = new TaskList("backlog", new FirestoreClass().getUserId());
-        TaskList inProgress = new TaskList("in_progress", new FirestoreClass().getUserId());
-        TaskList done = new TaskList("done", new FirestoreClass().getUserId());
-        //projectDetails.taskList.add(0, taskList);
-        //new FirestoreClass().updateTaskList(this, projectDetails);
-        //HashMap<String, Object> taskListHashMap = new HashMap<>();
-        //taskListHashMap.put(Constants.TASK_LIST, project.taskList);
-        project.taskList.add(backlog);
-        project.taskList.add(inProgress);
-        project.taskList.add(done);
-
-        // Projekt in Firestore anlegen
-        new FirestoreClass().createProject(this, project);
-    }
-
-    /*public static void writeProject (DBHelper dbHelper, String name, String status, String projectStartDate, String projectEndDate) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", name);
-        values.put("status", status);
-        values.put("startDate", projectStartDate);
-        values.put("endDate", projectEndDate);
-        db.insert("projects", null, values);
-        ProjectListActivity.readProjects(dbHelper);
-    }*/
+    // Alt
+    private Spinner statusSpinner;
+    private TextView startDateEditText;
+    private TextView endDateEditText;
+    private DatePickerDialog picker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,34 +73,11 @@ public class AddProject extends BaseActivity {
         toolbar = findViewById(R.id.addProjectToolbar);
         setupActionBar();
 
+        // ColorPicker initialisieren + Ereignisbehandlung
         pickColorButton = findViewById(R.id.pickColorButton);
+        setupColorPicker();
 
-        pickColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ColorPicker colorPicker = new ColorPicker(AddProject.this);
-                colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
-                    @Override
-                    public void onChooseColor(int position,int color) {
-                        pickColorButton.setBackgroundColor(color);
-                        //view.background.colorFilter = BlendModeColorFilter(Color.parseColor("#343434"), BlendMode.SRC_ATOP)
-                        //GradientDrawable bgShape = (GradientDrawable)pickColorButton.getBackground();
-                        //bgShape.setColor(color);
-                        Log.i("ColorPicker", String.valueOf(color));
-                        projectColor = String.valueOf(color);
-                    }
-
-                    @Override
-                    public void onCancel(){
-                        Toast.makeText(AddProject.this, "Farbauswahl abgebrochen", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                        .setTitle("Wähle eine Farbe für dein Projekt")
-                        .setRoundColorButton(true)
-                        .show();
-            }
-        });
-
+        // Username abrufen
         if (getIntent().hasExtra(Constants.NAME)) {
             userName = getIntent().getStringExtra(Constants.NAME);
         }
@@ -175,7 +109,7 @@ public class AddProject extends BaseActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
+                // Datumsauswahl Dialog
                 picker = new DatePickerDialog(AddProject.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -195,7 +129,7 @@ public class AddProject extends BaseActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
+                // Datumsauswahl Dialog
                 picker = new DatePickerDialog(AddProject.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
@@ -208,12 +142,9 @@ public class AddProject extends BaseActivity {
         });
 
         //statusSpinner = (Spinner) findViewById(R.id.statusSpinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         //        R.array.project_status_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         //statusSpinner.setAdapter(adapter);
 
         //Material DropDown mit Auswahlmöglichkeiten füllen
@@ -222,10 +153,87 @@ public class AddProject extends BaseActivity {
         projectStatusText.setAdapter(adapter);
     }
 
+    /**
+     * Nach Klick auf Projekt erstellen Button die eingegebenen Wert abrufen, sowie die UserID des
+     * eingeloggten Nutzers. Daraus wird ein Project-Objekt von {@link Project} erstellt.
+     * Zusätzlich werden drei TaskList-Objekte von {@link TaskList} erstellt, die jeweils eine
+     * Aufgabenliste des Status repräsentieren. Ursprünglich war angedacht, dass ein Nutzer eigene Aufgabenlisten
+     * erstellen kann wurde aber dann wieder verworfen.
+     */
+    public void createProject() {
+        ArrayList<String> assignedUsers = new ArrayList<>();
+        assignedUsers.add(getUserId());
+
+        String projectName = projectNameEditText.getText().toString();
+        String projectStatus = projectStatusText.getText().toString();
+        String projectTag = projectTagEditText.getText().toString();
+        String projectStartDate = projectStartEditText.getText().toString();
+        String projectEndDate = projectEndEditText.getText().toString();
+
+        Log.i("ProjectDetails", projectName + projectStatus);
+
+        // Project-Objekt anlegen
+        Project project = new Project(projectName, projectColor, userName, assignedUsers, projectTag, projectStartDate, projectEndDate, projectStatus);
+
+        // Standard-Aufgabenlisten erstellen TODO: Listennamen in Contants packen
+        TaskList backlog = new TaskList("backlog", new FirestoreClass().getUserId());
+        TaskList inProgress = new TaskList("in_progress", new FirestoreClass().getUserId());
+        TaskList done = new TaskList("done", new FirestoreClass().getUserId());
+        //projectDetails.taskList.add(0, taskList);
+        //new FirestoreClass().updateTaskList(this, projectDetails);
+        //HashMap<String, Object> taskListHashMap = new HashMap<>();
+        //taskListHashMap.put(Constants.TASK_LIST, project.taskList);
+
+        // Aufgabenlisten zum Projekt hinzufügen
+        project.taskList.add(backlog);
+        project.taskList.add(inProgress);
+        project.taskList.add(done);
+
+        // Projekt in Firestore anlegen, danach Aufruf der Methode projectCreatedSuccessfully()
+        new FirestoreClass().createProject(this, project);
+    }
+
+    /**
+     * Nachdem das Projekt im Firestore erfolgreich angelegt wurde wird der Ladedialog ausgeblendet
+     * und die Activity geschlossen. Dabei wird an die aufrufende Activity {@link ProjectListActivity}
+     * gemeldet, dass das Projekt erfolgreich erstellt wurde und entsprechend die Projektliste aktualisiert.
+     */
     public void projectCreatedSuccessfully() {
         hideDialog();
         setResult(RESULT_OK);
         finish();
+    }
+
+    /**
+     * ColorPicker Dialog initialisieren. Genutzt wird dafür die externe Library von https://github.com/kristiyanP/colorpicker
+     */
+    private void setupColorPicker() {
+        pickColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Externe Library von
+                ColorPicker colorPicker = new ColorPicker(AddProject.this);
+                colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                    @Override
+                    public void onChooseColor(int position,int color) {
+                        pickColorButton.setBackgroundColor(color);
+                        //view.background.colorFilter = BlendModeColorFilter(Color.parseColor("#343434"), BlendMode.SRC_ATOP)
+                        //GradientDrawable bgShape = (GradientDrawable)pickColorButton.getBackground();
+                        //bgShape.setColor(color);
+                        Log.i("ColorPicker", String.valueOf(color));
+                        projectColor = String.valueOf(color);
+                    }
+
+                    @Override
+                    public void onCancel(){
+                        Toast.makeText(AddProject.this, "Farbauswahl abgebrochen", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .setTitle("Wähle eine Farbe für dein Projekt")
+                        .setRoundColorButton(true)
+                        .show();
+            }
+        });
     }
 
     // Custom ActionBar initialisieren
@@ -244,5 +252,33 @@ public class AddProject extends BaseActivity {
                 onBackPressed();
             }
         });
+    }
+
+    // Alte Methode
+    public void addProject(View view) {
+        DBHelper dbHelper = new DBHelper(this);
+
+        String projectName = projectNameEditText.getText().toString();
+        String projectStatus = statusSpinner.getSelectedItem().toString();
+        String projectStartDate = startDateEditText.getText().toString();
+        String projectEndDate = endDateEditText.getText().toString();
+
+        writeProject(dbHelper, projectName, projectStatus, projectStartDate, projectEndDate);
+        ProjectListActivity.projectItems.add(projectName);
+        ProjectListActivity.readProjects(dbHelper);
+        ProjectListActivity.arrayAdapter.notifyDataSetChanged();
+        finish();
+    }
+
+    // Alte Methode
+    public static void writeProject (DBHelper dbHelper, String name, String status, String projectStartDate, String projectEndDate) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("status", status);
+        values.put("startDate", projectStartDate);
+        values.put("endDate", projectEndDate);
+        db.insert("projects", null, values);
+        ProjectListActivity.readProjects(dbHelper);
     }
 }
