@@ -25,11 +25,7 @@ import java.util.Map;
 import de.hochschulehannover.myprojects.helper.DBHelper;
 import de.hochschulehannover.myprojects.model.Project;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class BacklogFragment extends Fragment {
 
     ListView taskListView;
@@ -53,14 +49,6 @@ public class BacklogFragment extends Fragment {
         this.mParam1 = status.toString();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskListFragment.
-     */
     // TODO: Rename and change types and number of parameters
     /*public static TaskListFragment newInstance(String param1, String param2) {
         TaskListFragment fragment = new TaskListFragment();

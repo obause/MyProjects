@@ -154,7 +154,7 @@ public class AddProject extends BaseActivity {
     }
 
     /**
-     * Nach Klick auf Projekt erstellen Button die eingegebenen Wert abrufen, sowie die UserID des
+     * Nach Klick auf Projekt erstellen Button die eingegebenen Werte abrufen, sowie die UserID des
      * eingeloggten Nutzers. Daraus wird ein Project-Objekt von {@link Project} erstellt.
      * Zusätzlich werden drei TaskList-Objekte von {@link TaskList} erstellt, die jeweils eine
      * Aufgabenliste des Status repräsentieren. Ursprünglich war angedacht, dass ein Nutzer eigene Aufgabenlisten

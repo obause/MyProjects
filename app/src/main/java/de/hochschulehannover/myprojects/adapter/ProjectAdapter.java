@@ -16,9 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.R;
+import de.hochschulehannover.myprojects.TaskListActivity;
 import de.hochschulehannover.myprojects.model.Project;
 
+/**
+ * <h2>Adapterklasse ProjectAdapter</h2>
+ *
+ * Adapterklasse, die den entsprechenden RecyclerView mithilfe eines ViewHolders mit den Projekten befüllt.
+ * Diese erbt von {@link RecyclerView.Adapter}.
+ *
+ * Es werden alle Projekte die dem eingeloggten Nutzer zugeordnet sind für das UI erstellt.
+ *
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
@@ -26,32 +40,31 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<Project> mData;
     private ItemClickListener mClickListener;
 
+    /**
+     * Konstruktor zum initialisieren des Objekts.
+     * @param context Der Context der aufrufenden Activity
+     * @param list Eine ArrayList bestehend aus den Projekten (Jedes Projekt ist ein Objekt von {@link Project})
+     */
     public ProjectAdapter(Context context, ArrayList<Project> list) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = list;
-
     }
 
     /**
-     * Called when RecyclerView needs a new  ViewHolder of the given type to represent
-     * an item.
-     * <p>
-     * This new ViewHolder should be constructed with a new View that can represent the items
-     * of the given type. You can either create a new View manually or inflate it from an XML
-     * layout file.
-     * <p>
-     * The new ViewHolder will be used to display items of the adapter using
-     *  #onBindViewHolder(ViewHolder, int, List). Since it will be re-used to display
-     * different items in the data set, it is a good idea to cache references to sub views of
-     * the View to avoid unnecessary {@link View#findViewById(int)} calls.
+     * Wird aufgerufen, wenn der RecyclerView einen neuen ViewHolder benötigt, um ein Element
+     * (Projekt) zu repräsentieren.
      *
-     * @param parent   The ViewGroup into which the new View will be added after it is bound to
-     *                 an adapter position.
-     * @param viewType The view type of the new View.
-     * @return A new ViewHolder that holds a View of the given view type.
-     * @see #getItemViewType(int)
-     *  #onBindViewHolder(ViewHolder, int)
+     * Der ViewHolder wird mit einem neuen View initialisiert, das die Elemente(Projekte)
+     * repräsentiert. Die View wird von der angegebenen XML content_project_card.xml inflated.
+     *
+     * Das ViewHolder Objekt wird dann dazu genutzt die Elemente(Projekte) des Adapers mithilfe von
+     * #onBindViewHolder(ViewHolder, int, List) anzuzeigen.
+     *
+     * @param parent   Die ViewGroup in die die neue View hinzugefügt wird nachdem es zum Adapter
+     *                 hinzugefügt wurde.
+     * @param viewType Der View Type der neuen View.
+     * @return Eine neues ViewHolder-Objekt, das die entsprechende View beinhaltet.
      */
     @NonNull
     @Override
@@ -64,29 +77,17 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return new MyViewHolder(view);
     }
 
-
-    /*
-    Element aus Liste mit RecyclerView verbinden
-     */
     /**
-     * Called by RecyclerView to display the data at the specified position. This method should
-     * update the contents of the { ViewHolder#itemView} to reflect the item at the given
-     * position.
-     * <p>
-     * Note that unlike { ListView}, RecyclerView will not call this method
-     * again if the position of the item changes in the data set unless the item itself is
-     * invalidated or the new position cannot be determined. For this reason, you should only
-     * use the <code>position</code> parameter while acquiring the related data item inside
-     * this method and should not keep a copy of it. If you need the position of an item later
-     * on (e.g. in a click listener), use { ViewHolder#getAdapterPosition()} which will
-     * have the updated adapter position.
-     * <p>
-     * Override { #onBindViewHolder(ViewHolder, int, List)} instead if Adapter can
-     * handle efficient partial bind.
+     * Wird vom RecyclerView aufgerufen, um die Daten anzuzeigen. Diese Methode aktualisiert die
+     * Elemente des ViewHolders mit den Attributen eines Projekts.
+     * -> Element aus der Projektliste wird mit Recyclerview verbunden.
      *
-     * @param holder   The ViewHolder which should be updated to represent the contents of the
-     *                 item at the given position in the data set.
-     * @param position The position of the item within the adapter's data set.
+     * TODO: anstatt den Parameter position zu nehmen, holder.getAdapterPosition() nutzen
+     * Grund: Wenn sich die Position des Elements in der Liste ändert, ändert sich die Position nicht.
+     * Wenn es später möglich sein soll die Anordnung der Liste änzupassen muss das geändert werden
+     *
+     * @param holder   Das ViewHolder-Objekt, in dem die Elemente mit den Projektdaten aktualisiert werden.
+     * @param position Die Position des Elements im Adapter.
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -115,9 +116,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     /**
-     * Returns the total number of items in the data set held by the adapter.
+     * Gibt die Gesamtanzahl der Elemente in den Daten(ArrayList der  Projekte) zurück, die sich im
+     * Adapter befinden
      *
-     * @return The total number of items in this adapter.
+     * @return Anzahl Elemente im Adapter.
      */
     @Override
     public int getItemCount() {
@@ -129,7 +131,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mClickListener = itemClickListener;
     }
 
-    //Innere Klasse
+    //Innere Klasse MyViewHolder
     private class MyViewHolder extends RecyclerView.ViewHolder {
 
         public MyViewHolder(@NonNull View itemView) {
@@ -137,7 +139,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    // parent activity will implement this method to respond to click events
+    // Übergeprdnete Activity implementiert diese Methode, um eine Ereignisbehandlung der Klicks auf
+    // Elemente zu ermöglichen.
     public interface ItemClickListener {
         void onClick(int position, Project model);
     }

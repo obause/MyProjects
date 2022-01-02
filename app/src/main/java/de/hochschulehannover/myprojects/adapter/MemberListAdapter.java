@@ -14,10 +14,27 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import de.hochschulehannover.myprojects.BaseActivity;
 import de.hochschulehannover.myprojects.R;
+import de.hochschulehannover.myprojects.TaskListActivity;
+import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.User;
 
+/**
+ * <h2>Adapterklasse MemberListAdapter</h2>
+ *
+ * Adapterklasse, die den RecyclerView der Activity {@link de.hochschulehannover.myprojects.ProjectMembersActivity}
+ * mithilfe eines ViewHolders mit den zugeordneten Nutzern des Projekts befüllt.
+ *
+ * Diese erbt von {@link RecyclerView.Adapter}.
+ *
+ * Es werden alle Nutzer die dem Projekt zugeordnet sind für das UI erstellt.
+ *
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private LayoutInflater mInflater;
@@ -27,12 +44,32 @@ public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private CircleImageView userImage;
 
+    /**
+     * Konstruktor zum initialisieren des Objekts.
+     * @param context Der Context der aufrufenden Activity
+     * @param list Eine ArrayList bestehend aus den Usern (Jedes Element ist ein Objekt von {@link User})
+     */
     public MemberListAdapter(Context context, ArrayList<User> list) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
         this.mData = list;
     }
 
+    /**
+     * Wird aufgerufen, wenn der RecyclerView einen neuen ViewHolder benötigt, um ein Element
+     * (Nutzer) zu repräsentieren.
+     *
+     * Der ViewHolder wird mit einem neuen View initialisiert, das die Elemente(Nutzer)
+     * repräsentiert. Die View wird von der angegebenen XML item_list_members.xml inflated.
+     *
+     * Das ViewHolder Objekt wird dann dazu genutzt die Elemente(Nutzer) des Adapers mithilfe von
+     * #onBindViewHolder(ViewHolder, int, List) anzuzeigen.
+     *
+     * @param parent   Die ViewGroup in die die neue View hinzugefügt wird nachdem es zum Adapter
+     *                 hinzugefügt wurde.
+     * @param viewType Der View Type der neuen View.
+     * @return Eine neues ViewHolder-Objekt, das die entsprechende View beinhaltet.
+     */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +82,14 @@ public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return new MyViewHolder(view);
     }
 
+    /**
+     * Wird vom RecyclerView aufgerufen, um die Daten anzuzeigen. Diese Methode aktualisiert die
+     * Elemente des ViewHolders mit den Attributen eines Nutzers.
+     * -> Element aus der Userliste wird mit Recyclerview verbunden.
+     *
+     * @param holder   Das ViewHolder-Objekt, in dem die Elemente mit den Nutzerdaten aktualisiert werden.
+     * @param position Die Position des Elements im Adapter.
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -65,6 +110,12 @@ public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         memberMailTextView.setText(model.email);
     }
 
+    /**
+     * Gibt die Gesamtanzahl der Elemente in den Daten(ArrayList der  Projekte) zurück, die sich im
+     * Adapter befinden
+     *
+     * @return Anzahl Elemente im Adapter.
+     */
     @Override
     public int getItemCount() {
         return mData.size();
@@ -75,7 +126,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.mClickListener = itemClickListener;
     }
 
-    //Innere Klasse
+    //Innere Klasse MyViewHolder
     private class MyViewHolder extends RecyclerView.ViewHolder {
 
         public MyViewHolder(@NonNull View itemView) {
@@ -83,7 +134,8 @@ public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    // parent activity will implement this method to respond to click events
+    // Übergeprdnete Activity implementiert diese Methode, um eine Ereignisbehandlung der Klicks auf
+    // Elemente zu ermöglichen.
     public interface ItemClickListener {
         void onClick(int position, Task task, View view, String s);
     }

@@ -27,36 +27,47 @@ import de.hochschulehannover.myprojects.model.Task;
 import de.hochschulehannover.myprojects.model.TaskList;
 import de.hochschulehannover.myprojects.utils.Constants;
 
+/**
+ * <h2>Activity AddTask</h2>
+ * <p>Activity zum Hinzufügen einer neuen Aufgabe zum Projekt. Diese erbt von {@link BaseActivity}.
+ *
+ * Eine neu erstellte Aufgabe wird der entsprechenden Aufgabenliste(Backlog, In Arbeit, Fertig)
+ * zugeordnet und das Projekt wird anschließend in Firestore aktualisiert
+ *</p>
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public class AddTask extends BaseActivity {
 
     private static final String TAG = "AddTask";
 
-    Toolbar toolbar;
-    EditText taskNameEditText;
-    AutoCompleteTextView taskStatusText;
-    AutoCompleteTextView taskPrioText;
-    EditText taskDescrEditText;
-    Button createTaskButton;
-    Button deleteTaskButton;
+    private Toolbar toolbar;
+    private EditText taskNameEditText;
+    private AutoCompleteTextView taskStatusText;
+    private AutoCompleteTextView taskPrioText;
+    private EditText taskDescrEditText;
+    private Button createTaskButton;
+    private Button deleteTaskButton;
 
-    Integer statusIndex;
-    Integer oldStatusIndex;
+    private Integer statusIndex;
+    private Integer oldStatusIndex;
 
-    Task task;
-    Integer taskPosition;
-    Project projectDetails;
-    String projectDocumentId;
-    String userName;
+    private Task task;
+    private Integer taskPosition;
+    private Project projectDetails;
+    private String projectDocumentId;
+    private String userName;
 
     //Alt
-    Spinner prioSpinner;
-    Spinner statusTaskSpinner;
-    Integer projectId;
-    Integer taskId;
-    String taskName;
-    String taskPrio;
-    String taskStatus;
-    ImageButton deleteButton;
+    private Spinner prioSpinner;
+    private Spinner statusTaskSpinner;
+    private Integer projectId;
+    private Integer taskId;
+    private String taskName;
+    private String taskPrio;
+    private String taskStatus;
+    private ImageButton deleteButton;
 
 
     @Override
@@ -64,7 +75,8 @@ public class AddTask extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        // Aufgaben des aktuellen Projekts holen
+        // Anhand der DocumentId aus Firestore das Projekt mit den Aufgaben holen
+        // TODO: Parcelable-Umsetzung einbauen
         if (getIntent().hasExtra(Constants.DOCUMENT_ID) && getIntent().hasExtra(Constants.NAME)) {
             projectDocumentId = getIntent().getStringExtra(Constants.DOCUMENT_ID);
             Log.i(TAG, "DocumentId:" + projectDocumentId);
@@ -83,6 +95,8 @@ public class AddTask extends BaseActivity {
         deleteTaskButton = findViewById(R.id.deleteTaskButton);
         deleteTaskButton.setVisibility(View.INVISIBLE);
 
+        // Bei Klick auf "Aufgabe erstellen" wird die neue Aufgabe verarbeitet und die aktualisierten
+        // Projektdaten an Firestore gesendet und aktualisiert
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +109,7 @@ public class AddTask extends BaseActivity {
                     String taskPrio = taskPrioText.getText().toString();
                     String taskDescr = taskDescrEditText.getText().toString();
 
+                    // Neuen Task erstellen und zur TaskList des entsprechenden Status hinzufügen
                     addTaskToList(statusIndex, taskName, taskStatus, taskPrio, taskDescr);
                 } else {
                     showErrorSnackBar("Name, Status und Priorität müssen ausgefüllt werden!");
@@ -111,9 +126,8 @@ public class AddTask extends BaseActivity {
         taskPrioText.setAdapter(prioAdapter);
 
 
-        /* Position des ausgewählten Elements vom Status holen
-         * Entspricht der Position der Liste in Firestore
-         */
+        // Position des ausgewählten Elements vom Status holen
+        // Entspricht der Position der Liste in Firestore
         taskStatusText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,12 +135,11 @@ public class AddTask extends BaseActivity {
             }
         });
 
-        if (getIntent().hasExtra("statusIndex")) {
-            statusIndex = getIntent().getIntExtra("statusIndex", 0);
-        }
-
+        // Wenn beide Extras existieren handelt es sich nicht um eine neue Aufgabe, sonder es wurde
+        // eine bereits bestehende angeklickt -> "Bearbeitungsmodus"
         if (getIntent().hasExtra("task") && getIntent().hasExtra("taskPosition")) {
 
+            // Angeklickte Aufgabe aus Intent holen
             task = getIntent().getExtras().getParcelable("task");
             taskPosition = getIntent().getIntExtra("taskPosition", 0);
             oldStatusIndex = statusIndex;
@@ -150,6 +163,7 @@ public class AddTask extends BaseActivity {
             Log.i("Positionen", "oldStatusIndex: " + oldStatusIndex);
             Log.i("Positionen", "taskPosition: " + taskPosition);
 
+            // Ereignisbehandlung des Buttons überschreiben -> Bestehende Aufgabe wird aktualisiert
             createTaskButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -176,7 +190,7 @@ public class AddTask extends BaseActivity {
                 }
             });
         }
-        /*
+        /* Alte Umsetzung
         taskNameEditText = findViewById(R.id.taskNameEditText);
         deleteButton = findViewById(R.id.deleteButton);
 
@@ -216,6 +230,18 @@ public class AddTask extends BaseActivity {
          */
     }
 
+    /**
+     * Diese Methode erstellt ein neues Task Objekt ({@link Task}). Danach wird die entsprechende
+     * Aufgabenliste aus dem aktuellen Projekt geholt und die Aufgabe wird zu dieser Liste hinzugefügt.
+     * Danach wird die alte Aufgabenliste im Projekt-Objekt mit der aktualisierten Aufgabenliste überschrieben.
+     * Anschließend wird das aktualisierte Projekt-Objekt an die FirestoreClass übergeben welche das
+     * aktualisierte Projekt in Firestore aktualisiert.
+     * @param position Position der Aufgabenliste die aktualisiert werden soll
+     * @param taskName Name der Aufgabe
+     * @param status Status der Aufgabe
+     * @param priotity Priorität der Aufgabe
+     * @param description Beschreibung der Aufgabe
+     */
     public void addTaskToList(Integer position, String taskName, String status, String priotity,
                               String description) {
         //projectDetails.taskList.remove(projectDetails.taskList.size() -1);
@@ -239,6 +265,17 @@ public class AddTask extends BaseActivity {
         new FirestoreClass().updateTaskList(this, projectDetails);
     }
 
+    /**
+     * Diese Methode aktualisiert eine bereits bestehende Aufgabe in der entsprechenden Aufgabenliste.
+     * Sollte sich der Status der Aufgabe geändert haben wird die Aufgabe aus der Aufgabenliste des alten
+     * Status entfernt und in die Aufgabenliste des neuen Status hinzugefügt.
+     * Anschließend wird das aktualisierte Projekt im Firestore aktualisiert.
+     * @param position
+     * @param taskName
+     * @param status
+     * @param priotity
+     * @param description
+     */
     public void updateTaskInList(Integer position, String taskName, String status, String priotity,
                                  String description) {
         //ArrayList<String> taskAssignedUsersList = new ArrayList<>();
@@ -295,6 +332,11 @@ public class AddTask extends BaseActivity {
         new FirestoreClass().updateTaskList(this, projectDetails);
     }
 
+    /**
+     * Diese Methode löscht eine Aufgabe aus der entsprechenden Aufgabenliste.
+     * Danach wird das Projekt in Firestore aktualisiert
+     * @param position
+     */
     public void deleteTask(Integer position) {
 
         new android.app.AlertDialog.Builder(AddTask.this)
@@ -324,6 +366,10 @@ public class AddTask extends BaseActivity {
                 .show();
     }
 
+    /**
+     * Diese Methode wird vpn der {@link FirestoreClass} aufgerufen, wenn eine Aufgabenliste
+     * im Firestore erfolgreich aktualisiert werden konnte
+     */
     public void updateStatusListSuccess() {
         hideDialog();
         showInfoSnackBar("Aufgabenliste erfolgreich aktualisiert!");
@@ -331,6 +377,11 @@ public class AddTask extends BaseActivity {
         finish();
     }
 
+    /**
+     * Diese Methode wird von der {@link FirestoreClass} aufgerufen, um die aus Firestore geholten
+     * Projektdaten an die Activity zu übergeben.
+     * @param project
+     */
     public void getProjectDetails(Project project) {
         hideDialog();
         projectDetails = project;
@@ -354,7 +405,7 @@ public class AddTask extends BaseActivity {
         });
     }
 
-    /*
+    // Ab hier alte nicht mehr benutzte Methoden (Soll irgendwann wieder aufgenommen werden)
     public void addTask(View view) {
         DBHelper dbHelper = new DBHelper(this);
 
@@ -379,7 +430,6 @@ public class AddTask extends BaseActivity {
             finish();
         }
     }
-    */
 
     public static void updateTask (DBHelper dbHelper, Integer taskId, Integer projectId, String name, String status, String prio) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();

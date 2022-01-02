@@ -6,7 +6,23 @@ import android.util.Log;
 
 import java.io.Serializable;
 
-
+/**
+ * <h2>Model User</h2>
+ * Modelklasse für einen User. Die Klasse implementiert das {@link Parcelable} interface.
+ * Damit kann das gesamte Objekt einfacher an Activities übergeben werden.
+ *
+ * <p>Ein User besitzt folgende Attribute:</p>
+ * <ul>
+ *  <li>id: Die von Firebase Authentication generierte UID</li>
+ *  <li>name: Der Name des Nutzers</li>
+ *  <li>email: Die Email-Adresse des Nutzers</li>
+ *  <li>image: Die URL zum Profilbild des Nutzers</li>
+ *  <li>fcmToken: Token für Benachrichtigungen (Funktion noch nicht implementiert)</li>
+ * </ul>
+ *
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public final class User implements Parcelable {
     //TODO: Attribute privat setzen und getter/setter erstellen
     public String id = "";

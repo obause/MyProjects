@@ -8,6 +8,28 @@ import java.util.ArrayList;
 
 import de.hochschulehannover.myprojects.R;
 
+/**
+ * <h2>Model Project</h2>
+ * Modelklasse für ein Projekt. Die Klasse implementiert das {@link Parcelable} interface.
+ * Damit kann das gesamte Objekt einfacher an Activities übergeben werden.
+ *
+ * <p>Ein Projekt besitzt folgende Attribute:</p>
+ *  <ul>
+ *   <li>Name: Name des Projekts</li>
+ *   <li>Color: Farbe des Projekt, Standardfarbe: App Hauptfarbe</li>
+ *   <li>userId: Name des Users der das Projekt erstellt hat (Name in Klartext und nicht die UID)</li>
+ *   <li>assignedUsers: ArrayList bestehend aus den UIDs aller Nutzer, die zum Projekt hinzugefügt wurden</li>
+ *   <li>Tag: Tag bzw. Kategorie des Projekts</li>
+ *   <li>startDate: Datum an dem das Projekt beginnen soll</li>
+ *   <li>endDate: Datum an dem das Projekt vorraussichtlich beendet werden soll</li>
+ *   <li>documentId: Die documentId im Firestore</li>
+ *   <li>status: Der Status des Projekts(Nicht angefangen, In Arbeit, Abgeschlossen, Abgebrochen)</li>
+ *   <li>taskList: Eine ArrayList bestehend aus Objekten vom Typ TaskList. In dieser sind die Aufgabenlisten (Backlog, In Bearbeitung, Fertig) gespeichert</li>
+ *  </ul>
+ *
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public class Project implements Parcelable {
     public String name = "";
     public String color = String.valueOf(R.color.primary_app_color);

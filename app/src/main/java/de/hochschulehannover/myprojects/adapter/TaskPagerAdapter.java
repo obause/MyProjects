@@ -7,6 +7,7 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,20 @@ import de.hochschulehannover.myprojects.R;
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
+ */
+/**
+ * <h2>Adapterklasse TaskPagerAdapter</h2>
+ *
+ * Adapterklasse, die ein zu einem Tab zugehöriges Fragment zurückgibt
+ * Diese erbt von {@link FragmentPagerAdapter}.
+ *
+ * TODO: FragmentPagerAdapter ist veraltet. Neueren ViewPager2 nutzen und dafür eine FragmentStateAdapter Klasse erstellen.
+ *
+ * Das Fragment wird mit dem entsprechenden Tab verbunden bzw. zu diesem Tag hinzugefügt.
+ *
+ *<p>
+ * <b>Autor(en):</b>
+ * </p>
  */
 public class TaskPagerAdapter extends FragmentPagerAdapter {
 
@@ -32,8 +47,9 @@ public class TaskPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
+        // getItem wird aufgerufen, um das Fragment für den entsprechenden Tab zu initialisieren.
+        // Das Fragment wird hier nicht initialisiert. Stattdessen werden alle drei Fragments
+        // an diese Klasse übergeben.
         //return PlaceholderFragment.newInstance(position + 1);
         return fragmentArrayList.get(position);
     }
@@ -47,10 +63,12 @@ public class TaskPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
+        // Anzahl der Tabs entsprechend der Anzahl der Fragments in der ArrayList
         return fragmentArrayList.size();
     }
 
+    // Mit addFragment werden die erstellen Fragment-Objekte aus der Klasse der Activity hier zur
+    // ArrayList hinzugefügt.
     public void addFragment(Fragment fragment, String title) {
         fragmentArrayList.add(fragment);
         fragmentTitle.add(title);

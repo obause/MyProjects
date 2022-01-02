@@ -6,6 +6,23 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+/**
+ * <h2>Model Task</h2>
+ * Modelklasse für eine Aufgabe. Die Klasse implementiert das {@link Parcelable} interface.
+ * Damit kann das gesamte Objekt einfacher an Activities übergeben werden.
+ *
+ * <p>Ein Task besitzt folgende Attribute:</p>
+ *  <ul>
+ *   <li>name: Name/Bezeichnung der Aufgabe</li>
+ *   <li>createdBy: Name des Nutzers der die Aufgabe erstellt hat</li>
+ *   <li>assignedTo: ArrayList bestehend aus UIDs der Nutzer die der Aufgabe zugeordnet sind (wurde nicht mehr umgesetzt)</li>
+ *   <li>status: Status der Aufgabe(Backlog, in Arbeit, Fertig)</li>
+ *   <li>priority: Priorität der Aufgabe (Niedrig, Mittel, Hoch)</li>
+ *   <li>description: Aufgabenbeschreibung</li>
+ *  </ul>
+ * <b>Autor(en):</b>
+ * </p>
+ */
 public class Task implements Parcelable {
     public String name = "";
     public String createdBy = "";

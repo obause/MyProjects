@@ -8,26 +8,29 @@ import android.webkit.MimeTypeMap;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * Klasse für globale Konstanten und Methoden
+ */
 public class Constants {
 
     // Tabellennamen in Firebase
     public static final String USERS_TABLE = "users";
     public static final String PROJECTS_TABLE = "projects";
 
-    //Key für Firebase für Liste der Tasks eines Projektes
+    //Keys für Firebase innerhalb eines Projektes
     public static final String TASK_LIST = "taskList";
+    public static final String ASSIGNED_TO = "assignedUsers";
+    public static final String DOCUMENT_ID = "documentId";
 
     public static final String IMAGE = "image";
     public static final String NAME = "name";
-
-    public static final String ASSIGNED_TO = "assignedUsers";
-    public static final String DOCUMENT_ID = "documentId";
 
     public static final String PROJECT_DETAILS = "project_details";
 
     public static int READ_STORAGE_PERMISSION_CODE = 1;
     public static int PICK_IMAGE_REQUEST_CODE = 2;
 
+    // Bezeichnungen und Index der Aufgabenlisten
     public static final String BACKLOG = "backlog";
     public static final int BACKLOG_INDEX = 0;
     public static final String PROGRESS = "in_progress";

@@ -24,9 +24,14 @@ import de.hochschulehannover.myprojects.model.TaskList;
 import de.hochschulehannover.myprojects.utils.Constants;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskListContentFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Eine Fragmentklasse für die Inhalte der Tabs der Aufgabenlisten.
+ * Diese erbt von {@link Fragment}.
+ *
+ * Die Methode {@link TaskListContentFragment#newInstance} wird genutzt, um eine neue Instanz
+ * des Fragments zu erstellen.
+ * Des weiteren wird in dieser Klasse der entsprechende RecyclerView im Layout initialisiert. An diesen
+ * wird dann mithilfe der Adapterklasse {@link TaskListAdapter} die Aufgabenliste für das UI erstellt.
+ *
  */
 public class TaskListContentFragment extends Fragment {
 
@@ -39,18 +44,16 @@ public class TaskListContentFragment extends Fragment {
 
     private View view;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Initialisierungsparameter
     private static final String STATUS_PARAM = "status";
     private static final String INDEX_PARAM = "index";
 
-    // TODO: Rename and change types of parameters
     private String status;
     private Integer index;
     private Project project;
 
     public TaskListContentFragment() {
-        // Required empty public constructor
+        // Benötigter leerer Konstruktor
     }
 
     public TaskListContentFragment(String status, Integer index) {
@@ -65,12 +68,8 @@ public class TaskListContentFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TaskListContentFragment.
+     * Mit dieser Klassenmethode wird eine neue Instanz des Fragments erstellt und die Parameter
+     * übergeben
      */
     // TODO: Rename and change types and number of parameters
     public static TaskListContentFragment newInstance(String param1, String param2) {
@@ -92,6 +91,13 @@ public class TaskListContentFragment extends Fragment {
         }
     }
 
+    /**
+     * RecyclerView initialisieren
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,15 +116,11 @@ public class TaskListContentFragment extends Fragment {
         } else {
             Log.i("TaskListContentFragment", "Es konnten keine Tasks abgerufen werden");
         }
-
         Log.i("TaskListContentFragment", "TaskList Index:" + String.valueOf(index));
-
 
         //TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
         adapter = new TaskListAdapter(getActivity(), tasks);
         taskRecyclerView.setAdapter(adapter);
-
-
 
         return view;
     }
@@ -162,11 +164,6 @@ public class TaskListContentFragment extends Fragment {
             adapter.setOnClickListener(new TaskListAdapter.ItemClickListener() {
                 @Override
                 public void onClick(int position, Task task, View view, String s) {
-                    /*Intent intent = new Intent(getActivity(), AddTask.class);
-                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId);
-                    intent.putExtra(Constants.NAME, model.userId);
-                    startActivity(intent);*/
-
                     if (s.equals("edit")) {
                         //Toast.makeText(getActivity(), "Edit gedrückt", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), AddTask.class);
