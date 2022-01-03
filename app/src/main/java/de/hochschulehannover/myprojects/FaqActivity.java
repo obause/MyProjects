@@ -5,6 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**
+ * <h2>Activityklasse FaqActivity</h2>
+ *
+ *<p>
+ * <b>Autor: Constantin</b>
+ * </p>
+ */
 public class FaqActivity extends AppCompatActivity {
     TextView headlineFaqTextView;
     TextView frage1;

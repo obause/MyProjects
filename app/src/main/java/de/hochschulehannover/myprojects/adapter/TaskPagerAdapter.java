@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import de.hochschulehannover.myprojects.R;
 
 /**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-/**
  * <h2>Adapterklasse TaskPagerAdapter</h2>
  *
  * Adapterklasse, die ein zu einem Tab zugehöriges Fragment zurückgibt
@@ -28,7 +24,7 @@ import de.hochschulehannover.myprojects.R;
  * Das Fragment wird mit dem entsprechenden Tab verbunden bzw. zu diesem Tag hinzugefügt.
  *
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Constantin</b>
  * </p>
  */
 public class TaskPagerAdapter extends FragmentPagerAdapter {

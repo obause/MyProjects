@@ -11,6 +11,13 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 
+/**
+ * <h2>Activityklasse FaqActivity</h2>
+ *
+ *<p>
+ * <b>Autor: Constantin</b>
+ * </p>
+ */
 public class InfosActivity extends AppCompatActivity {
 
     TextView headlineTextView;

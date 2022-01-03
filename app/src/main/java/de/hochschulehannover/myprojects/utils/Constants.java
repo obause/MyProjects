@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * Klasse für globale Konstanten und Methoden
+ * Autor: Alle
  */
 public class Constants {
 

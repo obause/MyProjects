@@ -25,7 +25,7 @@ import java.util.Arrays;
  *  <li>tasks: ArrayList bestehend aus Objekten vom Typ Task. Diese beinhaltet alle Aufgaben, die dieser Aufgabenliste zugeordnet sind</li>
  * </ul>
  *
- * <b>Autor(en):</b>
+ * <b>Autor: Joshua</b>
  * </p>
  */
 public class TaskList implements Parcelable {

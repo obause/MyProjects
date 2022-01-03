@@ -41,7 +41,7 @@ import de.hochschulehannover.myprojects.model.User;
  * TODO: Klassenname umbenennen. Passt nicht mehr so wirklich.
  * TODO: Google Login in eigene Klasse
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Constantin</b>
  * </p>
  */
 

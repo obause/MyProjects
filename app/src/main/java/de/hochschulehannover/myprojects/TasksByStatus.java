@@ -22,6 +22,13 @@ import de.hochschulehannover.myprojects.adapter.TaskPagerAdapter;
 import de.hochschulehannover.myprojects.databinding.ActivityTasksByStatusBinding;
 import de.hochschulehannover.myprojects.helper.DBHelper;
 
+/**
+ * <h2>Activityklasse TasksByStatus</h2>
+ *
+ *<p>
+ * <b>Autor: Joshua</b>
+ * </p>
+ */
 public class TasksByStatus extends BaseActivity {
 
     private ActivityTasksByStatusBinding binding;

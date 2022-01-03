@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *   <li>priority: Priorität der Aufgabe (Niedrig, Mittel, Hoch)</li>
  *   <li>description: Aufgabenbeschreibung</li>
  *  </ul>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class Task implements Parcelable {

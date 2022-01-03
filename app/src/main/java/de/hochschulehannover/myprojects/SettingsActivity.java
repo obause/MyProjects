@@ -13,6 +13,13 @@ import android.widget.TextView;
 
 import de.hochschulehannover.myprojects.helper.LocaleHelper;
 
+/**
+ * <h2>Activityklasse SettingsActivity</h2>
+ *
+ *<p>
+ * <b>Autor: Constantin</b>
+ * </p>
+ */
 public class SettingsActivity extends AppCompatActivity {
     TextView helloworld,dialog_language;
     int lang_selected;

@@ -3,6 +3,7 @@ package de.hochschulehannover.myprojects.firebase;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +31,16 @@ import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.utils.Constants;
 
+/**
+ * <h2>Klasse FirestoreClass</h2>
+ *
+ * Diese Klasse ist ausschließlich für die Operationen mit dem Firestore.
+ * Jede Abfrage und jedes Senden von Daten an Firestore erfolgt über diese Klasse.
+ *
+ *<p>
+ * <b>Autor: Ole</b>
+ * </p>
+ */
 public class FirestoreClass {
 
     private String TAG = "FirestoreClass";

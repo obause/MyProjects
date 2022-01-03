@@ -27,7 +27,7 @@ import java.util.Map;
  * Sollte der Nutzer bereits eingeloggt sein wir man direkt zur
  * Projektliste ({@link ProjectListActivity}) weitergeleitet</p>
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Joshua</b>
  * </p>
  */
 

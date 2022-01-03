@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
  * </ul>
  *
  *
- * <b>Autor(en):</b>
+ * <b>Autor: Joshua</b>
  */
 
 // TODO: Die neue Splash-Screen API benutzen

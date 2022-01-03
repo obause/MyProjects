@@ -20,7 +20,7 @@ import java.io.Serializable;
  *  <li>fcmToken: Token für Benachrichtigungen (Funktion noch nicht implementiert)</li>
  * </ul>
  *
- * <b>Autor(en):</b>
+ * <b>Autor: Constantin</b>
  * </p>
  */
 public final class User implements Parcelable {

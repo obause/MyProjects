@@ -40,7 +40,7 @@ import petrov.kristiyan.colorpicker.ColorPicker;
  * Über einen RecyclerView werden alle Projekte die dem eingeloggten Nutzer zugeordnet sind, angezeigt.
  * Weiterleitung zur Aufgabenliste ({@link TaskListActivity}) bei Klick auf ein Projekt</p>
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 

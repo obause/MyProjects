@@ -33,7 +33,7 @@ import com.google.firebase.auth.FirebaseAuth;
  * </ul>
  *
  *
- * <b>Autor(en):</b>
+ * <b>Autor: Constantin</b>
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

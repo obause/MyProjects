@@ -24,9 +24,11 @@ import java.util.Map;
 import de.hochschulehannover.myprojects.helper.DBHelper;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * <h2>Fragmentklasse DoneFragment</h2>
+ *
+ *<p>
+ * <b>Autor: Joshua</b>
+ * </p>
  */
 public class DoneFragment extends Fragment {
 

@@ -32,7 +32,7 @@ import de.hochschulehannover.myprojects.model.User;
  * Es werden alle Nutzer die dem Projekt zugeordnet sind für das UI erstellt.
  *
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class MemberListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{

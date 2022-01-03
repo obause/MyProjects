@@ -35,7 +35,7 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * zugeordnet und das Projekt wird anschließend in Firestore aktualisiert
  *</p>
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class AddTask extends BaseActivity {

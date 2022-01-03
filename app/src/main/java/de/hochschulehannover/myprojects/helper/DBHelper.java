@@ -6,6 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+/**
+ * <h2>Hilfsklasse DBHelper</h2>
+ *<p>
+ * <b>Autor: Joshua</b>
+ * </p>
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {

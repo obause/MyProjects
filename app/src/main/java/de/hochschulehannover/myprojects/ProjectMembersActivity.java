@@ -22,6 +22,18 @@ import de.hochschulehannover.myprojects.model.Project;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.utils.Constants;
 
+/**
+ * <h2>Activityklasse ProjectMembersActivity</h2>
+ *
+ *<p>Liste der Projektmitglieder. Diese erbt von {@link BaseActivity}.
+ * Über einen RecyclerView werden alle Mitglieder angezeigt, die dem aktuell geöffneten Projekt zugeordnet sind, angezeigt.
+ * Bei Klick auf "Mitglied hinzufügen" wird der entsprechende Dialog geöffnet.
+ * </p>
+ *<p>
+ *<p>
+ * <b>Autor: Ole</b>
+ * </p>
+ */
 public class ProjectMembersActivity extends BaseActivity {
 
     private Toolbar toolbar;

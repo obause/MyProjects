@@ -31,6 +31,15 @@ import de.hochschulehannover.myprojects.firebase.FirestoreClass;
 import de.hochschulehannover.myprojects.model.User;
 import de.hochschulehannover.myprojects.utils.Constants;
 
+/**
+ * <h2>Activity ProfileActivity</h2>
+ *<p>
+ *     Activity zum Anzeigen und bearbeiten der Nutzerdaten. Diese erbt von {@link BaseActivity}.
+ *</p>
+ *<p>
+ * <b>Autor: Constantin (Mit Anpassungen von Ole)</b>
+ * </p>
+ */
 public class ProfileActivity extends BaseActivity {
 
     Toolbar toolbar;

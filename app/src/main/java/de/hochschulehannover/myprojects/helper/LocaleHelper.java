@@ -11,9 +11,11 @@ import android.preference.PreferenceManager;
 import java.util.Locale;
 
 /**
- * Created by abdalla on 10/2/17.
+ * <h2>Hilfsklasse LocaleHelper</h2>
+ *<p>
+ * <b>Autor: Constantin</b>
+ * </p>
  */
-
 public class LocaleHelper {
 
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";

@@ -32,7 +32,7 @@ import de.hochschulehannover.myprojects.model.Task;
  * erstellt.
  *
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

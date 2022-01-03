@@ -39,7 +39,7 @@ import de.hochschulehannover.myprojects.model.User;
  * registrieren.
  * Weiterleitung zur Projektliste ({@link ProjectListActivity}) nach erfolgreicher Registrierung</p>
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Constantin</b>
  * </p>
  */
 

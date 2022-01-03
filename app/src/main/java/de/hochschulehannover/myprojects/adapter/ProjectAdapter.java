@@ -30,7 +30,7 @@ import de.hochschulehannover.myprojects.model.Project;
  * Es werden alle Projekte die dem eingeloggten Nutzer zugeordnet sind für das UI erstellt.
  *
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

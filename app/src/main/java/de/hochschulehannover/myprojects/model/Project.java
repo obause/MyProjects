@@ -27,7 +27,7 @@ import de.hochschulehannover.myprojects.R;
  *   <li>taskList: Eine ArrayList bestehend aus Objekten vom Typ TaskList. In dieser sind die Aufgabenlisten (Backlog, In Bearbeitung, Fertig) gespeichert</li>
  *  </ul>
  *
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 public class Project implements Parcelable {

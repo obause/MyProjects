@@ -45,7 +45,7 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * Über einen RecyclerView werden alle Projekte die dem eingeloggten Nutzer zugeordnet sind, angezeigt.
  * Weiterleitung zur Aufgabenliste ({@link TaskListActivity}) bei Klick auf ein Projekt</p>
  *<p>
- * <b>Autor(en):</b>
+ * <b>Autor: Ole</b>
  * </p>
  */
 
@@ -133,7 +133,8 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
 
     /**
      * Projekte im UI über den RecyclerView anzeigen mit eigener Adapterklasse {@link ProjectAdapter}
-     * @param projectList
+     * @param projectList ArrayList bestehend aus Objekten vom Typ Project. Beinhaltet alle Projekte
+     *                    des Nutzers
      */
     public void projectsToUi (ArrayList<Project> projectList) {
         hideDialog();
@@ -202,8 +203,8 @@ public class ProjectListActivity extends BaseActivity implements NavigationView.
      * Diese Methode wird aufgerufen nachdem entweder eine Änderung der Nutzerdaten vorgenommen wurde
      * oder wenn ein neues Projekt angelegt wurde. Je nach Vorgang werden entweder die Nutzerdaten neu
      * vom Firestore geladen oder die Projektliste
-     * @param requestCode
-     * @param resultCode
+     * @param requestCode Der request-Code der beim Aufrufen der Activity übergeben wurde
+     * @param resultCode Der result-Code ob das Ziel der Activity erfolgreich war
      * @param data
      */
     @Override

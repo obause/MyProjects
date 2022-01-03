@@ -32,6 +32,7 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * Des weiteren wird in dieser Klasse der entsprechende RecyclerView im Layout initialisiert. An diesen
  * wird dann mithilfe der Adapterklasse {@link TaskListAdapter} die Aufgabenliste für das UI erstellt.
  *
+ * Autor: Joshua (Mit Anpassungen von Ole)
  */
 public class TaskListContentFragment extends Fragment {
 

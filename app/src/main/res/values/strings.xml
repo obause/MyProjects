@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyProjects</string>
-    <string name="language">DEUTSCH</string>
+    <string name="language">Deutsch</string>
     <string name="hello_world">Sprache einstellen</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -20,8 +20,9 @@
     <!-- Willkommensbildschirm WelcomeActivity -->
     <string name="sign_in">Einloggen</string>
     <string name="sign_up">Registrieren</string>
-    <string name="intro_text">Eine kurze Beschreibung zur App</string>
+    <string name="intro_text">Verwalte, plane und tracke deine persönlichen Projekte oder deines Teams</string>
     <string name="welcome_text">Willkommen bei</string>
+    <string name="are_you_new">Bist du neu hier?</string>
     <!-- Registrierung RegisterActivity -->
     <string name="sign_up_description">Bitte gib deinen Namen, deine Email-Adresse und dein Passwort ein</string>
     <string name="name">Name</string>

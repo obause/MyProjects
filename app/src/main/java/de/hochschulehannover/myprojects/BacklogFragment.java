@@ -25,7 +25,12 @@ import java.util.Map;
 import de.hochschulehannover.myprojects.helper.DBHelper;
 import de.hochschulehannover.myprojects.model.Project;
 
-
+/**
+ * <h2>Fragmentklasse BacklogFragment</h2>
+ *<p>
+ * <b>Autor: Joshua</b>
+ * </p>
+ */
 public class BacklogFragment extends Fragment {
 
     ListView taskListView;

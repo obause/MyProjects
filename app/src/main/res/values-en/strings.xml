@@ -49,4 +49,22 @@
     <string name="create_project_button">Add project</string>
     <!-- Projektübersicht -->
     <string name="no_projects">You have not yet created any projects. Add your first project!</string>
+    <string name="hello_blank_fragment">Empty Fragment</string>
+    <string name="no_tasks">Du hast in diesem Bereich noch keine Aufgaben</string>
+    <string name="backlog">Backlog</string>
+    <string name="in_progress">In Progress</string>
+    <string name="done">Done</string>
+    <string name="delete_project">Delete Project</string>
+    <string name="edit_project">Edit Project</string>
+    <string name="task_name">Task name</string>
+    <string name="task_priority">Priority</string>
+    <string name="task_status">Status</string>
+    <string name="task_description">Task Description</string>
+    <string name="create_task">Create Task</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="members">Project Members</string>
+    <string name="add_member">Add Member</string>
+    <string name="search_member">Search Member</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_new">Are you new?</string>
 </resources>

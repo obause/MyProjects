@@ -48,7 +48,7 @@ import de.hochschulehannover.myprojects.utils.Constants;
  * einen RecyclerView mit dem Adapter {@link TaskListAdapter} umgesetzt.
  * </p>
  * <p>
- *  <b>Autor(en):</b>
+ *  <b>Autor: Ole</b>
  * </p>
  */
 
